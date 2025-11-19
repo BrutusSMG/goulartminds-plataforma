@@ -1,0 +1,76 @@
+/* Estilos específicos para a página home */
+
+/* Introdução da página */
+.home-intro {
+    text-align: center;
+    margin-bottom: 40px;
+}
+
+.home-intro h2 {
+    font-size: 28px;
+    color: var(--primary-color);
+}
+
+.home-intro p {
+    font-size: 18px;
+    color: var(--secondary-color);
+    max-width: 600px;
+    margin: 10px auto 0;
+}
+
+/* Grid que segura os cards das ferramentas */
+.tools-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr; /* Duas colunas */
+    gap: 30px; /* Espaçamento entre os cards */
+}
+
+/* Estilo individual de cada card */
+.tool-card {
+    display: flex;
+    flex-direction: column;
+    background-color: #fff;
+    border: 1px solid var(--border-color);
+    border-radius: 12px;
+    padding: 30px;
+    text-align: center;
+    text-decoration: none; /* Remove o sublinhado do link */
+    color: var(--text-color);
+    transition: transform 0.2s ease-out, box-shadow 0.2s ease-out;
+}
+
+.tool-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+}
+
+.card-icon {
+    font-size: 48px;
+    margin-bottom: 15px;
+}
+
+.tool-card h3 {
+    font-size: 22px;
+    color: var(--primary-color);
+    margin: 0 0 10px;
+}
+
+.tool-card p {
+    font-size: 16px;
+    color: var(--secondary-color);
+    flex-grow: 1; /* Faz o parágrafo ocupar o espaço e empurrar o botão para baixo */
+    margin-bottom: 20px;
+}
+
+.card-cta {
+    font-weight: 700;
+    color: var(--accent-color);
+    font-size: 16px;
+}
+
+/* Deixa os cards em uma única coluna em telas pequenas (celulares) */
+@media (max-width: 768px) {
+    .tools-grid {
+        grid-template-columns: 1fr; /* Uma coluna */
+    }
+}

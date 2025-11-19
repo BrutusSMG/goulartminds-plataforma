@@ -1,0 +1,129 @@
+/* ================================================================== */
+/* === ARQUIVO CSS GLOBAL - A IDENTIDADE VISUAL DA PLATAFORMA     === */
+/* ================================================================== */
+
+/* 1. Definição das Cores e Fontes Globais */
+:root {
+    --primary-color: #0a2540;
+    --secondary-color: #556270;
+    --accent-color: #4ecdc4;
+    --background-color: #f4f4f9;
+    --text-color: #333;
+    --card-bg-color: #ffffff;
+    --border-color: #e0e0e0;
+}
+
+/* 2. Estilo do Corpo da Página e do Container Principal */
+body {
+    font-family: 'Lexend', sans-serif;
+    background-color: var(--background-color);
+    color: var(--text-color);
+    margin: 0;
+    padding: 40px 20px;
+    line-height: 1.6;
+    font-size: 16px;
+}
+
+body.loading {
+    visibility: hidden;
+    opacity: 0;
+}
+
+.container {
+    max-width: 800px;
+    margin: 0 auto;
+    background-color: var(--card-bg-color);
+    padding: 20px 40px;
+    border-radius: 12px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+}
+
+/* 3. Estilos de Tipografia e Cabeçalho */
+header { text-align: center; border-bottom: 1px solid var(--border-color); padding-bottom: 20px; margin-bottom: 30px; }
+header h1, h2 { color: var(--primary-color); font-weight: 700; margin: 0; }
+header h1 { font-size: 28px; margin-bottom: 5px; }
+header p { font-size: 18px; color: #555; margin: 0; }
+h2 { font-size: 24px; margin-bottom: 15px; }
+h3 { font-size: 20px; font-weight: 700; color: var(--primary-color); }
+p { font-size: 16px; color: var(--text-color); }
+
+/* NOVO: Estilo para o placeholder da logo */
+.logo-placeholder {
+    min-height: 50px;
+    margin-bottom: 15px;
+}
+
+/* 4. Estilos de Componentes Comuns */
+.step { display: none; }
+.step.active { display: block; }
+
+.instructions-box {
+    background-color: #f0f5ff;
+    border-left: 4px solid var(--accent-color);
+    padding: 15px;
+    margin-bottom: 25px;
+    border-radius: 4px;
+}
+
+.primary-btn {
+    display: block; width: 100%; padding: 15px; font-size: 1.1em; font-weight: 700;
+    color: #fff; background-color: var(--secondary-color); border: none; border-radius: 8px;
+    cursor: pointer; transition: background-color 0.2s; margin-top: 30px;
+}
+.primary-btn:hover { background-color: var(--primary-color); }
+.primary-btn:disabled { background-color: #ccc; cursor: not-allowed; }
+
+hr { border: none; border-top: 1px solid var(--border-color); margin: 40px 0; }
+
+/* 5. Estilos para os Modais (do _footer.html) */
+.modal-overlay {
+    display: none; position: fixed; z-index: 1000; left: 0; top: 0;
+    width: 100%; height: 100%; background-color: rgba(0, 0, 0, 0.6);
+    justify-content: center; align-items: center; padding: 20px; box-sizing: border-box;
+}
+.modal-content, .progress-bar-container {
+    background-color: #fff; padding: 30px 40px; border-radius: 10px;
+    width: 100%; max-width: 500px; text-align: center; box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+}
+.progress-bar-container p, .modal-content p { font-size: 18px; color: var(--text-color); }
+.modal-content h3 { font-size: 24px; color: var(--primary-color); margin-top: 0; }
+.modal-content .primary-btn { width: auto; padding: 12px 40px; margin-top: 15px; }
+
+.progress-bar { width: 100%; height: 8px; background-color: #e0e0e0; border-radius: 4px; overflow: hidden; margin-bottom: 15px; }
+.progress-bar::before {
+    content: ''; display: block; width: 50%; height: 100%; background-color: var(--primary-color);
+    animation: progress-animation 1.5s infinite;
+}
+@keyframes progress-animation { from { transform: translateX(-100%); } to { transform: translateX(200%); } }
+
+/* 6. Estilos para Campos de Formulário Globais */
+input[type="text"],
+input[type="email"],
+input[type="tel"],
+textarea {
+    display: block;
+    width: 100%;
+    padding: 12px;
+    border: 1px solid var(--border-color);
+    border-radius: 5px;
+    margin-top: 8px;
+    font-family: 'Lexend', sans-serif;
+    font-size: 16px;
+    box-sizing: border-box;
+    background-color: #fff;
+    color: var(--text-color);
+}
+
+textarea {
+    resize: vertical;
+    min-height: 80px;
+}
+
+/* NOVO: Estilo para o rodapé de copyright */
+.site-footer {
+    text-align: center;
+    padding: 20px;
+    margin-top: 40px;
+    font-size: 14px;
+    color: #888;
+}

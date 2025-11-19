@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Goulart Minds - Plataforma de Ferramentas</title>
+    
+    <!-- Links para fontes e estilos globais (a mesma estrutura que já usamos) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Lexend:wght@400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/assets/global-style.css">
+    
+    <!-- Link para o CSS específico da página Home -->
+    <link rel="stylesheet" href="home-style.css">
+</head>
+<body class="loading">
+
+    <!-- Header (será carregado pelo main.js ) -->
+    <div id="header-placeholder"></div>
+
+    <!-- Container principal da página -->
+    <div class="container">
+        
+        <div class="home-intro">
+            <h2>Ferramentas de Autoconhecimento</h2>
+            <p>Escolha uma das ferramentas abaixo para iniciar sua jornada de clareza e desenvolvimento pessoal.</p>
+        </div>
+
+        <div class="tools-grid">
+            <!-- Card da Ferramenta 1: Mapa da Irritação -->
+            <a href="/irritacao/" class="tool-card">
+                <div class="card-icon">😠</div>
+                <h3>Mapa da Sua Irritação</h3>
+                <p>Descubra o que realmente aciona sua reatividade e aprenda a retomar o controle em momentos de estresse.</p>
+                <span class="card-cta">Começar Agora &rarr;</span>
+            </a>
+
+            <!-- Card da Ferramenta 2: Mapa dos Valores -->
+            <a href="/valores/" class="tool-card">
+                <div class="card-icon">🧭</div>
+                <h3>Mapa dos Seus Valores</h3>
+                <p>Identifique seus valores fundamentais e entenda como eles influenciam suas decisões, motivações e satisfação.</p>
+                <span class="card-cta">Começar Agora &rarr;</span>
+            </a>
+        </div>
+
+    </div>
+
+    <!-- Copyright (será carregado pelo main.js) -->
+    <div id="copyright-placeholder"></div>
+
+    <!-- Scripts (carregam os componentes e mostram a página) -->
+    <script src="/assets/main.js" defer></script>
+
+</body>
+</html>
