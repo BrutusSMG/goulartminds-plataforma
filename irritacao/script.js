@@ -144,35 +144,23 @@ document.addEventListener('DOMContentLoaded', () => {
             document.dispatchEvent(new CustomEvent('showProgress'));
             sendReportBtn.disabled = true;
 
-            const webAppUrl = 'https://script.google.com/macros/s/AKfycby5iSP4Z9Q15vD9b-xGiKsUddWdaU4vvJlmfszpogzmijtW9aTpiB9j-_6GC7lQjeY0/exec'; // << NÃO ESQUEÇA DE COLOCAR A URL CORRETA AQUI
+            const webAppUrl = 'https://script.google.com/macros/s/AKfycby7e7ub9sZYLPkWgfpZ11xvzn0u0s7Iy5VOElSXYoSu3kLzJ_2BNCwvSqeF-M2_iUEz/exec'; // << NÃO ESQUEÇA DE COLOCAR A URL CORRETA AQUI
 
             fetch(webAppUrl, {
                 method: 'POST',
-                body: JSON.stringify(userResponses),
-                headers: {
-                    'Content-Type': 'text/plain;charset=utf-8', // Necessário para o Apps Script
-                },
+                mode: 'no-cors', // << IMPORTANTE: Isso evita o erro de CORS.
+                body: JSON.stringify(userResponses)
             })
-            .then(response => response.json()) // Converte a resposta do servidor para JSON
-            .then(result => {
-                // **NOVA LÓGICA PARA TRATAR A RESPOSTA**
-                if (result.status === 'success') {
-                    // Se deu tudo certo, mostra o modal de sucesso.
-                    document.dispatchEvent(new CustomEvent('showSuccess'));
-                } else if (result.status === 'duplicate') {
-                    // Se o e-mail é duplicado, esconde o progresso e mostra um alerta.
-                    document.getElementById('progress-overlay').style.display = 'none';
-                    alert('Este e-mail já foi cadastrado. Por favor, verifique sua caixa de entrada ou utilize outro e-mail.');
-                    sendReportBtn.disabled = false; // Reabilita o botão
-                } else {
-                    // Se ocorreu qualquer outro erro no servidor.
-                    throw new Error(result.message || 'Erro desconhecido no servidor.');
-                }
+            .then(() => {
+                // No modo 'no-cors', o .then() sempre executa, assumindo sucesso no envio.
+                // A lógica de erro (duplicidade, etc.) fica toda no back-end.
+                document.dispatchEvent(new CustomEvent('showSuccess'));
             })
             .catch(error => {
-                console.error('Erro de rede ou de processamento:', error);
+                // Este catch agora só pegará erros muito graves, como falha de rede.
+                console.error('Erro de rede:', error);
                 document.getElementById('progress-overlay').style.display = 'none';
-                alert('Ocorreu um erro ao processar sua solicitação. Por favor, tente novamente.');
+                alert('Ocorreu um erro de rede ao enviar sua solicitação. Verifique sua conexão e tente novamente.');
                 sendReportBtn.disabled = false;
                 wantsGiftCheckbox.dispatchEvent(new Event('change'));
             });
