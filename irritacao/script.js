@@ -144,7 +144,7 @@ document.addEventListener('DOMContentLoaded', () => {
             document.dispatchEvent(new CustomEvent('showProgress'));
             sendReportBtn.disabled = true;
 
-            const webAppUrl = 'https://script.google.com/macros/s/AKfycby7e7ub9sZYLPkWgfpZ11xvzn0u0s7Iy5VOElSXYoSu3kLzJ_2BNCwvSqeF-M2_iUEz/exec'; // << NÃO ESQUEÇA DE COLOCAR A URL CORRETA AQUI
+            const webAppUrl = 'https://script.google.com/macros/s/AKfycbyZ3-z22JopJar4BWi7iSzAruNBVX-sZTJSaihfK2OGyCuorHgF-3SjdVU40fPitdRU/exec'; // << NÃO ESQUEÇA DE COLOCAR A URL CORRETA AQUI
 
             fetch(webAppUrl, {
                 method: 'POST',
