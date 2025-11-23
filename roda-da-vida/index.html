@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Roda da Vida</title>
+    <link rel="stylesheet" href="/assets/global-style.css">
+    <link rel="stylesheet" href="style.css">
+    <!-- Usaremos a Chart.js apenas para o gráfico de resultado final -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+
+</head>
+
+<body class="loading">
+    <div class="container">
+        <div id="header-placeholder"></div>
+
+        <!-- ETAPA 1: A RODA DA VIDA INTERATIVA -->
+        <section id="step1" class="step active">
+            <div class="instructions-box">
+                <h4>Como usar a Roda da Vida?</h4>
+                <p>
+                    Esta é uma poderosa ferramenta de autoanálise que te ajudará a ter clareza sobre o seu momento atual. Ao final, você verá um mapa visual da sua vida, identificando áreas de sucesso e pontos que merecem sua atenção.
+                </p>
+                <p><strong>Siga os 3 passos:</strong></p>
+                <ol>
+                    <li><strong>Reflita com calma:</strong> Para cada uma das 12 áreas, pense sobre o seu nível de satisfação <strong>hoje</strong>. Não há resposta certa ou errada.</li>
+                    <li><strong>Dê uma nota de 1 a 10:</strong> Clique no número que melhor representa sua satisfação atual em cada fatia da roda.</li>
+                    <li><strong>Descubra sua área de alavanca:</strong> Após preencher tudo, observe o resultado. Qual área, se você dedicasse um pouco mais de energia, poderia impulsionar todas as outras?</li>
+                </ol>
+            </div>
+            <!-- O Contêiner onde a roda será desenhada -->
+            <div id="roda-container-wrapper">
+                <div class="linha-demarcatoria" id="linha-vertical"></div>
+                <div class="linha-demarcatoria" id="linha-horizontal"></div>
+                
+                <!-- ANEL EXTERNO (GRANDE ÁREA) -->
+                <div id="anel-grande-area" class="anel-texto">
+                    <div class="quadrante-cor" id="cor-pessoal"></div>
+                    <div class="quadrante-cor" id="cor-qualidade"></div>
+                    <div class="quadrante-cor" id="cor-relacionamentos"></div>
+                    <div class="quadrante-cor" id="cor-profissional"></div>
+                    <div class="quadrante-titulo" id="titulo-pessoal">PESSOAL</div>
+                    <div class="quadrante-titulo" id="titulo-qualidade">QUALIDADE DE VIDA</div>
+                    <div class="quadrante-titulo" id="titulo-relacionamentos">RELACIONAMENTOS</div>
+                    <div class="quadrante-titulo" id="titulo-profissional">PROFISSIONAL</div>
+                </div>
+
+                <!-- ANEL INTERNO (SUBÁREA) -->
+                <div id="anel-sub-area" class="anel-texto">
+                    <!-- Os 12 títulos das subáreas serão inseridos aqui pelo JavaScript -->
+                </div>
+                
+                <div id="roda-da-vida-container">
+                    <!-- As 12 fatias serão inseridas aqui -->
+                    <div id="anel-central"></div>
+                </div>
+
+            </div>
+
+            <div id="reflection-questions-step1" class="reflection-questions hidden">
+                <h3>Perguntas para Reflexão</h3>
+                
+                <div class="question-group">
+                    <label for="reflexao1">Olhando para essa Roda, qual o seu nível de satisfação geral com os resultados da sua vida?</label>
+                    <textarea id="reflexao1" rows="4" placeholder="Seja honesto(a) com você mesmo(a). Descreva seus sentimentos e percepções..."></textarea>
+                </div>
+
+                <div class="question-group">
+                    <label for="reflexao2">Qual dessas áreas, ao receber um pouco mais de foco e energia, poderia influenciar positivamente o maior número de outras áreas? (Sua Área de Alavanca)</label>
+                    <textarea id="reflexao2" rows="4" placeholder="Identifique sua área de alavanca e explique por que você acredita que ela tem tanto poder..."></textarea>
+                </div>
+
+            </div>
+
+            <button id="goto-step2-btn" class="primary-btn">Ver Minha Roda da Vida</button>
+        </section>
+
+        <!-- ETAPA 2: RESULTADO E FORMULÁRIO -->
+        <section id="step2" class="step">
+            <h2>Sua Roda da Vida - Resultado</h2>
+            <div id="resultado-container">
+                <div class="resultado-coluna">
+                    <h4>Sua Roda da Vida</h4>
+                    <!-- A imagem da roda será inserida aqui -->
+                    <div id="imagem-roda-container"></div> 
+                </div>
+                <div class="resultado-coluna">
+                    <h4>Gráfico de Equilíbrio</h4>
+                    <!-- O gráfico de radar continua aqui -->
+                    <canvas id="graficoRodaDaVida"></canvas>
+                </div>
+            </div>
+            <hr>
+            <div class="email-form">
+                <h3>Receba sua análise completa por e-mail.</h3>
+                <input type="text" id="user-name" placeholder="Seu nome*">
+                <input type="email" id="user-email" placeholder="Seu melhor e-mail*">
+                <input type="tel" id="user-whatsapp" placeholder="Seu WhatsApp (Opcional )">
+                <button id="send-report-btn" class="primary-btn">Quero Receber Minha Análise</button>
+            </div>
+        </section>
+
+    </div>
+
+    <div id="footer-placeholder"></div>
+    <div id="copyright-placeholder"></div>
+    <script src="/assets/main.js" defer></script>
+    <script src="script.js"></script>
+</body>
+</html>
