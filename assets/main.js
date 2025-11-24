@@ -1,4 +1,4 @@
-// assets/main.js (Versão 3.1 - Gerenciador de Modais Corrigido)
+// assets/main.js
 
 // Trava para impedir a execução múltipla.
 if (!window.goulartMindsPlatform) {
@@ -38,7 +38,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // Lista de todos os componentes a serem carregados na página
     const componentsToLoad = [
         loadComponent('/componentes/_header.html', 'header-placeholder'),
-        loadComponent('/componentes/_footer.html', 'footer-placeholder'),
+        // loadComponent('/componentes/_footer.html', 'footer-placeholder'), // Removido: O footer é um componente de layout, não um placeholder.
         loadComponent('/componentes/_copyright.html', 'copyright-placeholder')
     ];
 
@@ -63,34 +63,28 @@ document.addEventListener('DOMContentLoaded', () => {
             document.body.classList.remove('loading');
 
             // =================================================================
-            // === GERENCIADOR GLOBAL DE MODAIS (CORRIGIDO) ====================
+            // === GERENCIADOR GLOBAL DE MODAIS (Refatorado) ===================
             // =================================================================
             
-            // **CORREÇÃO:** Declara as variáveis dos modais AQUI
-            const progressOverlay = document.querySelector('#footer-placeholder #progress-overlay');
-            const successModal = document.querySelector('#footer-placeholder #success-modal');
-            const successOkBtn = document.querySelector('#footer-placeholder #success-ok-btn');
-
             // Ouve o pedido para MOSTRAR o modal de progresso
             document.addEventListener('showProgress', () => {
+                const progressOverlay = document.getElementById('progress-overlay');
                 if (progressOverlay) progressOverlay.style.display = 'flex';
             });
 
             // Ouve o pedido para MOSTRAR o modal de sucesso
             document.addEventListener('showSuccess', () => {
+                const progressOverlay = document.getElementById('progress-overlay');
+                const successModal = document.getElementById('success-modal');
                 if (progressOverlay) progressOverlay.style.display = 'none';
                 if (successModal) successModal.style.display = 'flex';
             });
-
-            // Adiciona o evento de clique no botão OK do modal de sucesso
-            if (successOkBtn) {
-                successOkBtn.onclick = () => {
-                    location.reload(); // Ação de resetar a página
-                };
-            } else {
-                // Adiciona um log caso o botão não seja encontrado, para facilitar futuras depurações
-                console.warn('Aviso: O botão do modal de sucesso (#success-ok-btn) não foi encontrado no DOM.');
-            }
+            
+            // Ouve o pedido para ESCONDER o modal de sucesso
+            document.addEventListener('hideSuccess', () => {
+                const successModal = document.getElementById('success-modal');
+                if (successModal) successModal.style.display = 'none';
+            });
         })
         .catch(error => {
             console.error('Um ou mais componentes falharam ao carregar:', error);
