@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Resultado Esperado - Goulart Minds</title>
+    
+    <!-- Estilos -->
+    <link rel="stylesheet" href="../assets/global-style.css">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body class="loading">
+
+    <!-- Header (carregado pelo main.js) -->
+    <div id="header-placeholder"></div>
+
+    <!-- Conteúdo Principal da Ferramenta -->
+    <div class="container">
+        <div class="tool-wrapper">
+
+            <!-- ===================================================================== -->
+            <!-- ETAPA 0: INTRODUÇÃO                                                 -->
+            <!-- ===================================================================== -->
+            <section id="step-0" class="step active">
+                <div class="step-header">
+                    <h1>🌟 Ferramenta: Resultado Esperado</h1>
+                    <p>Esta ferramenta te guiará para transformar um desejo vago em um objetivo claro e poderoso. Responda com calma e sinceridade.</p>
+                </div>
+                <div class="step-content">
+                    <div class="info-box">
+                        <h4>O Segredo de um Objetivo Poderoso</h4>
+                        <p>Muitas vezes, nossos desejos são sentimentos (ex: "quero ser feliz"). Para alcançá-los, precisamos transformá-los em algo concreto e palpável. Ao longo desta jornada, vamos te ajudar a fazer exatamente isso.</p>
+                    </div>
+                </div>
+                <div class="step-navigation">
+                    <button class="btn-next">Começar</button>
+                </div>
+            </section>
+
+            <!-- ===================================================================== -->
+            <!-- ETAPA 1: RESULTADOS ESPERADOS (OBJETIVO SMART)                      -->
+            <!-- ===================================================================== -->
+            <section id="step-1" class="step">
+                <div class="step-header">
+                    <h2>Etapa 1: Definição do Objetivo</h2>
+                    <p>Vamos começar entendendo o que te trouxe até aqui para, então, construir um objetivo claro e poderoso usando a metodologia SMART.</p>
+                </div>
+                <div class="step-content">
+                    <!-- PARTE A: EXPLORAÇÃO INICIAL -->
+                    <div id="exploration-container">
+                        <div class="question-block">
+                            <label for="q-expl-problema">O que te trouxe até aqui? O que fez você parar e dedicar seu tempo a esta ferramenta neste exato momento?</label>
+                            <textarea id="q-expl-problema" placeholder="Seja sincero(a). Ex: 'Sinto que estou estagnado(a) na carreira', 'Minha vida financeira está uma bagunça', 'Não tenho tempo para mim'..."></textarea>
+                        </div>
+                        <div class="question-block">
+                            <label for="q-expl-ganho">Imagine que você chegou ao final desta jornada. O que precisa ter acontecido para você dizer "Uau, valeu muito a pena!"?</label>
+                            <textarea id="q-expl-ganho" placeholder="Descreva o resultado ideal. Ex: 'Ter um plano claro para os próximos 6 meses', 'Sentir que retomei o controle da minha vida'..."></textarea>
+                        </div>
+                        <div class="question-block">
+                            <label for="q-expl-indicacao">E o que te deixaria tão satisfeito(a) a ponto de querer indicar esta ferramenta para um amigo querido?</label>
+                            <textarea id="q-expl-indicacao" placeholder="Qual nível de transformação você espera? Ex: 'Se eu conseguir destravar uma decisão importante', 'Se eu me sentir mais motivado(a) e com mais energia'..."></textarea>
+                        </div>
+                        <div class="subtask-navigation" style="justify-content: flex-end;">
+                            <button id="btn-start-smart" class="btn-next-small">Definir meu Objetivo</button>
+                        </div>
+                    </div>
+
+                    <!-- PARTE B: ASSISTENTE SMART -->
+                    <div id="smart-conversation-container" class="hidden">
+                        <div class="recap-box">
+                            <h4>Suas Reflexões Iniciais:</h4>
+                            <p id="recap-exploration-text">Carregando...</p>
+                        </div>
+                        <div id="smart-history-container"></div>
+                        <div id="active-question-container">
+                            <div class="label-wrapper">
+                                <label id="smart-label" for="smart-input">...</label>
+                            </div>
+                            <div id="smart-summary" class="draft-box hidden">
+                                <h4 id="smart-summary-title"></h4>
+                                <p id="smart-summary-text"></p>
+                            </div>
+                            <div id="input-fields-wrapper">
+                                <textarea id="smart-input" placeholder="Escreva sua resposta aqui..."></textarea>
+                                <div id="date-inputs-container" class="hidden">
+                                    <div class="date-input-wrapper">
+                                        <label for="smart-date-input-start">Data de Início</label>
+                                        <input type="date" id="smart-date-input-start">
+                                    </div>
+                                    <div class="date-input-wrapper">
+                                        <label for="smart-date-input-end">Data de Término</label>
+                                        <input type="date" id="smart-date-input-end">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="subtask-navigation">
+                            <button id="btn-prev-smart" class="btn-prev-small hidden">Voltar</button>
+                            <button id="btn-next-smart" class="btn-next-small">Próximo</button>
+                        </div>
+                    </div>
+
+                    <!-- PARTE C: MODO DE REVISÃO -->
+                    <div id="review-container" class="hidden">
+                        <div id="review-summary" class="draft-box">
+                            <h4>Seu Objetivo definido é:</h4>
+                            <p id="review-summary-text"></p>
+                        </div>
+                        <button id="btn-edit-smart" class="btn-prev-small" style="margin-top: 1rem;">Editar Objetivo</button>
+                    </div>
+                </div>
+                <div class="step-navigation">
+                    <button class="btn-prev">Voltar</button>
+                    <button class="btn-next">Avançar</button>
+                </div>
+            </section>
+
+            <!-- ===================================================================== -->
+            <!-- ETAPA 2: FOTOGRAFIA DO SUCESSO                                      -->
+            <!-- ===================================================================== -->
+            <section class="step" id="step-2">
+                <div class="step-header">
+                    <h2>Etapa 2: A Fotografia do Sucesso</h2>
+                    <p>Imagine que viajou no tempo e seu objetivo já foi alcançado. Vamos descrever essa cena com o máximo de detalhes racionais, como um planejamento.</p>
+                </div>
+                <div class="step-content">
+                    <div class="recap-box">
+                        <h4>Seu objetivo definido é:</h4>
+                        <p id="recap-objetivo-step2">Carregando...</p>
+                    </div>
+                    <div id="photo-assistant-container">
+                        <div class="label-wrapper">
+                            <label id="photo-label" for="photo-input">Pergunta inicial...</label>
+                        </div>
+                        <div id="photo-draft-summary" class="draft-box hidden">
+                            <h4>Rascunho da sua Cena:</h4>
+                            <p id="photo-draft-summary-text"></p>
+                        </div>
+                        <textarea id="photo-input" placeholder="Descreva em detalhes..."></textarea>
+                        <div class="subtask-navigation">
+                            <button id="btn-prev-photo" class="btn-prev-small hidden">Voltar</button>
+                            <button id="btn-next-photo" class="btn-next-small">Próximo</button>
+                        </div>
+                    </div>
+                    <div id="photo-summary" class="hidden">
+                        <h4>Sua Fotografia do Sucesso:</h4>
+                        <p id="photo-summary-text"></p>
+                        <button id="btn-edit-photo" class="btn-prev-small" style="margin-top: 1rem;">Editar Fotografia</button>
+                    </div>
+                </div>
+                <div class="step-navigation">
+                    <button class="btn-prev">Voltar</button>
+                    <button class="btn-next">Avançar</button>
+                </div>
+            </section>
+
+            <!-- ===================================================================== -->
+            <!-- ETAPA 3: O ENSAIO MENTAL (VÍDEO + ÁUDIO)                          -->
+            <!-- ===================================================================== -->
+            <section id="step-3" class="step">
+                <div class="step-header">
+                    <h2>Etapa 3: O Ensaio Mental Guiado</h2>
+                    <p>Esta é a etapa mais importante. Vamos transformar seu planejamento em uma experiência real e emocional.</p>
+                </div>
+                <div class="step-content">
+                    <div class="media-wrapper">
+                        <h4>Uma mensagem para você:</h4>
+                        <video controls controlsList="nodownload" style="width: 100%; border-radius: 8px;">
+                            <source src="../assets/video-intro.mp4" type="video/mp4">
+                            Seu navegador não suporta o elemento de vídeo.
+                        </video>
+                    </div>
+                    <div class="media-wrapper">
+                        <h4>Seu Ensaio Mental:</h4>
+                        <p style="text-align: center; margin-bottom: 1rem;"><em>"Agora, encontre uma posição confortável, feche os olhos e pressione 'Play'."</em></p>
+                        <audio controls controlsList="nodownload" style="width: 100%;">
+                            <source src="../assets/audio-ensaio.mp3" type="audio/mpeg">
+                            Seu navegador não suporta o elemento de áudio.
+                        </audio>
+                    </div>
+                </div>
+                <div class="step-navigation">
+                    <button class="btn-prev">Voltar</button>
+                    <button class="btn-next">Avançar</button>
+                </div>
+            </section>
+
+            <!-- ===================================================================== -->
+            <!-- ETAPA 4: COMPROMISSO E AÇÃO                                       -->
+            <!-- ===================================================================== -->
+            <section id="step-4" class="step">
+                <div class="step-header">
+                    <h2>Etapa 4: Compromisso e Ação</h2>
+                    <p>Você sentiu a emoção da conquista. Agora, vamos transformar essa energia em um plano de ação concreto.</p>
+                </div>
+                <div class="step-content">
+
+                    <!-- 1. Seção de Motivação (O "Porquê") -->
+                    <div class="question-block">
+                        <label for="q-motivacao">Para selar sua motivação, releia o benefício que você definiu na Etapa 1 e reforce: por que alcançar esse objetivo é inegociável para você?</label>
+                        <div class="recap-box" style="margin-bottom: 1rem;">
+                            <h4>Lembre-se do seu "Porquê" (Benefício):</h4>
+                            <p id="recap-motivacao-step4">Carregando...</p>
+                        </div>
+                        <textarea id="q-motivacao" placeholder="Reforce sua motivação com suas próprias palavras..."></textarea>
+                    </div>
+
+                    <!-- 2. Seção de Confiança (O "Como") -->
+                    <div class="question-block">
+                        <label>Para construir sua confiança, lembre-se dos recursos que você já possui.</label>
+                        <div class="recap-box">
+                            <h4>Você já tem o que é preciso para começar (Recursos):</h4>
+                            <p id="recap-acessivel-step4">Carregando...</p>
+                        </div>
+                    </div>
+
+                    <!-- 3. Seção de Responsabilidade (O "Quem") -->
+                    <div class="question-block">
+                        <label for="q-responsabilidade-quem">De quem é a responsabilidade de conseguir isso?</label>
+                        <textarea id="q-responsabilidade-quem" placeholder="Ex: Minha, minha e do meu chefe, etc."></textarea>
+                        
+                        <label for="slider-responsabilidade" style="margin-top: 1rem;">De 0 a 100%, quanto o sucesso dessa jornada depende exclusivamente de você?</label>
+                        <input type="range" id="slider-responsabilidade" min="0" max="100" value="80" class="slider">
+                        <span id="responsabilidade-value" class="slider-value">80%</span>
+
+                        <!-- Esta pergunta só aparecerá se o slider for < 100% -->
+                        <div id="responsabilidade-extra-container" class="hidden" style="margin-top: 1rem;">
+                            <label for="q-responsabilidade-extra">O que você poderia fazer para que esse número aumente, para que dependa um pouquinho mais só de você?</label>
+                            <textarea id="q-responsabilidade-extra" placeholder="Ex: Em vez de esperar uma oportunidade, posso criar uma. Em vez de depender de alguém, posso aprender a fazer."></textarea>
+                        </div>
+                    </div>
+
+                    <!-- 4. Seção de Comprometimento (O "Quanto") -->
+                    <div class="question-block">
+                        <label for="slider-comprometimento">Com essa clareza e motivação, de 0 a 10, qual o seu nível de comprometimento em fazer o que for preciso para dar o próximo passo?</label>
+                        <input type="range" id="slider-comprometimento" min="0" max="10" value="8" class="slider">
+                        <span id="comprometimento-value" class="slider-value">8</span>
+                    </div>
+
+                    <!-- 5. Seção de Ação (O "O Quê") -->
+                    <div class="question-block">
+                        <label for="q-tarefa">Excelente! Agora, qual é o <strong>primeiro e menor passo</strong> (algo que você possa fazer em até 15 minutos) que você dará na próxima semana para iniciar sua jornada?</label>
+                        <textarea id="q-tarefa" placeholder="Ex: Enviar um e-mail para marcar aquela conversa; pesquisar por 15 minutos sobre o tema X; arrumar a gaveta do escritório..."></textarea>
+                    </div>
+
+                </div>
+                <div class="step-navigation">
+                    <button class="btn-prev">Voltar</button>
+                    <button id="btn-finalizar">Finalizar e Ver Resumo</button>
+                </div>
+            </section>
+
+            <!-- ===================================================================== -->
+            <!-- ETAPA 5: RESUMO FINAL                                             -->
+            <!-- ===================================================================== -->
+            <section id="step-5" class="step">
+                <div class="step-header">
+                    
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.5rem;">
+                        <h2>Seu Plano de Ação</h2>
+                        <button id="btn-print" class="btn-icon" title="Imprimir ou Salvar como PDF">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 6 2 18 2 18 9"></polyline><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"></path><rect x="6" y="14" width="12" height="8"></rect></svg>
+                        </button>
+                    </div>
+
+                    <!-- O parágrafo foi movido para fora do flexbox -->
+                    <p>Parabéns por concluir a jornada! Guarde este plano e consulte-o sempre que precisar de motivação.</p>
+
+                </div>
+                <div id="summary-content" class="step-content">
+                    <!-- O resumo será gerado aqui pelo JavaScript -->
+                </div>
+                <div class="step-navigation">
+                    <button class="btn-prev">Voltar</button>
+                </div>
+            </section>
+
+        </div>
+    </div>
+
+    <!-- TEMPLATE DO HELP-TIP (usado pelo JavaScript) -->
+    <div id="help-tip-template" style="display: none;">
+        <span class="help-tip" data-tooltip="">?</span>
+    </div>
+
+    <div id="footer-placeholder"></div>
+    <!-- Copyright (será carregado pelo main.js) -->
+    <div id="copyright-placeholder"></div>
+
+    <!-- Scripts -->
+    <script src="../assets/main.js" defer></script>
+    <script src="script.js" defer></script>
+
+</body>
+</html>
