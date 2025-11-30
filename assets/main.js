@@ -37,9 +37,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Lista de todos os componentes a serem carregados na página
     const componentsToLoad = [
-        loadComponent('componentes/header.html', 'header-placeholder'),
-        loadComponent('componentes/footer.html', 'footer-placeholder'),
-        loadComponent('componentes/copyright.html', 'copyright-placeholder')
+        loadComponent('../componentes/header.html', 'header-placeholder'),
+        loadComponent('../componentes/footer.html', 'footer-placeholder'),
+        loadComponent('../componentes/copyright.html', 'copyright-placeholder')
     ];
 
     // Carrega todos os componentes em paralelo e depois inicializa a aplicação
