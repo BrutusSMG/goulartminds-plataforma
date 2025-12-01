@@ -39,23 +39,24 @@
 
 .add-value-form {
     display: flex;
-    gap: 8px;
-    align-items: center;
+    gap: 10px; /* --- AJUSTE --- Aumenta o espaçamento. */
+    align-items: stretch; /* --- AJUSTE --- Faz o botão e o input terem a mesma altura. */
     margin-top: 30px;
-    max-width: 50%; /* Largura reduzida */
-    margin-left: auto; /* Alinha à direita */
+    /* --- AJUSTE --- Ocupa 100% da largura no mobile por padrão. */
+    width: 100%; 
+    max-width: 100%;
 }
 
 .add-value-form input[type="text"] {
     flex-grow: 1;
     margin-top: 0;
-    padding: 8px 12px; /* Tamanho reduzido */
-    font-size: 12px;
+    padding: 10px 12px; /* --- AJUSTE --- Aumenta o padding para melhor toque. */
+    font-size: 1rem; /* --- AJUSTE --- Tamanho de fonte padrão para legibilidade. */
 }
 
 .add-value-form button {
-    padding: 8px 15px; /* Tamanho reduzido */
-    font-size: 14px;
+    padding: 10px 15px;
+    font-size: 1rem;
     font-weight: 600;
     color: #fff;
     background-color: var(--secondary-color);
@@ -76,6 +77,8 @@
 
 .prioritization-container {
     display: flex;
+    /* --- AJUSTE --- Quebra as colunas em telas pequenas. */
+    flex-direction: column; 
     gap: 30px;
     margin-top: 20px;
 }
@@ -86,7 +89,7 @@
     padding: 15px;
     border-radius: 8px;
     border: 1px solid var(--border-color);
-    min-height: 300px;
+    min-height: 200px; /* --- AJUSTE --- Reduz a altura mínima para mobile. */
 }
 
 .column h3 {
@@ -96,7 +99,6 @@
     border-bottom: 1px solid var(--border-color);
 }
 
-/* Estilos para os cartões de valor DENTRO das colunas da Etapa 2 */
 #selected-values-pool .value-card,
 #top-5-list .value-card {
     display: block;
@@ -110,7 +112,6 @@
     cursor: grabbing;
 }
 
-/* Estilos para as caixas de destino (drop zones) */
 .drop-zone {
     position: relative;
     background-color: #efefef;
@@ -122,7 +123,6 @@
     min-height: 50px;
 }
 
-/* Placeholder de texto para as drop zones vazias */
 .drop-zone::before {
     content: attr(data-placeholder);
     position: absolute;
@@ -132,9 +132,9 @@
     color: #aaa;
     font-style: italic;
     font-size: 14px;
+    width: 90%; /* --- AJUSTE --- Garante que o texto do placeholder não transborde. */
 }
 
-/* Esconde o placeholder quando a drop zone tem um valor */
 .drop-zone:has(.value-card) {
     border-style: solid;
     border-color: var(--border-color);
@@ -145,76 +145,53 @@
 }
 
 /* ================================================================== */
-/* === ETAPA 3: DEFINIÇÃO PESSOAL DOS VALORES                     === */
+/* === ETAPA 3 & 4: DEFINIÇÃO E LUZ/SOMBRA                        === */
 /* ================================================================== */
 
-.definition-group {
+.definition-group, .duality-group {
+    margin-bottom: 25px;
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    padding: 20px;
+}
+
+.definition-group label, .duality-group h4, .duality-group label {
+    display: block;
+    font-weight: 700;
+    color: var(--primary-color);
+    margin-bottom: 8px;
+    line-height: 1.4; /* Melhora a legibilidade. */
+}
+
+.duality-group h4 {
+    font-size: clamp(1.25rem, 5vw, 1.5rem);
+    padding-bottom: 15px;
+    border-bottom: 1px solid var(--border-color);
+    margin-top: 0;
     margin-bottom: 20px;
 }
 
-.definition-group label {
-    display: block;
-    font-weight: 700;
-    font-size: 1.1em;
-    color: var(--primary-color);
-    margin-bottom: 8px;
+.duality-group label {
+    font-size: 1rem;
+    font-weight: 600;
 }
 
-/* ================================================================== */
-/* === ETAPA 4: Luz e Sombra (Motivador/Sabotador)                === */
-/* ================================================================== */
-/* --- Estilos da Etapa 4: Luz e Sombra (Layout Vertical) --- */
+.duality-group .form-group:first-of-type {
+    margin-bottom: 25px;
+}
 
-/* Caixa de exemplo amarela */
 .example-box {
-    background-color: #fffbe6; /* Amarelo bem claro */
-    border: 1px solid #ffe58f; /* Borda amarela */
+    background-color: #fffbe6;
+    border: 1px solid #ffe58f;
     border-radius: 8px;
     padding: 15px 20px;
     margin: 25px 0;
     font-size: 15px;
 }
-.example-box p {
-    margin-top: 0;
-}
-.example-box ul {
-    padding-left: 20px;
-    margin-bottom: 0;
-}
-.example-box li {
-    margin-bottom: 10px;
-}
+.example-box p { margin-top: 0; }
+.example-box ul { padding-left: 20px; margin-bottom: 0; }
+.example-box li { margin-bottom: 10px; }
 
-/* Container para cada valor (Ex: "1. Altruísmo") */
-.duality-group {
-    border: 1px solid var(--border-color);
-    border-radius: 8px;
-    padding: 20px;
-    margin-bottom: 30px;
-}
-
-/* Título do valor (Ex: "1. Altruísmo") */
-.duality-group h4 {
-    margin-top: 0;
-    font-size: 1.4em;
-    color: var(--primary-color);
-    padding-bottom: 15px;
-    border-bottom: 1px solid var(--border-color);
-    margin-bottom: 20px;
-}
-
-/* Pergunta/Label para cada campo de texto */
-.duality-group label {
-    display: block;
-    font-weight: 600;
-    margin-bottom: 8px;
-    font-size: 0.9em;
-}
-
-/* Espaçamento entre o campo Motivador e o Sabotador */
-.duality-group .form-group:first-of-type {
-    margin-bottom: 25px;
-}
 /* ================================================================== */
 /* === ETAPA 5: CONFRONTO DE PARES                                === */
 /* ================================================================== */
@@ -228,16 +205,17 @@
 
 .confrontation-box {
     display: flex;
-    justify-content: center;
-    align-items: stretch; /* Faz os botões terem a mesma altura */
-    gap: 20px;
+    /* --- AJUSTE --- Quebra os botões em coluna no mobile. */
+    flex-direction: column; 
+    align-items: stretch;
+    gap: 15px;
     margin: 30px 0;
 }
 
 .confrontation-box button {
     flex: 1;
-    padding: 20px;
-    font-size: 1.2em;
+    padding: 15px; /* --- AJUSTE --- Padding um pouco menor para mobile. */
+    font-size: clamp(1rem, 4vw, 1.2rem); /* --- AJUSTE --- Fonte responsiva. */
     font-weight: 700;
     color: var(--primary-color);
     background-color: #fff;
@@ -258,7 +236,10 @@
     font-size: 1.2em;
     font-weight: 700;
     color: #aaa;
-    align-self: center; /* Centraliza o "vs" verticalmente */
+    align-self: center;
+    /* --- AJUSTE --- Rotaciona o "vs" para economizar espaço vertical. */
+    transform: rotate(90deg);
+    margin: 10px 0;
 }
 
 .confrontation-box button .scenario {
@@ -269,4 +250,33 @@
     margin-top: 8px;
     line-height: 1.4;
     white-space: normal;
+}
+
+/* ================================================================== */
+/* === MEDIA QUERIES PARA AJUSTES EM DESKTOP                      === */
+/* ================================================================== */
+
+/* As regras abaixo só se aplicam em telas maiores que 768px. */
+@media (min-width: 768px) {
+    
+    /* Devolve o layout de 2 colunas para o drag-and-drop. */
+    .prioritization-container {
+        flex-direction: row;
+    }
+
+    /* Devolve o layout de 2 colunas para o confronto de pares. */
+    .confrontation-box {
+        flex-direction: row;
+    }
+
+    /* Restaura a rotação do "vs". */
+    .confrontation-box span {
+        transform: rotate(0deg);
+    }
+
+    /* Devolve o layout do formulário de adicionar valor. */
+    .add-value-form {
+        max-width: 50%;
+        margin-left: auto;
+    }
 }

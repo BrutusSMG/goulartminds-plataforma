@@ -1,38 +1,46 @@
 /* Estilos específicos para a página home */
 
-/* Introdução da página */
+/* 1. Introdução da página */
 .home-intro {
     text-align: center;
     margin-bottom: 40px;
 }
 
+/* --- AJUSTE --- */
+/* Usamos clamp() para o título da home se adaptar a diferentes telas. */
 .home-intro h2 {
-    font-size: 28px;
+    font-size: clamp(1.75rem, 5vw, 2.25rem); /* Mínimo, Ideal, Máximo */
     color: var(--primary-color);
 }
 
+/* --- AJUSTE --- */
+/* Usamos clamp() para o parágrafo de introdução. */
 .home-intro p {
-    font-size: 18px;
+    font-size: clamp(1rem, 3vw, 1.125rem);
     color: var(--secondary-color);
     max-width: 600px;
     margin: 10px auto 0;
 }
 
-/* Grid que segura os cards das ferramentas */
+/* 2. Grid que segura os cards das ferramentas */
 .tools-grid {
     display: grid;
-    grid-template-columns: 1fr 1fr; /* Duas colunas */
+    /* --- AJUSTE --- */
+    /* Usamos repeat(auto-fit, ...) para um grid super flexível. */
+    /* Ele tentará criar colunas de no mínimo 280px. Se não couber, ele quebra a linha automaticamente. */
+    /* Isso substitui a necessidade da media query para o grid. */
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
     gap: 30px; /* Espaçamento entre os cards */
 }
 
-/* Estilo individual de cada card */
+/* 3. Estilo individual de cada card */
 .tool-card {
     display: flex;
     flex-direction: column;
     background-color: #fff;
     border: 1px solid var(--border-color);
     border-radius: 12px;
-    padding: 30px;
+    padding: 25px; /* Um pouco menos de padding para telas menores. */
     text-align: center;
     text-decoration: none; /* Remove o sublinhado do link */
     color: var(--text-color);
@@ -44,19 +52,23 @@
     box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
 }
 
+/* --- AJUSTE --- */
+/* Usamos clamp() para o ícone. */
 .card-icon {
-    font-size: 48px;
+    font-size: clamp(2.5rem, 8vw, 3rem);
     margin-bottom: 15px;
 }
 
+/* --- AJUSTE --- */
+/* Usamos clamp() para o título do card. */
 .tool-card h3 {
-    font-size: 22px;
+    font-size: clamp(1.25rem, 4vw, 1.5rem);
     color: var(--primary-color);
     margin: 0 0 10px;
 }
 
 .tool-card p {
-    font-size: 16px;
+    font-size: 1rem; /* Mantemos 1rem (16px) para o corpo do texto, para legibilidade. */
     color: var(--secondary-color);
     flex-grow: 1; /* Faz o parágrafo ocupar o espaço e empurrar o botão para baixo */
     margin-bottom: 20px;
@@ -65,12 +77,5 @@
 .card-cta {
     font-weight: 700;
     color: var(--accent-color);
-    font-size: 16px;
-}
-
-/* Deixa os cards em uma única coluna em telas pequenas (celulares) */
-@media (max-width: 768px) {
-    .tools-grid {
-        grid-template-columns: 1fr; /* Uma coluna */
-    }
+    font-size: 1rem;
 }
