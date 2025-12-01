@@ -79,3 +79,37 @@
     color: var(--accent-color);
     font-size: 1rem;
 }
+
+/* 4. Estilos para cards de ferramentas futuras (Em Breve) */
+
+/* Deixa o card com uma aparência "desabilitada" */
+.tool-card.disabled {
+    pointer-events: none; /* Impede o clique no link */
+    user-select: none;    /* Impede a seleção do texto */
+    position: relative;   /* Necessário para posicionar o selo "Em breve" */
+    overflow: hidden;     /* Garante que o selo não saia para fora do card */
+}
+
+/* Deixa o conteúdo do card esmaecido */
+.tool-card.disabled .card-icon,
+.tool-card.disabled h3,
+.tool-card.disabled p,
+.tool-card.disabled .card-cta {
+    opacity: 0.5;
+}
+
+/* Estilo do selo "Em breve" */
+.card-badge {
+    position: absolute;
+    top: 25px;
+    right: -45px;
+    transform: rotate(45deg); /* Coloca o texto na diagonal */
+    background-color: var(--accent-color); /* Usa a cor de destaque do seu site */
+    color: white;
+    padding: 5px 40px;
+    font-size: 0.875rem; /* 14px */
+    font-weight: 700;
+    text-align: center;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    opacity: 0.8; /* Um pouco de transparência para integrar melhor */
+}

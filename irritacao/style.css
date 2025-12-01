@@ -1,96 +1,98 @@
-/* irritacao/style.css (Versão Final, Responsiva e Comentada) */
+/* irritacao/style.css (Versão Final, com Novo Layout de Card) */
 
 /* ================================================================== */
-/* === 1. ESTILOS DA ETAPA 1: CARTÕES DE PERGUNTA                 === */
+/* === 1. ESTILOS DA ETAPA 1: CARTÕES DE PERGUNTA (NOVO LAYOUT)   === */
 /* ================================================================== */
 
 .question-card {
     background-color: #fff;
     border: 1px solid var(--border-color);
-    border-radius: 8px;
+    border-radius: 12px; /* Aumenta o arredondamento para um visual mais suave */
     padding: 20px;
-    margin-bottom: 15px;
+    margin-bottom: 20px; /* Aumenta o espaçamento entre os cards */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05); /* Sombra sutil */
+    transition: box-shadow 0.2s ease-in-out, transform 0.2s ease-in-out; /* Transição suave */
 }
 
-.question-card p {
-    margin: 0 0 15px 0;
-    line-height: 1.5; /* Melhora a legibilidade do texto da pergunta. */
+.question-card:hover {
+    transform: translateY(-3px); /* Levanta o card um pouco */
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.08); /* Aumenta a sombra para dar mais profundidade */
 }
 
-.slider-group {
+.question-card .question-text { /* Estiliza o parágrafo da pergunta */
+    margin: 0 0 20px 0; /* Aumenta a margem inferior */
+    line-height: 1.5;
+    font-size: 1.1rem; /* Aumenta um pouco a fonte da pergunta */
+    color: #333;
+}
+
+.slider-container {
     display: flex;
-    flex-wrap: wrap; /* --- AJUSTE --- Permite que os itens quebrem a linha em telas muito pequenas. */
-    align-items: center;
-    gap: 10px; /* --- AJUSTE --- Adiciona um espaçamento entre os itens. */
-    margin-top: 8px;
+    flex-direction: column; /* Empilha o slider e o feedback */
+    gap: 10px; /* Espaço entre o slider e o texto de feedback */
 }
 
-.slider-group label {
-    font-size: 14px;
-    font-weight: 600;
-    /* --- AJUSTE --- Remove a largura mínima para permitir que o layout flua. */
-    /* min-width: 130px; */
-    text-align: left;
-    flex-basis: 130px; /* --- AJUSTE --- Define uma base, mas permite encolher. */
-    flex-grow: 1;
+/* Estilização do slider para combinar com a identidade visual */
+.slider-container input[type="range"] {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 100%;
+    height: 8px;
+    background: #e0e0e0; /* Cor da trilha do slider */
+    border-radius: 5px;
+    outline: none;
+    cursor: pointer;
 }
 
-.slider-group input[type="range"] {
-    flex-grow: 10; /* --- AJUSTE --- Dá mais prioridade de espaço para o slider. */
-    min-width: 150px; /* --- AJUSTE --- Garante que o slider não fique muito pequeno. */
-    margin: 0; /* Remove margens desnecessárias. */
+/* Estilo da "bolinha" do slider (thumb) */
+.slider-container input[type="range"]::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 20px;
+    height: 20px;
+    background: var(--primary-color); /* Cor principal da plataforma */
+    border-radius: 50%;
+    border: 2px solid #fff;
+    box-shadow: 0 0 4px rgba(0,0,0,0.2);
 }
 
-.slider-group span.slider-value {
-    font-size: 16px;
+.slider-container input[type="range"]::-moz-range-thumb {
+    width: 20px;
+    height: 20px;
+    background: var(--primary-color);
+    border-radius: 50%;
+    border: 2px solid #fff;
+    box-shadow: 0 0 4px rgba(0,0,0,0.2);
+}
+
+/* Estilo para o texto de feedback abaixo do slider */
+.slider-feedback {
+    font-size: 1rem;
+    color: var(--secondary-color);
+    text-align: left; /* Centraliza o texto de feedback */
+    font-weight: 500;
+    padding-top: 5px;
+}
+
+.slider-feedback .slider-value {
     font-weight: 700;
     color: var(--primary-color);
-    min-width: 25px;
-    text-align: center;
 }
 
-.legend-container {
-    text-align: right;
-    padding: 8px 10px 0 0;
-    min-height: 20px;
-}
-
-.slider-legend {
-    font-size: 14px;
-    color: #555;
+.slider-feedback .slider-legend {
     font-style: italic;
-    font-weight: 600;
 }
+
 
 
 /* ================================================================== */
-/* === 2. ESTILOS DA ETAPA 2: MENSAGEM E REFLEXÃO                 === */
+/* === 2. ESTILOS DAS ETAPAS 2 E 3 (Sem grandes alterações)       === */
 /* ================================================================== */
 
-.congrats-message {
-    text-align: center;
-    padding: 10px 0;
-}
-
-/* --- AJUSTE --- Usa clamp() para o título se adaptar. */
-.congrats-message h2 {
-    font-size: clamp(1.5rem, 5vw, 1.8rem);
-}
-
-.reflection-questions .form-group {
-    margin-bottom: 25px;
-}
-
-.reflection-questions label {
-    display: block;
-    font-weight: 600;
-    line-height: 1.4; /* Melhora a legibilidade de perguntas longas. */
-}
-
-
-/* ================================================================== */
-/* === 3. ESTILOS DA ETAPA 3: DIAGNÓSTICO E FORMULÁRIO            === */
-/* ================================================================== */
+.congrats-message { text-align: center; padding: 10px 0; }
+.congrats-message h2 { font-size: clamp(1.5rem, 5vw, 1.8rem); }
+.reflection-questions .form-group { margin-bottom: 25px; }
+.reflection-questions label { display: block; font-weight: 600; line-height: 1.4; }
 
 #diagnosis-report {
     background-color: #f0f5ff;
@@ -99,49 +101,62 @@
     margin-bottom: 30px;
     border-radius: 4px;
 }
+#diagnosis-report p { font-size: clamp(1rem, 4vw, 1.125rem); margin: 8px 0; color: var(--primary-color); }
 
-/* --- AJUSTE --- Usa clamp() para o texto do diagnóstico. */
-#diagnosis-report p {
-    font-size: clamp(1rem, 4vw, 1.125rem);
-    margin: 8px 0;
-    color: var(--primary-color);
-}
+.gift-option { margin: 20px 0; display: flex; align-items: center; }
+.gift-option input[type="checkbox"] { margin-right: 10px; transform: scale(1.3); }
+.gift-option label { cursor: pointer; }
 
-.gift-option {
-    margin: 20px 0;
+/* ================================================================== */
+/* === 3. AJUSTES FINAIS DE CONSISTÊNCIA E RESPONSIVIDADE         === */
+/* ================================================================== */
+
+/* Garante que o grupo de slider na Etapa 2 ocupe a largura total. */
+.reflection-questions .slider-group {
     display: flex;
-    align-items: center;
+    flex-direction: column;
+    gap: 10px;
+    margin-top: 15px; /* Adiciona um espaço acima do slider. */
 }
 
-.gift-option input[type="checkbox"] {
-    margin-right: 10px;
-    transform: scale(1.3);
-}
-
-.gift-option label {
+/* Aplica o mesmo estilo de slider da Etapa 1 ao slider da Etapa 2. */
+.reflection-questions .slider-group input[type="range"] {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 100%;
+    height: 8px;
+    background: #e0e0e0;
+    border-radius: 5px;
+    outline: none;
     cursor: pointer;
 }
 
+/* Estiliza a "bolinha" do slider da Etapa 2. */
+.reflection-questions .slider-group input[type="range"]::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 20px;
+    height: 20px;
+    background: var(--primary-color);
+    border-radius: 50%;
+    border: 2px solid #fff;
+    box-shadow: 0 0 4px rgba(0,0,0,0.2);
+}
 
-/* ================================================================== */
-/* === 4. MEDIA QUERY PARA AJUSTES FINOS EM MOBILE                === */
-/* ================================================================== */
+.reflection-questions .slider-group input[type="range"]::-moz-range-thumb {
+    width: 20px;
+    height: 20px;
+    background: var(--primary-color);
+    border-radius: 50%;
+    border: 2px solid #fff;
+    box-shadow: 0 0 4px rgba(0,0,0,0.2);
+}
 
-@media (max-width: 480px) {
-    /* Em telas muito pequenas, o layout do slider pode ficar apertado. */
-    /* Esta media query ajusta o grupo do slider para um layout de coluna. */
-    .slider-group {
-        flex-direction: column; /* Empilha os elementos verticalmente. */
-        align-items: flex-start; /* Alinha todos à esquerda. */
-        gap: 15px; /* Aumenta o espaçamento vertical. */
-    }
-
-    .slider-group input[type="range"] {
-        width: 100%; /* Faz o slider ocupar toda a largura. */
-    }
-
-    .legend-container {
-        text-align: left; /* Alinha a legenda à esquerda no mobile. */
-        padding-left: 0;
-    }
+/* Estiliza o valor numérico (o "10" na imagem) para ficar maior e centralizado. */
+.reflection-questions .slider-group .slider-value {
+    font-size: 1.5rem; /* Tamanho maior para destaque. */
+    font-weight: 700;
+    color: var(--primary-color);
+    text-align: center; /* Centraliza o número. */
+    margin-top: 5px;
 }

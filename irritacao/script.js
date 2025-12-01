@@ -26,7 +26,17 @@ document.addEventListener('componentsLoaded', () => {
         questions.forEach((q, index) => {
             const card = document.createElement('div');
             card.className = 'question-card';
-            card.innerHTML = `<p><b>${index + 1}.</b> ${q.text}</p><div class="slider-group" data-question-id="${q.id}"><label>Nível de Incomodo</label><input type="range" min="0" max="4" value="0" class="irritation-slider"><span class="slider-value">0</span></div><div class="legend-container"><span class="slider-legend">${sliderLegends[0]}</span></div>`;
+
+            card.innerHTML = `
+                <p class="question-text"><b>${index + 1}.</b> ${q.text}</p>
+                
+                <div class="slider-container" data-question-id="${q.id}">
+                    <input type="range" min="0" max="4" value="0" class="irritation-slider">
+                    <div class="slider-feedback">
+                        Nível de Incômodo: <span class="slider-value">0</span> </br><span class="slider-legend">${sliderLegends[0]}</span>
+                    </div>
+                </div>
+            `;
             questionsContainer.appendChild(card);
         });
     }
@@ -39,7 +49,7 @@ document.addEventListener('componentsLoaded', () => {
         if (target.id === 'goto-step2-btn') {
             userResponses.respostas = {};
             questions.forEach(q => {
-                const slider = document.querySelector(`.slider-group[data-question-id="${q.id}"] .irritation-slider`);
+                const slider = document.querySelector(`.slider-container[data-question-id="${q.id}"] .irritation-slider`);
                 userResponses.respostas[q.id] = parseInt(slider.value, 10);
             });
             document.getElementById('step1').classList.remove('active');
@@ -138,8 +148,26 @@ document.addEventListener('componentsLoaded', () => {
     document.body.addEventListener('input', (e) => {
         if (e.target.classList.contains('irritation-slider')) {
             const slider = e.target;
-            slider.nextElementSibling.textContent = slider.value;
-            slider.closest('.question-card').querySelector('.slider-legend').textContent = sliderLegends[slider.value];
+            const value = slider.value;
+            
+            // =======================================================
+            // === A CORREÇÃO ESTÁ AQUI ===============================
+            // =======================================================
+            // Encontra o contêiner de feedback que está DENTRO do mesmo slider-container
+            const feedbackContainer = slider.closest('.slider-container').querySelector('.slider-feedback');
+            
+            if (feedbackContainer) {
+                // Encontra os spans específicos dentro do contêiner de feedback
+                const valueSpan = feedbackContainer.querySelector('.slider-value');
+                const legendSpan = feedbackContainer.querySelector('.slider-legend');
+
+                // Atualiza o conteúdo de cada um
+                if (valueSpan) valueSpan.textContent = value;
+                if (legendSpan) legendSpan.innerHTML = sliderLegends[value]; // Usamos innerHTML para renderizar o emoji
+            }
+            // =======================================================
+            // === FIM DA CORREÇÃO ===================================
+            // =======================================================
         }
         if (e.target.classList.contains('reflection-slider')) {
             e.target.nextElementSibling.textContent = e.target.value;
