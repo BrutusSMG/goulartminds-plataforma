@@ -7,8 +7,9 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
-},
+    "lint": "next lint",
+    "prisma:deploy": "npx prisma migrate deploy"
+  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/BrutusSMG/goulartminds-plataforma.git"
@@ -21,8 +22,16 @@
   },
   "homepage": "https://github.com/BrutusSMG/goulartminds-plataforma#readme",
   "dependencies": {
+    "@prisma/adapter-pg": "^7.1.0",
+    "@prisma/client": "^7.1.0",
+    "dotenv": "^17.2.3",
     "next": "^16.0.6",
+    "pg": "^8.16.3",
     "react": "^19.2.0",
     "react-dom": "^19.2.0"
+  },
+  "devDependencies": {
+    "@types/node": "^24.10.1",
+    "prisma": "^7.1.0"
   }
 }

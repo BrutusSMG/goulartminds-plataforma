@@ -83,6 +83,15 @@ if (typeof inicializarRodaDaVida !== 'function') {
             if (!containerSubArea) return;
             containerSubArea.innerHTML = ''; // Limpa antes de renderizar
 
+            // 1. Mede o tamanho atual do contêiner da roda.
+            const rodaWrapper = document.getElementById('roda-container-wrapper');
+            const diametroAtualDaRoda = rodaWrapper.offsetWidth; // offsetWidth nos dá a largura em pixels.
+
+            // 2. Calcula a distância do centro de forma dinâmica.
+            // O valor 0.48 é um "fator mágico" que posiciona o texto perto da borda.
+            // Ele representa 48% do raio da roda. Você pode ajustar (ex: 0.47 ou 0.49) para um ajuste fino.
+            const distanciaDoCentro = diametroAtualDaRoda * 0.48;
+
             estruturaRoda.forEach((item, index) => {
                 const angulo = (index * 30) + 15;
                 const distanciaDoCentro = 299;

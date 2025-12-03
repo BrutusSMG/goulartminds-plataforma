@@ -2,5 +2,8 @@
   "/": "pages/index.js",
   "/_app": "pages/_app.js",
   "/_document": "pages/_document.js",
+  "/_error": "pages/_error.js",
+  "/irritacao": "pages/irritacao.js",
+  "/resultado-esperado": "pages/resultado-esperado.js",
   "/roda-da-vida": "pages/roda-da-vida.js"
 }
