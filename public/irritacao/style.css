@@ -1,0 +1,290 @@
+/* irritacao/style.css (Versão Final, com Novo Layout de Card) */
+
+/* ================================================================== */
+/* === 1. ESTILOS DA ETAPA 1: CARTÕES DE PERGUNTA (NOVO LAYOUT)   === */
+/* ================================================================== */
+
+.question-card {
+    background-color: #fff;
+    border: 1px solid var(--border-color);
+    border-radius: 12px; /* Aumenta o arredondamento para um visual mais suave */
+    padding: 20px;
+    margin-bottom: 20px; /* Aumenta o espaçamento entre os cards */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05); /* Sombra sutil */
+    transition: box-shadow 0.2s ease-in-out, transform 0.2s ease-in-out; /* Transição suave */
+}
+
+.question-card:hover {
+    transform: translateY(-3px); /* Levanta o card um pouco */
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.08); /* Aumenta a sombra para dar mais profundidade */
+}
+
+.question-card .question-text { /* Estiliza o parágrafo da pergunta */
+    margin: 0 0 20px 0; /* Aumenta a margem inferior */
+    line-height: 1.5;
+    font-size: 1.1rem; /* Aumenta um pouco a fonte da pergunta */
+    color: #333;
+}
+
+.slider-container {
+    display: flex;
+    flex-direction: column; /* Empilha o slider e o feedback */
+    gap: 10px; /* Espaço entre o slider e o texto de feedback */
+    width: 100%;
+}
+
+/* Estilização do slider para combinar com a identidade visual */
+.slider-container input[type="range"] {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 100% !important;
+    height: 8px;
+    background: #e0e0e0; /* Cor da trilha do slider */
+    border-radius: 5px;
+    outline: none;
+    cursor: pointer;
+}
+
+/* Estilo da "bolinha" do slider (thumb) */
+.slider-container input[type="range"]::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 20px;
+    height: 20px;
+    background: var(--primary-color); /* Cor principal da plataforma */
+    border-radius: 50%;
+    border: 2px solid #fff;
+    box-shadow: 0 0 4px rgba(0,0,0,0.2);
+}
+
+.slider-container input[type="range"]::-moz-range-thumb {
+    width: 20px;
+    height: 20px;
+    background: var(--primary-color);
+    border-radius: 50%;
+    border: 2px solid #fff;
+    box-shadow: 0 0 4px rgba(0,0,0,0.2);
+}
+
+/* Estilo para o texto de feedback abaixo do slider */
+.slider-feedback {
+    font-size: 1rem;
+    color: var(--secondary-color);
+    text-align: left; /* Centraliza o texto de feedback */
+    font-weight: 500;
+    padding-top: 5px;
+}
+
+.slider-feedback .slider-value {
+    font-weight: 700;
+    color: var(--primary-color);
+}
+
+.slider-feedback .slider-legend {
+    font-style: italic;
+}
+
+/* ================================================================== */
+/* === 2. ESTILOS DA ETAPA 2: MENSAGEM E REFLEXÃO (VERSÃO MELHORADA) === */
+/* ================================================================== */
+
+.congrats-message {
+    /* --- AJUSTE 1: Destacando a caixa --- */
+    text-align: left; /* Alinha o texto dos parágrafos à esquerda */
+    padding: 25px 30px; /* Aumenta o padding interno */
+    border-radius: 12px; /* Aumenta o arredondamento */
+    border: 1px solid #bde0fe; /* Borda em tom de azul claro */
+    /* Fundo com gradiente suave */
+    background: linear-gradient(145deg, #f0f8ff, #e6f2ff); 
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05); /* Adiciona uma sombra sutil */
+    margin-bottom: 30px; /* Adiciona um espaço antes da linha <hr> */
+}
+
+.congrats-message h2 {
+    /* --- AJUSTE 2: Preparando o título para a animação --- */
+    font-size: clamp(1.6rem, 5vw, 2rem); /* Aumenta um pouco o tamanho */
+    color: var(--primary-color);
+    text-align: center; /* Mantém o título centralizado para destaque */
+    margin-bottom: 15px;
+    
+    /* Aplica a animação que criaremos abaixo */
+    animation: pulse-glow 2.5s infinite ease-in-out;
+}
+
+.congrats-message h3 {
+    font-size: clamp(1.1rem, 4vw, 1.3rem); /* Tamanho para o subtítulo */
+    color: var(--secondary-color); /* Cor secundária para diferenciar */
+    text-align: center; /* Centraliza o h3, como solicitado */
+    font-weight: 600;
+    margin-top: 0; /* Remove a margem de cima */
+    margin-bottom: 20px; /* Espaço antes dos parágrafos */
+}
+
+/* --- AJUSTE 3: Criando a animação --- */
+@keyframes pulse-glow {
+    0% {
+        transform: scale(1);
+        text-shadow: 0 0 5px rgba(10, 37, 64, 0.2); /* Sombra de texto sutil */
+    }
+    50% {
+        transform: scale(1.03); /* Aumenta ligeiramente o tamanho */
+        text-shadow: 0 0 15px rgba(78, 205, 196, 0.7); /* Brilho com a cor de destaque */
+    }
+    100% {
+        transform: scale(1);
+        text-shadow: 0 0 5px rgba(10, 37, 64, 0.2);
+    }
+}
+
+/* O resto dos estilos da Etapa 2 permanecem os mesmos */
+.reflection-questions .form-group {
+    margin-bottom: 25px;
+}
+
+.reflection-questions label {
+    display: block;
+    font-weight: 600;
+    line-height: 1.4;
+}
+
+#diagnosis-report {
+    background-color: #f0f5ff;
+    border-left: 4px solid var(--accent-color);
+    padding: 20px;
+    margin-bottom: 30px;
+    border-radius: 4px;
+}
+#diagnosis-report p { font-size: clamp(1rem, 4vw, 1.125rem); margin: 8px 0; color: var(--primary-color); }
+
+.gift-option { margin: 20px 0; display: flex; align-items: center; }
+.gift-option input[type="checkbox"] { margin-right: 10px; transform: scale(1.3); }
+.gift-option label { cursor: pointer; }
+
+/* ================================================================== */
+/* === 3. AJUSTES FINAIS DE CONSISTÊNCIA E RESPONSIVIDADE         === */
+/* ================================================================== */
+
+/* Garante que o grupo de slider na Etapa 2 ocupe a largura total. */
+.reflection-questions .slider-group {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-top: 15px; /* Adiciona um espaço acima do slider. */
+}
+
+/* Aplica o mesmo estilo de slider da Etapa 1 ao slider da Etapa 2. */
+.reflection-questions .slider-group input[type="range"] {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 100%;
+    height: 8px;
+    background: #e0e0e0;
+    border-radius: 5px;
+    outline: none;
+    cursor: pointer;
+}
+
+/* Estiliza a "bolinha" do slider da Etapa 2. */
+.reflection-questions .slider-group input[type="range"]::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 20px;
+    height: 20px;
+    background: var(--primary-color);
+    border-radius: 50%;
+    border: 2px solid #fff;
+    box-shadow: 0 0 4px rgba(0,0,0,0.2);
+}
+
+.reflection-questions .slider-group input[type="range"]::-moz-range-thumb {
+    width: 20px;
+    height: 20px;
+    background: var(--primary-color);
+    border-radius: 50%;
+    border: 2px solid #fff;
+    box-shadow: 0 0 4px rgba(0,0,0,0.2);
+}
+
+/* Estiliza o valor numérico (o "10" na imagem) para ficar maior e centralizado. */
+.reflection-questions .slider-group .slider-value {
+    font-size: 1rem;
+    font-weight: 700;
+    color: var(--primary-color);
+    text-align: center; /* Centraliza o número. */
+    margin-top: 5px;
+}
+
+/* ================================================================== */
+/* === 4. ESTILOS PARA O CARROSSEL DE PERGUNTAS (A CORREÇÃO)      === */
+/* ================================================================== */
+
+/* O contêiner que define a "janela" do carrossel. */
+#carousel-container {
+    position: relative;
+    overflow: hidden; /* ESSENCIAL: Esconde os cards que estão fora da vista. */
+    width: 100%;
+    margin: 20px 0;
+}
+
+/* O "palco" que segura todos os cards e se move. */
+#carousel-stage {
+    /* --- CORREÇÃO 1: O COMANDO MÁGICO --- */
+    display: flex; /* Alinha todos os cards filhos em uma única linha horizontal. */
+    
+    /* --- CORREÇÃO 2: LARGURA TOTAL --- */
+    /* Se temos 12 perguntas, o palco precisa ter 1200% da largura da janela. */
+    width: 1200%; 
+    
+    transition: transform 0.4s ease-in-out; /* A animação de deslizar! */
+}
+
+/* Garante que cada card dentro do palco ocupe o espaço correto. */
+#carousel-stage .question-card {
+    /* --- CORREÇÃO 3: LARGURA INDIVIDUAL --- */
+    /* Cada card deve ocupar 1/12 da largura total do palco. */
+    width: calc(100% / 12); 
+    
+    flex-shrink: 0; /* Impede que os cards encolham. */
+    box-sizing: border-box; /* Garante que o padding não afete a largura. */
+    
+    /* Adiciona um espaçamento entre os cards para não ficarem colados */
+    padding-right: 20px; 
+}
+
+/* Estilos para a navegação do carrossel. */
+#carousel-navigation {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 20px;
+}
+
+#carousel-counter {
+    font-weight: 600;
+    color: var(--secondary-color);
+}
+
+/* Estilo para os botões de navegação */
+.secondary-btn {
+    background-color: #f3f4f6;
+    color: #4b5563;
+    border: 1px solid #d1d5db;
+    padding: 10px 20px;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+.secondary-btn:hover {
+    background-color: #e5e7eb;
+}
+.secondary-btn:disabled {
+    background-color: #f9fafb;
+    color: #d1d5db;
+    cursor: not-allowed;
+    border-color: #f3f4f6;
+}
+
+/* Classe utilitária para esconder/mostrar elementos */
+.hidden {
+    display: none !important;
+}

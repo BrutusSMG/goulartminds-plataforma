@@ -1,2 +1,20 @@
 # Ignora a pasta com meus arquivos de teste
 Testes/
+
+# Dependências
+/node_modules
+
+# Arquivos de build
+/.next/
+/out/
+
+# Arquivos de ambiente
+.env*.local
+
+# Logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Outros
+.DS_Store

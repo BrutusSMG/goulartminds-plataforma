@@ -1,0 +1,6 @@
+{
+  "version": 3,
+  "sources": [],
+  "sections": [
+    {"offset": {"line": 4, "column": 0}, "map": {"version":3,"sources":["file:///P:/goulartminds-plataforma/pages/_app.js"],"sourcesContent":["// pages/_app.js\r\n\r\n// Importa os arquivos de CSS que devem ser carregados em TODAS as páginas.\r\nimport { useEffect } from 'react';\r\nimport '../public/assets/global-style.css';\r\nimport '../public/home-style.css'; // CSS específico da Home\r\n\r\n// Esta é uma função especial do Next.js que envolve toda a sua aplicação.\r\nfunction MyApp({ Component, pageProps }) {\r\n  useEffect(() => {\r\n    // Remove a classe 'loading' do body depois que o app carregar\r\n    document.body.classList.remove('loading');\r\n  }, []); // O array vazio [] garante que isso rode apenas uma vez\r\n  return <Component {...pageProps} />;\r\n}\r\n\r\nexport default MyApp;\r\n"],"names":[],"mappings":"AAAA,gBAAgB;AAEhB,2EAA2E;;;;;;AAC3E;;;;;AAIA,0EAA0E;AAC1E,SAAS,MAAM,EAAE,SAAS,EAAE,SAAS,EAAE;IACrC,IAAA,gHAAS,EAAC;QACR,8DAA8D;QAC9D,SAAS,IAAI,CAAC,SAAS,CAAC,MAAM,CAAC;IACjC,GAAG,EAAE,GAAG,wDAAwD;IAChE,qBAAO,qKAAC;QAAW,GAAG,SAAS;;;;;;AACjC;uCAEe"}}]
+}

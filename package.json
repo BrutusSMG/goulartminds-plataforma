@@ -1,0 +1,28 @@
+{
+  "name": "goulartminds-plataforma",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint"
+},
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/BrutusSMG/goulartminds-plataforma.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/BrutusSMG/goulartminds-plataforma/issues"
+  },
+  "homepage": "https://github.com/BrutusSMG/goulartminds-plataforma#readme",
+  "dependencies": {
+    "next": "^16.0.6",
+    "react": "^19.2.0",
+    "react-dom": "^19.2.0"
+  }
+}
