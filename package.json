@@ -8,7 +8,7 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "prisma:deploy": "node prisma/scripts/migrate.mjs"
+    "prisma:deploy": "node migrate.mjs"
   },
   "repository": {
     "type": "git",
