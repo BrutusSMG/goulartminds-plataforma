@@ -1,6 +1,7 @@
 // prisma/scripts/migrate.mjs
 import { execSync } from 'child_process';
-import { PrismaClient } from '@prisma/client';
+import pkg from '@prisma/client';
+const { PrismaClient } = pkg;
 
 // Função para executar um comando no shell
 const execute = (command) => {
