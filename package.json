@@ -22,8 +22,7 @@
   },
   "homepage": "https://github.com/BrutusSMG/goulartminds-plataforma#readme",
   "dependencies": {
-    "@prisma/adapter-pg": "^7.1.0",
-    "@prisma/client": "^7.1.0",
+    "@prisma/client": "5.12.1",
     "dotenv": "^17.2.3",
     "next": "^16.0.6",
     "pg": "^8.16.3",
@@ -32,6 +31,6 @@
   },
   "devDependencies": {
     "@types/node": "^24.10.1",
-    "prisma": "^7.1.0"
+    "prisma": "5.12.1"
   }
 }
