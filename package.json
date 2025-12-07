@@ -22,15 +22,19 @@
   },
   "homepage": "https://github.com/BrutusSMG/goulartminds-plataforma#readme",
   "dependencies": {
+    "@auth/prisma-adapter": "^2.11.1",
     "@prisma/client": "5.12.1",
     "dotenv": "^17.2.3",
     "next": "^16.0.6",
+    "next-auth": "^4.24.13",
+    "nodemailer": "^7.0.11",
     "pg": "^8.16.3",
     "react": "^19.2.0",
     "react-dom": "^19.2.0"
   },
   "devDependencies": {
     "@types/node": "^24.10.1",
+    "dotenv-cli": "^11.0.0",
     "prisma": "5.12.1"
   }
 }

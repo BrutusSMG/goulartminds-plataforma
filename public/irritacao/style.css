@@ -15,7 +15,7 @@
 }
 
 .question-card:hover {
-    transform: translateY(-3px); /* Levanta o card um pouco */
+    transform: translateY(1px); /* Levanta o card um pouco */
     box-shadow: 0 6px 12px rgba(0, 0, 0, 0.08); /* Aumenta a sombra para dar mais profundidade */
 }
 
@@ -78,10 +78,7 @@
 .slider-feedback .slider-value {
     font-weight: 700;
     color: var(--primary-color);
-}
-
-.slider-feedback .slider-legend {
-    font-style: italic;
+    font-size: 1rem;
 }
 
 /* ================================================================== */

@@ -1,0 +1,30 @@
+# docker-compose.yml
+
+version: '3.8'
+
+services:
+  # Define o serviço do nosso banco de dados
+  postgres:
+    # Usa a imagem oficial do PostgreSQL, versão 16 (a mesma do Neon)
+    image: postgres:16-alpine
+    
+    # Sempre reinicia o contêiner se ele parar
+    restart: always
+    
+    # Define as variáveis de ambiente (credenciais do banco de dados)
+    environment:
+      - POSTGRES_USER=user
+      - POSTGRES_PASSWORD=password
+      - POSTGRES_DB=goulartminds
+    
+    # Mapeia a porta 5432 do contêiner para a porta 5432 da sua máquina
+    ports:
+      - '5432:5432'
+    
+    # Garante que os dados do banco de dados sejam salvos mesmo se o contêiner for removido
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+# Define o volume para persistir os dados
+volumes:
+  postgres_data:

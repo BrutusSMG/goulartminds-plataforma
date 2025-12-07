@@ -167,3 +167,14 @@ textarea {
         margin: 0 0 30px 0;
     }
 }
+
+.profile-link {
+  text-decoration: none; /* Remove o sublinhado */
+  color: inherit;       /* Faz o link herdar a cor do texto ao redor */
+  cursor: pointer;      /* Mostra a "mãozinha" ao passar o mouse */
+  margin-right: 15px;   /* Adiciona um espaço entre o nome e o botão "Sair" */
+}
+
+.profile-link:hover {
+  text-decoration: underline; /* Adiciona um sublinhado ao passar o mouse, para feedback */
+}

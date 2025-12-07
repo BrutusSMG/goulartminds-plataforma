@@ -1,15 +1,25 @@
 // pages/resultado-esperado/index.js
 
 import { useEffect } from 'react';
+import Head from 'next/head';
 import Header from '../../components/Header';
 import Modals from '../../components/Modals';
 import Copyright from '../../components/Copyright';
+import { useAuthProtection, AccessDenied } from '../../components/AuthGuard';
+import { useSmartAuth } from '../../hooks/useSmartAuth'; 
 
 export default function FerramentaResultadoEsperado() {
+    // 1. Verifica o estado de autenticação do usuário
+    const { status, hasAccess, user } = useSmartAuth('roda-da-vida');
 
+    // -> MUDANÇA: O useEffect agora depende do 'status' e 'hasAccess'.
     useEffect(() => {
+        // SÓ executa o carregamento dos scripts se a autenticação foi verificada E o usuário tem acesso.
+    if (status === 'authenticated' && hasAccess) {
+            
+        // Todo o seu código de inicialização da ferramenta vai aqui dentro.
+        // Envolvemos tudo em uma função para garantir que as variáveis não "vazem" para o escopo global.
         function inicializarFerramenta() {
-
             // --- BLOCO 1: VARIÁVEIS DE NAVEGAÇÃO PRINCIPAL ---
             const steps = document.querySelectorAll('.step');
             if (steps.length === 0) {
@@ -529,11 +539,51 @@ export default function FerramentaResultadoEsperado() {
         }
         // Chama a função principal que inicializa toda a ferramenta.
         inicializarFerramenta();           
+        }
+    }, [status, hasAccess]); // -> MUDANÇA: O array de dependência foi atualizado.    
+    // 3. Lógica de renderização condicional
 
-    }, []);
+    // Enquanto a sessão está sendo verificada, mostre uma mensagem de carregamento
+    if (status === 'loading') {
+        return (
+        <>
+            <Head>
+            <title>Carregando... - Goulart Minds</title>
+            </Head>
+            <Header />
+            <main className="container" style={{ textAlign: 'center', padding: '50px' }}>
+            <p>Verificando acesso...</p>
+            </main>
+            <Copyright />
+        </>
+        );
+    }
+
+    // Se a verificação terminou e o usuário NÃO tem acesso, mostre a tela de acesso negado.
+    if (!hasAccess) {
+        return (
+        <>
+            <Head>
+            <title>Acesso Restrito - Goulart Minds</title>
+            </Head>
+            <Header />
+            <main className="container">
+            <AccessDenied />
+            </main>
+            <Copyright />
+        </>
+        );
+    }
+    // Se chegou aqui, o usuário tem acesso. Renderize a ferramenta completa.
 
     return (
         <>
+            <Head>
+                <title>Resultado Esperado - Goulart Minds</title>
+                <link rel="stylesheet" href="/assets/global-style.css" />
+                <link rel="stylesheet" href="/resultado-esperado/style.css" />
+            </Head>
+
             <div id="help-tip-template" style={{ display: 'none' }}>
                 <span className="help-tip" data-tooltip="">?</span>
             </div>
@@ -805,7 +855,6 @@ export default function FerramentaResultadoEsperado() {
 
                 </div>
             </div>
-            <Modals />
             <Copyright />
         </>
     );

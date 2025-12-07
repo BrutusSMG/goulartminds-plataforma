@@ -1,6 +1,0 @@
-{
-  "version": 3,
-  "sources": [],
-  "sections": [
-    {"offset": {"line": 10, "column": 0}, "map": {"version":3,"sources":["file:///P:/goulartminds-plataforma/pages/_app.js"],"sourcesContent":["// pages/_app.js\r\n\r\n// Importa os arquivos de CSS que devem ser carregados em TODAS as páginas.\r\nimport '../public/assets/global-style.css';\r\nimport '../public/home-style.css'; // CSS específico da Home\r\n\r\n// Esta é uma função especial do Next.js que envolve toda a sua aplicação.\r\nfunction MyApp({ Component, pageProps }) {\r\n  return <Component {...pageProps} />;\r\n}\r\n\r\nexport default MyApp;\r\n"],"names":[],"mappings":"AAAA,gBAAgB;AAEhB,2EAA2E;;;;;;;;;AAI3E,0EAA0E;AAC1E,SAAS,MAAM,EAAE,SAAS,EAAE,SAAS,EAAE;IACrC,qBAAO,qKAAC;QAAW,GAAG,SAAS;;;;;;AACjC;uCAEe"}}]
-}

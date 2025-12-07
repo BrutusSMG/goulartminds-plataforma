@@ -466,34 +466,42 @@ function triggerUpdate(msg) {
 "use strict";
 
 // pages/_app.js
-// Importa os arquivos de CSS que devem ser carregados em TODAS as páginas.
 __turbopack_context__.s([
     "default",
     ()=>__TURBOPACK__default__export__
 ]);
 var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/node_modules/react/jsx-dev-runtime.js [client] (ecmascript)");
 var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$index$2e$js__$5b$client$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/node_modules/react/index.js [client] (ecmascript)");
+var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2d$auth$2f$react$2f$index$2e$js__$5b$client$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/node_modules/next-auth/react/index.js [client] (ecmascript)");
 ;
 var _s = __turbopack_context__.k.signature();
 ;
 ;
 ;
-// Esta é uma função especial do Next.js que envolve toda a sua aplicação.
-function MyApp({ Component, pageProps }) {
+;
+// Altere a assinatura da função para receber a 'session'
+function MyApp({ Component, pageProps: { session, ...pageProps } }) {
     _s();
     (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$index$2e$js__$5b$client$5d$__$28$ecmascript$29$__["useEffect"])({
         "MyApp.useEffect": ()=>{
-            // Remove a classe 'loading' do body depois que o app carregar
             document.body.classList.remove('loading');
         }
-    }["MyApp.useEffect"], []); // O array vazio [] garante que isso rode apenas uma vez
-    return /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])(Component, {
-        ...pageProps
+    }["MyApp.useEffect"], []);
+    return(// 2. ENVOLVA O COMPONENTE COM O PROVIDER
+    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2d$auth$2f$react$2f$index$2e$js__$5b$client$5d$__$28$ecmascript$29$__["SessionProvider"], {
+        session: session,
+        children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$client$5d$__$28$ecmascript$29$__["jsxDEV"])(Component, {
+            ...pageProps
+        }, void 0, false, {
+            fileName: "[project]/pages/_app.js",
+            lineNumber: 18,
+            columnNumber: 7
+        }, this)
     }, void 0, false, {
         fileName: "[project]/pages/_app.js",
-        lineNumber: 14,
-        columnNumber: 10
-    }, this);
+        lineNumber: 17,
+        columnNumber: 5
+    }, this));
 }
 _s(MyApp, "OD7bBpZva5O2jO+Puf00hKivP7c=");
 _c = MyApp;

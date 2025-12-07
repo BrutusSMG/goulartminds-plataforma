@@ -241,4 +241,15 @@ textarea {
   }
 }
 
+.profile-link {
+  color: inherit;
+  cursor: pointer;
+  margin-right: 15px;
+  text-decoration: none;
+}
+
+.profile-link:hover {
+  text-decoration: underline;
+}
+
 /*# sourceMappingURL=public_assets_global-style_css_65f1660e._.single.css.map*/

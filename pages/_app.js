@@ -1,17 +1,23 @@
 // pages/_app.js
 
-// Importa os arquivos de CSS que devem ser carregados em TODAS as páginas.
 import { useEffect } from 'react';
-import '../public/assets/global-style.css';
-import '../public/home-style.css'; // CSS específico da Home
+import { SessionProvider } from 'next-auth/react';
 
-// Esta é uma função especial do Next.js que envolve toda a sua aplicação.
-function MyApp({ Component, pageProps }) {
+import '../public/assets/global-style.css';
+import '../public/home-style.css';
+
+// Altere a assinatura da função para receber a 'session'
+function MyApp({ Component, pageProps: { session, ...pageProps } }) {
   useEffect(() => {
-    // Remove a classe 'loading' do body depois que o app carregar
     document.body.classList.remove('loading');
-  }, []); // O array vazio [] garante que isso rode apenas uma vez
-  return <Component {...pageProps} />;
+  }, []);
+
+  return (
+    // 2. ENVOLVA O COMPONENTE COM O PROVIDER
+    <SessionProvider session={session}>
+      <Component {...pageProps} />
+    </SessionProvider>
+  );
 }
 
 export default MyApp;

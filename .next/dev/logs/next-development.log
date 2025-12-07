@@ -1,39 +1,203 @@
-[00:00:12.083] Server  LOG      ✓ Ready in 9.7s
-[00:00:34.208] Server  WARN    Do not add stylesheets using next/head (see <link rel="stylesheet"> tag with href="/assets/global-style.css"). Use Document instead. 
+[00:00:15.908] Server  ERROR   (node:10960) [MODULE_TYPELESS_PACKAGE_JSON] Warning: Module type of file:///P:/goulartminds-plataforma/next.config.js is not specified and it doesn't parse as CommonJS.
+Reparsing as ES module because module syntax was detected. This incurs a performance overhead.
+To eliminate this warning, add "type": "module" to P:\goulartminds-plataforma\package.json.
+(Use `node --trace-warnings ...` to show where the warning was created)
+[00:00:17.623] Server  LOG      ✓ Ready in 12.2s
+[00:00:20.685] Server  LOG      ○ Compiling / ...
+[00:00:22.877] Browser LOG     [PageLayout Effect] Status da sessão: loading
+[00:00:27.295] Server  WARN    [next-auth][warn][NO_SECRET] "\nhttps://next-auth.js.org/warnings#no_secret"
+[00:00:27.604] Browser LOG     [PageLayout Effect] Status da sessão: unauthenticated
+[00:00:42.516] Browser LOG     [PageLayout Effect] Status da sessão: loading
+[00:00:42.516] Browser LOG     [Irritação Effect] CONDIÇÃO NÃO ATENDIDA. A ferramenta não será inicializada.
+[00:00:42.516] Browser WARN    Do not add stylesheets using next/head (see <link rel="stylesheet"> tag with href="/irritacao/style.css"). Use Document instead. 
 See more info here: https://nextjs.org/docs/messages/no-stylesheets-in-head-component
-[00:00:34.208] Server  WARN    Do not add stylesheets using next/head (see <link rel="stylesheet"> tag with href="/roda-da-vida/style.css"). Use Document instead. 
+[00:00:42.516] Browser LOG     [PageLayout Effect] Status da sessão: unauthenticated
+[00:00:42.516] Browser LOG     [Irritação Effect] CONDIÇÃO ATENDIDA. Tentando inicializar a ferramenta...
+[00:00:42.516] Browser LOG     [Irritação Effect] DOM já está pronto. Chamando diretamente.
+[00:00:42.516] Browser LOG     [Irritação Effect] DOMContentLoaded disparado. Chamando inicializarFerramenta...
+[00:00:42.516] Browser LOG     [Irritação Script] A função inicializarFerramenta() FOI CHAMADA.
+[00:00:42.517] Browser LOG     Inicializando Ferramenta de Irritação...
+[00:01:53.367] Server  LOG     [API Fire-and-Forget] Dados recebidos. Disparando para o Google...
+[00:01:53.371] Server  LOG     [API Fire-and-Forget] Disparo efetuado. Respondendo sucesso ao cliente.
+[00:02:00.063] Browser LOG     [PageLayout Effect] Status da sessão: loading
+[00:02:00.063] Browser LOG     [Irritação Effect] CONDIÇÃO NÃO ATENDIDA. A ferramenta não será inicializada.
+[00:02:00.063] Browser WARN    Do not add stylesheets using next/head (see <link rel="stylesheet"> tag with href="/irritacao/style.css"). Use Document instead. 
 See more info here: https://nextjs.org/docs/messages/no-stylesheets-in-head-component
-[00:00:34.473] Browser WARN    Do not add stylesheets using next/head (see <link rel="stylesheet"> tag with href="/assets/global-style.css"). Use Document instead. 
+[00:02:00.063] Browser LOG     [PageLayout Effect] Status da sessão: unauthenticated
+[00:02:00.063] Browser LOG     [Irritação Effect] CONDIÇÃO ATENDIDA. Tentando inicializar a ferramenta...
+[00:02:00.063] Browser LOG     [Irritação Effect] DOM já está pronto. Chamando diretamente.
+[00:02:00.063] Browser LOG     [Irritação Effect] DOMContentLoaded disparado. Chamando inicializarFerramenta...
+[00:02:00.063] Browser LOG     [Irritação Script] A função inicializarFerramenta() FOI CHAMADA.
+[00:02:00.063] Browser LOG     Inicializando Ferramenta de Irritação...
+[00:02:21.253] Server  LOG     [API Fire-and-Forget] Dados recebidos. Disparando para o Google...
+[00:02:21.255] Server  LOG     [API Fire-and-Forget] Disparo efetuado. Respondendo sucesso ao cliente.
+[00:03:24.458] Browser LOG     [PageLayout Effect] Status da sessão: loading
+[00:03:24.459] Browser LOG     [Irritação Effect] CONDIÇÃO NÃO ATENDIDA. A ferramenta não será inicializada.
+[00:03:24.459] Browser WARN    Do not add stylesheets using next/head (see <link rel="stylesheet"> tag with href="/irritacao/style.css"). Use Document instead. 
 See more info here: https://nextjs.org/docs/messages/no-stylesheets-in-head-component
-[00:00:34.474] Browser WARN    Do not add stylesheets using next/head (see <link rel="stylesheet"> tag with href="/roda-da-vida/style.css"). Use Document instead. 
+[00:03:24.459] Browser LOG     [PageLayout Effect] Status da sessão: unauthenticated
+[00:03:24.459] Browser LOG     [Irritação Effect] CONDIÇÃO ATENDIDA. Tentando inicializar a ferramenta...
+[00:03:24.459] Browser LOG     [Irritação Effect] DOM já está pronto. Chamando diretamente.
+[00:03:24.459] Browser LOG     [Irritação Effect] DOMContentLoaded disparado. Chamando inicializarFerramenta...
+[00:03:24.459] Browser LOG     [Irritação Script] A função inicializarFerramenta() FOI CHAMADA.
+[00:03:24.459] Browser LOG     Inicializando Ferramenta de Irritação...
+[00:04:33.507] Server  LOG     [API Fire-and-Forget] Dados recebidos. Disparando para o Google...
+[00:04:33.509] Server  LOG     [API Fire-and-Forget] Disparo efetuado. Respondendo sucesso ao cliente.
+[00:18:07.122] Browser LOG     [Irritação Effect] Limpando listener.
+[00:18:07.122] Browser LOG     [PageLayout Effect] Status da sessão: unauthenticated
+[00:18:07.122] Browser LOG     [PageLayout Effect] Status da sessão: unauthenticated
+[00:18:08.881] Browser WARN    Aviso: O slider de reflexão ('reflection-scale') ou seu span de valor não foram encontrados.
+[00:18:09.754] Browser LOG     [PageLayout Effect] Status da sessão: loading
+[00:18:09.754] Browser LOG     [Irritação Effect] CONDIÇÃO NÃO ATENDIDA. A ferramenta não será inicializada.
+[00:18:09.930] Browser WARN    Do not add stylesheets using next/head (see <link rel="stylesheet"> tag with href="/irritacao/style.css"). Use Document instead. 
 See more info here: https://nextjs.org/docs/messages/no-stylesheets-in-head-component
-[00:00:34.474] Browser LOG     Iniciando carregamento de dependências...
-[00:00:34.636] Browser LOG     html2canvas carregado. Carregando Chart.js...
-[00:00:34.857] Browser LOG     Chart.js carregado. Carregando script principal...
-[00:00:34.857] Browser LOG     Inicializando Ferramenta Roda da Vida...
-[00:06:13.830] Browser WARN    Do not add stylesheets using next/head (see <link rel="stylesheet"> tag with href="/assets/global-style.css"). Use Document instead. 
+[00:18:09.930] Browser LOG     [PageLayout Effect] Status da sessão: unauthenticated
+[00:18:09.930] Browser LOG     [Irritação Effect] CONDIÇÃO ATENDIDA. Tentando inicializar a ferramenta...
+[00:18:09.930] Browser LOG     [Irritação Effect] DOM já está pronto. Chamando diretamente.
+[00:18:09.930] Browser LOG     [Irritação Effect] DOMContentLoaded disparado. Chamando inicializarFerramenta...
+[00:18:09.930] Browser LOG     [Irritação Script] A função inicializarFerramenta() FOI CHAMADA.
+[00:18:09.930] Browser LOG     Inicializando Ferramenta de Irritação...
+[00:22:36.379] Server  LOG      ✓ Compiled in 784ms
+[00:28:02.169] Server  LOG      ✓ Compiled in 1902ms
+[00:30:07.563] Server  LOG     [API Fire-and-Forget] Dados recebidos. Disparando para o Google...
+[00:30:07.591] Server  LOG     [API Fire-and-Forget] Disparo efetuado. Respondendo sucesso ao cliente.
+[00:44:18.030] Server  LOG      ✓ Compiled in 7.4s
+[00:44:38.352] Server  LOG      ✓ Compiled in 298ms
+[00:45:13.866] Server  LOG      ✓ Compiled in 1787ms
+[00:45:53.685] Server  LOG      ✓ Compiled in 1731ms
+[00:46:38.146] Browser LOG     [PageLayout Effect] Status da sessão: loading
+[00:46:38.146] Browser LOG     [Irritação Effect] CONDIÇÃO NÃO ATENDIDA. A ferramenta não será inicializada.
+[00:46:38.146] Browser WARN    Do not add stylesheets using next/head (see <link rel="stylesheet"> tag with href="/irritacao/style.css"). Use Document instead. 
 See more info here: https://nextjs.org/docs/messages/no-stylesheets-in-head-component
-[00:06:13.830] Browser WARN    Do not add stylesheets using next/head (see <link rel="stylesheet"> tag with href="/roda-da-vida/style.css"). Use Document instead. 
+[00:46:38.146] Browser LOG     [PageLayout Effect] Status da sessão: unauthenticated
+[00:46:38.146] Browser LOG     [Irritação Effect] CONDIÇÃO ATENDIDA. Tentando inicializar a ferramenta...
+[00:46:38.146] Browser LOG     [Irritação Effect] DOM já está pronto. Chamando diretamente.
+[00:46:38.146] Browser LOG     [Irritação Effect] DOMContentLoaded disparado. Chamando inicializarFerramenta...
+[00:46:38.146] Browser LOG     [Irritação Script] A função inicializarFerramenta() FOI CHAMADA.
+[00:46:38.146] Browser LOG     Inicializando Ferramenta de Irritação...
+[00:46:48.186] Browser LOG     [PageLayout Effect] Status da sessão: loading
+[00:46:48.186] Browser LOG     [PageLayout Effect] Status da sessão: unauthenticated
+[00:46:51.090] Browser LOG     [PageLayout Effect] Status da sessão: loading
+[00:46:51.090] Browser LOG     [Irritação Effect] CONDIÇÃO NÃO ATENDIDA. A ferramenta não será inicializada.
+[00:46:51.090] Browser WARN    Do not add stylesheets using next/head (see <link rel="stylesheet"> tag with href="/irritacao/style.css"). Use Document instead. 
 See more info here: https://nextjs.org/docs/messages/no-stylesheets-in-head-component
-[00:06:13.830] Browser LOG     Iniciando carregamento de dependências...
-[00:06:13.830] Browser LOG     html2canvas carregado. Carregando Chart.js...
-[00:06:13.830] Browser LOG     Chart.js carregado. Carregando script principal...
-[00:06:13.830] Browser LOG     Inicializando Ferramenta Roda da Vida...
-[00:18:16.796] Browser WARN    Do not add stylesheets using next/head (see <link rel="stylesheet"> tag with href="/assets/global-style.css"). Use Document instead. 
+[00:46:51.090] Browser LOG     [PageLayout Effect] Status da sessão: unauthenticated
+[00:46:51.090] Browser LOG     [Irritação Effect] CONDIÇÃO ATENDIDA. Tentando inicializar a ferramenta...
+[00:46:51.090] Browser LOG     [Irritação Effect] DOM já está pronto. Chamando diretamente.
+[00:46:51.090] Browser LOG     [Irritação Effect] DOMContentLoaded disparado. Chamando inicializarFerramenta...
+[00:46:51.090] Browser LOG     [Irritação Script] A função inicializarFerramenta() FOI CHAMADA.
+[00:46:51.090] Browser LOG     Inicializando Ferramenta de Irritação...
+[00:47:33.253] Browser LOG     Respostas finais do carrossel: {"q1":1,"q10":1,"q11":1,"q12":1,"q2":2,"q3":1,"q4":3,"q5":3,"q6":2,"q7":1,"q8":1,"q9":2}
+[00:47:48.020] Browser ERROR   uncaughtError: TypeError: Cannot read properties of undefined (reading 'q1')
+[00:51:51.240] Server  LOG      ✓ Compiled in 6.2s
+[00:52:00.361] Browser ERROR   uncaughtError: TypeError: Cannot read properties of undefined (reading 'q1')
+[00:52:06.689] Browser LOG     [PageLayout Effect] Status da sessão: loading
+[00:52:06.689] Browser LOG     [Irritação Effect] CONDIÇÃO NÃO ATENDIDA. A ferramenta não será inicializada.
+[00:52:06.859] Browser WARN    Do not add stylesheets using next/head (see <link rel="stylesheet"> tag with href="/irritacao/style.css"). Use Document instead. 
 See more info here: https://nextjs.org/docs/messages/no-stylesheets-in-head-component
-[00:18:16.796] Browser WARN    Do not add stylesheets using next/head (see <link rel="stylesheet"> tag with href="/roda-da-vida/style.css"). Use Document instead. 
+[00:52:06.859] Browser LOG     [PageLayout Effect] Status da sessão: unauthenticated
+[00:52:06.859] Browser LOG     [Irritação Effect] CONDIÇÃO ATENDIDA. Tentando inicializar a ferramenta...
+[00:52:06.859] Browser LOG     [Irritação Effect] DOM já está pronto. Chamando diretamente.
+[00:52:06.859] Browser LOG     [Irritação Effect] DOMContentLoaded disparado. Chamando inicializarFerramenta...
+[00:52:06.859] Browser LOG     [Irritação Script] A função inicializarFerramenta() FOI CHAMADA.
+[00:52:06.859] Browser LOG     Inicializando Ferramenta de Irritação...
+[00:52:27.693] Browser LOG     Respostas finais do carrossel: {"q1":4,"q10":0,"q11":0,"q12":0,"q2":3,"q3":2,"q4":1,"q5":0,"q6":0,"q7":0,"q8":0,"q9":0}
+[00:52:49.131] Server  LOG     [API Fire-and-Forget] Dados recebidos. Disparando para o Google...
+[00:52:49.134] Server  LOG     [API Fire-and-Forget] Disparo efetuado. Respondendo sucesso ao cliente.
+[00:52:49.183] Browser LOG     Dados que serão enviados para o backend: {"email":"goulartminds@gmail.com","nome":"Fabio","querBrinde":false,"respostas":{"q1":4,"q10":0,"q11":0,"q12":0,"q2":3,"q3":2,"q4":1,"q5":0,"q6":0,"q7":0,"q8":0,"q9":0},"whatsapp":""}
+[00:54:23.747] Browser LOG     [PageLayout Effect] Status da sessão: loading
+[00:54:23.747] Browser LOG     [Irritação Effect] CONDIÇÃO NÃO ATENDIDA. A ferramenta não será inicializada.
+[00:54:23.747] Browser WARN    Do not add stylesheets using next/head (see <link rel="stylesheet"> tag with href="/irritacao/style.css"). Use Document instead. 
 See more info here: https://nextjs.org/docs/messages/no-stylesheets-in-head-component
-[00:18:16.796] Browser LOG     Iniciando carregamento de dependências...
-[00:18:16.796] Browser LOG     html2canvas carregado. Carregando Chart.js...
-[00:18:16.796] Browser LOG     Chart.js carregado. Carregando script principal...
-[00:18:16.796] Browser LOG     Inicializando Ferramenta Roda da Vida...
-[00:18:42.586] Browser WARN    Do not add stylesheets using next/head (see <link rel="stylesheet"> tag with href="/assets/global-style.css"). Use Document instead. 
+[00:54:23.747] Browser LOG     [PageLayout Effect] Status da sessão: unauthenticated
+[00:54:23.747] Browser LOG     [Irritação Effect] CONDIÇÃO ATENDIDA. Tentando inicializar a ferramenta...
+[00:54:23.747] Browser LOG     [Irritação Effect] DOM já está pronto. Chamando diretamente.
+[00:54:23.747] Browser LOG     [Irritação Effect] DOMContentLoaded disparado. Chamando inicializarFerramenta...
+[00:54:23.747] Browser LOG     [Irritação Script] A função inicializarFerramenta() FOI CHAMADA.
+[00:54:23.747] Browser LOG     Inicializando Ferramenta de Irritação...
+[00:54:52.441] Browser LOG     Respostas finais do carrossel: {"q1":0,"q10":0,"q11":0,"q12":0,"q2":0,"q3":0,"q4":0,"q5":0,"q6":0,"q7":0,"q8":0,"q9":0}
+[00:59:35.754] Server  LOG      ✓ Compiled in 6.4s
+[00:59:41.804] Server  LOG      ✓ Compiled in 132ms
+[01:00:38.733] Server  LOG      ✓ Compiled in 1668ms
+[01:00:58.858] Server  LOG      ✓ Compiled in 45ms
+[01:01:00.864] Server  LOG      ✓ Compiled in 59ms
+[01:01:12.075] Server  LOG      ✓ Compiled in 24ms
+[01:01:39.011] Server  LOG      ✓ Compiled in 147ms
+[01:02:04.022] Server  LOG      ✓ Compiled in 1258ms
+[01:02:41.205] Browser LOG     [PageLayout Effect] Status da sessão: loading
+[01:02:41.206] Browser LOG     [Irritação Effect] CONDIÇÃO NÃO ATENDIDA. A ferramenta não será inicializada.
+[01:02:41.343] Browser WARN    Do not add stylesheets using next/head (see <link rel="stylesheet"> tag with href="/irritacao/style.css"). Use Document instead. 
 See more info here: https://nextjs.org/docs/messages/no-stylesheets-in-head-component
-[00:18:42.586] Browser WARN    Do not add stylesheets using next/head (see <link rel="stylesheet"> tag with href="/roda-da-vida/style.css"). Use Document instead. 
+[01:02:41.344] Browser LOG     [PageLayout Effect] Status da sessão: unauthenticated
+[01:02:41.344] Browser LOG     [Irritação Effect] CONDIÇÃO ATENDIDA. Tentando inicializar a ferramenta...
+[01:02:41.344] Browser LOG     [Irritação Effect] DOM já está pronto. Chamando diretamente.
+[01:02:41.344] Browser LOG     [Irritação Effect] DOMContentLoaded disparado. Chamando inicializarFerramenta...
+[01:02:41.344] Browser LOG     [Irritação Script] A função inicializarFerramenta() FOI CHAMADA.
+[01:02:41.344] Browser LOG     Inicializando Ferramenta de Irritação...
+[01:03:05.498] Browser LOG     Respostas finais do carrossel: {"q1":4,"q10":0,"q11":0,"q12":0,"q2":4,"q3":4,"q4":4,"q5":4,"q6":4,"q7":4,"q8":0,"q9":0}
+[01:03:16.057] Browser LOG     Respostas de reflexão capturadas: {"q1":4,"q10":0,"q11":0,"q12":0,"q2":4,"q3":4,"q4":4,"q5":4,"q6":4,"q7":4,"q8":0,"q9":0,"reflexao_como_foi":"dfahsd","reflexao_metafora":"sdfhsdh","reflexao_mudanca":"sdfhsd","reflexao_nota":10}
+[01:03:24.047] Server  LOG     [API Fire-and-Forget] Dados recebidos. Disparando para o Google...
+[01:03:24.053] Server  LOG     [API Fire-and-Forget] Disparo efetuado. Respondendo sucesso ao cliente.
+[01:03:24.141] Browser LOG     Dados que serão enviados para o backend: {"email":"goulartminds@gmail.com","nome":"Fabio","querBrinde":false,"respostas":{"q1":4,"q10":0,"q11":0,"q12":0,"q2":4,"q3":4,"q4":4,"q5":4,"q6":4,"q7":4,"q8":0,"q9":0},"whatsapp":""}
+[01:04:23.627] Server  LOG      ✓ Compiled in 3.5s
+[01:04:23.627] Browser LOG     Refreshing page data due to server-side change
+[01:04:23.627] Browser LOG     [PageLayout Effect] Status da sessão: unauthenticated
+[01:04:24.434] Browser ERROR   ./pages/irritacao/index.js:259:33
+Parsing ecmascript source code failed
+  257 |                                 respostas: respostas, // Agora este objeto terá os dados corretos
+  258 |                                 querBrinde: querBrinde
+> 259 |                                 reflexao_como_foi: userResponses.reflexao_como_foi || '',
+      |                                 ^^^^^^^^^^^^^^^^^
+  260 |     reflexao_metafora: userResponses.reflexao_metafora || '',
+  261 |     reflexao_mudanca: userResponses.reflexao_mudanca || '',
+  262 |     reflexao_nota: userResponses.reflexao_nota || 0
+
+Expected ',', got 'reflexao_como_foi'
+[01:04:27.433] Browser ERROR   ./pages/irritacao/index.js:259:33
+Parsing ecmascript source code failed
+  257 |                                 respostas: respostas, // Agora este objeto terá os dados corretos
+  258 |                                 querBrinde: querBrinde
+> 259 |                                 reflexao_como_foi: userResponses.reflexao_como_foi || '',
+      |                                 ^^^^^^^^^^^^^^^^^
+  260 |                                 reflexao_metafora: userResponses.reflexao_metafora || '',
+  261 |                                 reflexao_mudanca: userResponses.reflexao_mudanca || '',
+  262 |                                 reflexao_nota: userResponses.reflexao_nota || 0
+
+Expected ',', got 'reflexao_como_foi'
+[01:04:32.009] Server  LOG      ✓ Compiled in 221ms
+[01:04:32.427] Browser LOG     Refreshing page data due to server-side change
+[01:04:32.427] Browser LOG     [PageLayout Effect] Status da sessão: unauthenticated
+[01:05:07.550] Browser LOG     [PageLayout Effect] Status da sessão: loading
+[01:05:07.668] Browser LOG     [PageLayout Effect] Status da sessão: unauthenticated
+[01:05:09.650] Browser LOG     [PageLayout Effect] Status da sessão: loading
+[01:05:09.650] Browser LOG     [Irritação Effect] CONDIÇÃO NÃO ATENDIDA. A ferramenta não será inicializada.
+[01:05:09.650] Browser WARN    Do not add stylesheets using next/head (see <link rel="stylesheet"> tag with href="/irritacao/style.css"). Use Document instead. 
 See more info here: https://nextjs.org/docs/messages/no-stylesheets-in-head-component
-[00:18:42.586] Browser LOG     Iniciando carregamento de dependências...
-[00:18:42.586] Browser LOG     html2canvas carregado. Carregando Chart.js...
-[00:18:42.586] Browser LOG     Chart.js carregado. Carregando script principal...
-[00:18:42.586] Browser LOG     Inicializando Ferramenta Roda da Vida...
-[00:18:46.576] Browser LOG     Área: Saúde e|Disposição, Nota: 9
-[00:18:58.725] Browser LOG     Área: Desenvolvimento| Intelectual, Nota: 10
+[01:05:09.650] Browser LOG     [PageLayout Effect] Status da sessão: unauthenticated
+[01:05:09.650] Browser LOG     [Irritação Effect] CONDIÇÃO ATENDIDA. Tentando inicializar a ferramenta...
+[01:05:09.650] Browser LOG     [Irritação Effect] DOM já está pronto. Chamando diretamente.
+[01:05:09.650] Browser LOG     [Irritação Effect] DOMContentLoaded disparado. Chamando inicializarFerramenta...
+[01:05:09.650] Browser LOG     [Irritação Script] A função inicializarFerramenta() FOI CHAMADA.
+[01:05:09.650] Browser LOG     Inicializando Ferramenta de Irritação...
+[01:05:28.517] Browser LOG     Respostas finais do carrossel: {"q1":1,"q10":0,"q11":0,"q12":0,"q2":1,"q3":2,"q4":3,"q5":1,"q6":4,"q7":1,"q8":0,"q9":0}
+[01:05:39.566] Browser LOG     Respostas de reflexão capturadas: {"q1":1,"q10":0,"q11":0,"q12":0,"q2":1,"q3":2,"q4":3,"q5":1,"q6":4,"q7":1,"q8":0,"q9":0,"reflexao_como_foi":"afdh","reflexao_metafora":"dfh","reflexao_mudanca":"sfdha","reflexao_nota":10}
+[01:05:44.845] Server  LOG     [API Fire-and-Forget] Dados recebidos. Disparando para o Google...
+[01:05:44.848] Server  LOG     [API Fire-and-Forget] Disparo efetuado. Respondendo sucesso ao cliente.
+[01:05:44.939] Browser LOG     Dados que serão enviados para o backend: {"email":"goulartminds@gmail.com","nome":"Fabio","querBrinde":false,"reflexao_como_foi":"afdh","reflexao_metafora":"dfh","reflexao_mudanca":"sfdha","reflexao_nota":10,"respostas":{"q1":1,"q10":0,"q11":0,"q12":0,"q2":1,"q3":2,"q4":3,"q5":1,"q6":4,"q7":1,"q8":0,"q9":0},"whatsapp":""}
+[01:11:33.028] Server  LOG      ✓ Compiled in 1093ms
+[01:11:37.826] Server  LOG      ✓ Compiled in 100ms
+[01:12:07.768] Server  LOG      ✓ Compiled in 1041ms
+[01:12:38.313] Server  LOG      ✓ Compiled in 68ms
+[01:12:50.291] Server  LOG      ✓ Compiled in 52ms
+[01:13:00.217] Server  LOG      ✓ Compiled in 26ms
+[01:13:07.660] Server  LOG      ✓ Compiled in 46ms
+[01:13:15.122] Server  LOG      ✓ Compiled in 21ms
+[01:13:22.529] Server  LOG      ✓ Compiled in 39ms
+[01:13:26.213] Server  LOG      ✓ Compiled in 14ms
+[01:13:30.501] Server  LOG      ✓ Compiled in 27ms
+[01:16:32.743] Browser LOG     [PageLayout Effect] Status da sessão: loading
+[01:16:32.905] Browser LOG     [PageLayout Effect] Status da sessão: unauthenticated
+[01:19:41.882] Server  LOG      ✓ Compiled in 5.2s
+[01:19:43.432] Server  LOG      ✓ Compiled in 65ms
+[01:20:06.593] Server  LOG      ✓ Compiled in 177ms
+[01:23:34.330] Server  LOG      ✓ Compiled in 4.9s

@@ -311,3 +311,76 @@
   border-radius: 8px;
   margin-top: 10px;
 }
+
+/* =============================================================== */
+/* === OTIMIZAÇÃO PARA DISPOSITIVOS MÓVEIS (MOBILE-FIRST) === */
+/* =============================================================== */
+
+/* Regras que se aplicam a telas com largura máxima de 768px (tablets e celulares) */
+@media (max-width: 768px) {
+
+    /* 1. Ajusta o contêiner principal da roda para ser flexível */
+    #roda-container-wrapper {
+        /* Usa 95% da largura da tela, com um máximo de 500px para não ficar enorme em tablets */
+        width: 95vw;
+        height: 95vw; /* Mantém a proporção quadrada */
+        max-width: 500px;
+        max-height: 500px;
+        margin: 20px auto; /* Centraliza a roda */
+    }
+
+    /* 2. Esconde os títulos das grandes áreas (PESSOAL, PROFISSIONAL, etc.) */
+    /* Eles poluem muito a tela pequena e a cor já dá a dica. */
+    /*#anel-grande-area {
+        display: none;
+    }
+    */
+    /* 3. Ajusta o tamanho e a posição dos títulos das subáreas */
+    .sub-area-titulo {
+        font-size: 10px; /* Reduz o tamanho da fonte */
+        line-height: 1.1;
+        /* O cálculo de posicionamento precisa ser ajustado para o novo tamanho da roda. */
+        /* Esta é uma parte delicada. O ideal é que a função JS recalcule, */
+        /* mas podemos tentar uma aproximação com CSS. */
+        /* Vamos remover o posicionamento JS e tentar um mais simples com CSS. */
+        /* Se isso não funcionar, precisaremos de um ajuste no JS. */
+    }
+
+    /* 4. Simplifica os anéis para melhorar a performance e o toque */
+    .anel span {
+        font-size: 11px; /* Reduz o tamanho dos números */
+    }
+
+    /* 5. Ajusta o layout da Etapa 2 (Resultados) para ser vertical */
+    #resultado-container {
+        flex-direction: column; /* Empilha as colunas verticalmente */
+        gap: 40px; /* Adiciona um espaço entre a imagem e o gráfico */
+    }
+
+    .resultado-coluna {
+        width: 100%; /* Faz cada coluna ocupar a largura total */
+    }
+
+    /* 6. Melhora a legibilidade das instruções */
+    .instructions-box {
+        padding: 15px;
+        font-size: 15px;
+    }
+}
+
+/* Regras ainda mais específicas para celulares pequenos (largura máxima de 480px) */
+@media (max-width: 480px) {
+    .sub-area-titulo {
+        font-size: 8px; /* Fonte ainda menor para caber */
+        /* Em telas muito pequenas, pode ser melhor esconder os títulos */
+        /* Descomente a linha abaixo para esconder os títulos em celulares pequenos */
+        /* display: none; */
+    }
+    #anel-grande-area {
+        display: none;
+    }
+
+    .anel span {
+        font-size: 10px;
+    }
+}

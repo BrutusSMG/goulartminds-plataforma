@@ -33,13 +33,18 @@ if (typeof inicializarRodaDaVida !== 'function') {
 
         // --- Elementos do DOM ---
         const container = document.getElementById('roda-da-vida-container');
+        if (!container) {
+            console.error("Erro crítico: O elemento 'roda-da-vida-container' não foi encontrado no DOM.");
+            return; // Aborta a execução se o container principal não existir.
+        }
+        
         const containerSubArea = document.getElementById('anel-sub-area');
         const questionsContainer = document.getElementById('reflection-questions-step1');
 
         // ===============================================================
         // SEÇÃO 2: DEFINIÇÃO DAS FUNÇÕES PRINCIPAIS
         // ===============================================================
-
+        
         function renderizarRoda() {
             if (!container) return;
             container.innerHTML = ''; // Limpa antes de renderizar
@@ -185,6 +190,7 @@ if (typeof inicializarRodaDaVida !== 'function') {
             imagemContainer.innerHTML = '';
             imagemContainer.appendChild(imagem);
         });
+
     }
 
         // ===============================================================
@@ -232,6 +238,14 @@ if (typeof inicializarRodaDaVida !== 'function') {
                     alert('Por favor, preencha todas as 12 áreas da Roda da Vida para continuar.');
                     return;
                 }
+
+                if (typeof window.handleTagUser === 'function') {
+                    window.handleTagUser('roda-da-vida-concluida');
+                } else {
+                    console.error('Função de tagueamento não encontrada. O tagueamento não ocorrerá.');
+                }
+                
+                window.handleTagUser('roda-da-vida-concluida');
                 document.getElementById('step1').classList.remove('active');
                 document.getElementById('step2').classList.add('active');
                 window.scrollTo(0, 0);
@@ -246,6 +260,11 @@ if (typeof inicializarRodaDaVida !== 'function') {
         renderizarRoda();
         renderizarSubtitulos();
         renderizarLinhasInternas();
+
+        window.addEventListener('resize', () => {
+            console.log('Janela redimensionada, recalculando subtítulos...');
+            renderizarSubtitulos();
+        });
     }
 
     // Ponto de entrada que inicia a ferramenta

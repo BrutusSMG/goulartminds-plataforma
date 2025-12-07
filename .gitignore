@@ -19,6 +19,8 @@ yarn-error.log*
 # Outros
 .DS_Store
 .vercel
+.env
+.env.local
 
 /generated/prisma
 

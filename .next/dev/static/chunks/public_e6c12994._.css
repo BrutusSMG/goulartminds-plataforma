@@ -241,6 +241,17 @@ textarea {
   }
 }
 
+.profile-link {
+  color: inherit;
+  cursor: pointer;
+  margin-right: 15px;
+  text-decoration: none;
+}
+
+.profile-link:hover {
+  text-decoration: underline;
+}
+
 /* [project]/public/home-style.css [client] (css) */
 .home-intro {
   text-align: center;

@@ -22,8 +22,6 @@ export default function Document() {
         {/* Carrega o seu script global principal. 
             O caminho é relativo à pasta 'public'. */}
         <Script src="/assets/main.js" strategy="beforeInteractive" />
-        <Script src="/irritacao/script.js" strategy="lazyOnload" />
-        <Script src="/resultado-esperado/script.js" strategy="lazyOnload" />
       </body>
     </Html>
    );
