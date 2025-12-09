@@ -12,6 +12,14 @@ export const authOptions = {
 
   // 2. Provedores: Os métodos de login que vamos oferecer
   providers: [
+    // Adicionando o GoogleProvider com as variáveis de ambiente corretas
+    GoogleProvider({
+      clientId: process.env.GOOGLE_CLIENT_ID,
+      clientSecret: process.env.GOOGLE_CLIENT_SECRET,
+    }),
+
+    /*
+    // O EmailProvider está temporariamente desativado até configurarmos as variáveis de ambiente para ele.
     EmailProvider({
       server: {
         host: process.env.EMAIL_SERVER_HOST,
@@ -23,8 +31,7 @@ export const authOptions = {
       },
       from: process.env.EMAIL_FROM,
     }),
-    // Futuramente, podemos adicionar outros provedores aqui:
-    // GoogleProvider({ ... }),
+    */
   ],
 
   // 3. Estratégia de Sessão: Usaremos JSON Web Tokens (JWT)
