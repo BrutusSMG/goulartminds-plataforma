@@ -95,5 +95,27 @@ export const authOptions = {
   secret: process.env.NEXTAUTH_SECRET,
 };
 
-// -> MUDANÇA: A exportação padrão agora simplesmente usa a constante 'authOptions'
-export default NextAuth(authOptions);
+// =========================================================================
+// 2. O NOVO "CAPTURADOR DE ERROS"
+//    Esta função agora envolve a execução do NextAuth.
+// =========================================================================
+export default async function auth(req, res) {
+  try {
+    // Tenta executar o NextAuth normalmente com a configuração acima
+    return await NextAuth(req, res, authOptions);
+  } catch (error) {
+    // SE ALGO QUEBRAR, NÓS CAPTURAMOS O ERRO AQUI
+    console.error("ERRO CATASTRÓFICO NA INICIALIZAÇÃO DO NEXTAUTH:", error);
+
+    // E enviamos uma resposta JSON detalhada em vez de deixar o servidor quebrar
+    res.status(500).json({
+      success: false,
+      message: "Falha crítica na inicialização do NextAuth.",
+      errorDetails: {
+        name: error.name,
+        message: error.message,
+        stack: error.stack,
+      },
+    });
+  }
+}
