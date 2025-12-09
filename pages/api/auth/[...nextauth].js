@@ -8,7 +8,7 @@ import client from '../../../lib/db'; // Importa nossa instância do Prisma Clie
 // -> MUDANÇA: Definimos toda a configuração em uma constante exportável 'authOptions'
 export const authOptions = {
   // 1. Adaptador: Conecta o NextAuth ao nosso banco de dados Prisma
-  //adapter: PrismaAdapter(client),
+  adapter: PrismaAdapter(client),
 
   // 2. Provedores: Os métodos de login que vamos oferecer
   providers: [
