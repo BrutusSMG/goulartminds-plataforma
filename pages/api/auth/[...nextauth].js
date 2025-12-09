@@ -3,7 +3,7 @@
 import NextAuth from 'next-auth';
 import { PrismaAdapter } from '@auth/prisma-adapter';
 import EmailProvider from 'next-auth/providers/email';
-import client from '../../../lib/db'; // Importa nossa instância do Prisma Client
+import client from '../../../lib/db'; 
 import GoogleProvider from 'next-auth/providers/google';
 
 // -> MUDANÇA: Definimos toda a configuração em uma constante exportável 'authOptions'
@@ -19,7 +19,7 @@ export const authOptions = {
       clientSecret: process.env.GOOGLE_CLIENT_SECRET,
     }),
 
-    /*
+    
     // O EmailProvider está temporariamente desativado até configurarmos as variáveis de ambiente para ele.
     EmailProvider({
       server: {
@@ -32,7 +32,7 @@ export const authOptions = {
       },
       from: process.env.EMAIL_FROM,
     }),
-    */
+    
   ],
 
   // 3. Estratégia de Sessão: Usaremos JSON Web Tokens (JWT)
