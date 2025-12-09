@@ -4,6 +4,7 @@ import NextAuth from 'next-auth';
 import { PrismaAdapter } from '@auth/prisma-adapter';
 import EmailProvider from 'next-auth/providers/email';
 import client from '../../../lib/db'; // Importa nossa instância do Prisma Client
+import GoogleProvider from 'next-auth/providers/google';
 
 // -> MUDANÇA: Definimos toda a configuração em uma constante exportável 'authOptions'
 export const authOptions = {
