@@ -5,6 +5,9 @@ self.__BUILD_MANIFEST = {
   "/irritacao": [
     "static/chunks/pages/irritacao.js"
   ],
+  "/valores": [
+    "static/chunks/pages/valores.js"
+  ],
   "__rewrites": {
     "afterFiles": [],
     "beforeFiles": [],

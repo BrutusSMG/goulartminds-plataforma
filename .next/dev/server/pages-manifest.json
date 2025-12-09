@@ -3,6 +3,6 @@
   "/_app": "pages/_app.js",
   "/_document": "pages/_document.js",
   "/api/auth/[...nextauth]": "pages/api/auth/[...nextauth].js",
-  "/api/capture-lead": "pages/api/capture-lead.js",
-  "/irritacao": "pages/irritacao.js"
+  "/irritacao": "pages/irritacao.js",
+  "/valores": "pages/valores.js"
 }
