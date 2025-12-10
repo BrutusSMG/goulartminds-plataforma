@@ -5,11 +5,12 @@
   "main": "index.js",
   "scripts": {
     "dev": "next dev",
-    "build": "npx prisma generate && next build",
+    "build": "npx prisma migrate dev --name init --skip-generate && next build",
     "start": "next start",
     "lint": "next lint",
     "postinstall": "prisma generate",
-    "prisma:deploy": "npx prisma migrate deploy"
+    "prisma:deploy": "npx prisma migrate deploy",
+    "prisma:migrate": "npx prisma migrate dev" 
   },
   "repository": {
     "type": "git",
