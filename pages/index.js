@@ -1,6 +1,8 @@
 // No Next.js, cada página é um "componente".
 // Esta função representa a sua página inicial.
 import PageLayout from '../components/PageLayout';
+// Forçando um novo build em 10/12/2025 09:40
+import Head from 'next/head'
 
 export default function HomePage() {  
   return (
