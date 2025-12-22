@@ -1,19 +1,17 @@
-// components/PageLayout.js - Passo 4 (Final)
+// components/PageLayout.js
 
 import Head from 'next/head';
 import Header from './Header';
 import Copyright from './Copyright';
 import { useSession } from 'next-auth/react';
 import { useRouter } from 'next/router';
-import { useEffect } from 'react'; // Adiciona a importação
+import { useEffect } from 'react';
 
 export default function PageLayout({ children, title, hideLoginButton = false }) {
   const { status } = useSession();
   const router = useRouter();
 
-  // ADICIONA O USEEFFECT DE VOLTA
   useEffect(() => {
-    // Só executa no lado do cliente e quando a autenticação estiver concluída
     if (typeof window !== 'undefined' && status === 'authenticated') {
       // 1. Pega a URL que salvamos antes do login
       const redirectUrl = localStorage.getItem('redirectAfterLogin');
@@ -34,14 +32,17 @@ export default function PageLayout({ children, title, hideLoginButton = false })
       <Head>
         <title>{title ? `${title} - Goulart Minds` : 'Goulart Minds'}</title>
       </Head>
-      
-      <Header hideLoginButton={hideLoginButton} />
-      
-      <main className="container">
-        {children}
-      </main>
-      
-      <Copyright />
+
+      <div className="container">               
+        
+        <Header hideLoginButton={hideLoginButton} />
+        
+        <main>
+          {children}
+        </main>
+        
+        <Copyright />
+      </div>
     </>
   );
 }

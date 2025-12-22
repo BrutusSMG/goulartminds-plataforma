@@ -1,0 +1,393 @@
+/* ================================================================== */
+/* === ARQUIVO CSS GLOBAL - A IDENTIDADE VISUAL DA PLATAFORMA     === */
+/* ================================================================== */
+
+/* ------------------------------------------------------------------ */
+/* 1. VARIÁVEIS GLOBAIS (PALETA DE CORES E FONTES)
+/* Define as cores e fontes principais em um só lugar. Mudar um valor
+/* aqui atualiza o site inteiro, garantindo consistência.
+/* ------------------------------------------------------------------ */
+:root {
+    --primary-color: #0a2540;
+    --secondary-color: #556270;
+    --accent-color: #4ecdc4;
+    --background-color: #f4f4f9;
+    --text-color: #2d3748;
+    --card-bg-color: #ffffff;
+    --border-color: #e0e0e0;
+}
+
+/* ------------------------------------------------------------------ */
+/* 2. ESTILOS DE BASE (BODY, CONTAINER)
+/* Define a aparência padrão para o corpo da página e para o 
+/* container principal que segura o conteúdo.
+/* ------------------------------------------------------------------ */
+body {
+    font-family: 'Lexend', sans-serif;
+    background-color: var(--background-color);
+    color: var(--text-color);
+    margin: 0;
+    padding: 0; 
+    line-height: 1.6;
+    font-size: 12px;
+}
+
+/* Classe usada para evitar "flash" de conteúdo sem estilo no carregamento */
+body.loading {
+    visibility: hidden;
+    opacity: 0;
+}
+
+/* O contêiner principal que centraliza o conteúdo na página */
+.container {
+    width: 100%;
+    max-width: 1100px;
+    margin: 0 auto;
+    background-color: var(--card-bg-color);
+    padding: 20px 30px;
+    border-radius: 0;
+    box-shadow: none;
+    box-sizing: border-box;
+}
+
+/* ------------------------------------------------------------------ */
+/* 3. TIPOGRAFIA GLOBAL
+/* Estilos padrão para os elementos de texto mais comuns (h1, h2, p).
+/* Usam clamp() para se adaptarem a diferentes tamanhos de tela.
+/* ------------------------------------------------------------------ */
+h2 {      
+    font-size: clamp(1.25rem, 3vw, 1.75rem);
+    margin-bottom: 25px;
+    color: var(--primary-color);
+    font-weight: 700; 
+    margin: 10px; 
+    padding-bottom: 10px; /* Cria um espaço entre o texto e a nova borda */
+    border-bottom: 3px solid var(--accent-color); /* Borda de destaque */
+    /*display: inline-block;  Faz a borda ter a largura exata do texto, não da linha inteira */
+}
+
+h3 { 
+    color: var(--primary-color); 
+    font-weight: 700; 
+    margin: 0; 
+    font-size: clamp(1.1rem, 2.8vw, 1.5rem); 
+}
+
+p { 
+    font-size: 1rem; 
+    color: var(--text-color); 
+    line-height: 1.7; /* Aumenta o espaço entre as linhas, melhorando a legibilidade */
+    margin-bottom: 1rem; /* Garante um espaço padrão abaixo de cada parágrafo */
+}
+
+hr { 
+    border: none; 
+    border-top: 1px solid var(--border-color); 
+    margin: 60px 0; 
+}
+
+/* ------------------------------------------------------------------ */
+/* 4. COMPONENTES GLOBAIS (BOTÕES, HEADER, FOOTER, ETC.)
+/* Estilos para componentes que aparecem em várias páginas.
+/* ------------------------------------------------------------------ */
+
+/* --- HEADER --- */
+/* Estilos específicos do cabeçalho, que é um componente global */
+header { 
+    border-bottom: 1px solid var(--border-color);
+    padding-bottom: 20px;
+    margin-bottom: 30px;
+}
+
+header h1 { 
+    color: var(--primary-color); 
+    font-weight: 700; 
+    margin: 0; 
+    font-size: clamp(1.5rem, 4vw, 2rem); 
+    margin-bottom: 5px; 
+}
+
+header p { 
+    font-size: clamp(1rem, 2.5vw, 1.125rem); 
+    color: var(--secondary-color); 
+    margin: 0; 
+}
+
+button {
+    font-family: 'Lexend', sans-serif;
+}
+
+/* Botão de login específico do Header */
+.header-login-btn {    
+    font-weight: 600;
+    font-size: 0.8rem;
+    color: var(--secondary-color);
+    background-color: #fff;
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    padding: 8px 16px;
+    cursor: pointer;
+    transition: all 0.2s ease-in-out;
+}
+
+.header-login-btn:hover {
+    border-color: var(--accent-color);
+    color: var(--primary-color);
+    transform: translateY(-1px);
+}
+
+/* Link de perfil no Header */
+.profile-link {
+  text-decoration: none;
+  color: inherit;
+  cursor: pointer;
+  margin-right: 15px;
+}
+
+.profile-link:hover {
+  text-decoration: underline;
+}
+
+/* --- BOTÕES --- */
+/* Estilo do botão de ação principal (fundo sólido) */
+.primary-btn {
+    display: block; 
+    width: 100%; 
+    padding: 15px; 
+    font-size: 1.1em; 
+    font-weight: 700;
+    color: #fff;
+    border: none; 
+    border-radius: 8px;
+    cursor: pointer; 
+    transition: background-color 0.2s; 
+    margin-top: 30px;
+    text-align: center;
+    background-image: linear-gradient(to right, var(--primary-color) 0%, var(--secondary-color) 51%, var(--primary-color) 100%);
+    background-size: 200% auto; /* Dobro da largura para permitir o movimento do gradiente */
+    transition: 0.5s; /* Transição mais suave para o efeito de hover */
+}
+.primary-btn:hover {
+    background-position: right center; /* Move o gradiente para a direita, criando o efeito de animação */
+    color: #fff;
+    text-decoration: none;
+}
+.primary-btn:disabled { background-color: #ccc; cursor: not-allowed; }
+
+/* Estilo do botão secundário (contorno) - MOVIDO DO CSS DA IRRITAÇÃO */
+.secondary-btn {
+    background-color: #f3f4f6;
+    color: #4b5563;
+    border: 1px solid #d1d5db;
+    padding: 10px 20px;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+.secondary-btn:hover {
+    background-color: #e5e7eb;
+}
+.secondary-btn:disabled {
+    background-color: #f9fafb;
+    color: #d1d5db;
+    cursor: not-allowed;
+    border-color: #f3f4f6;
+}
+
+/* --- FORMULÁRIOS --- */
+/* Estilos globais para campos de input e textarea */
+input[type="text"],
+input[type="email"],
+input[type="tel"],
+textarea {
+    display: block;
+    width: 100%;
+    padding: 12px;
+    border: 1px solid var(--border-color);
+    border-radius: 5px;
+    margin-top: 8px;
+    font-family: 'Lexend', sans-serif;
+    font-size: 16px;
+    box-sizing: border-box;
+    background-color: #fff;
+    color: var(--text-color);
+    transition: border-color 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+}
+input[type="text"]:focus,
+input[type="email"]:focus,
+input[type="tel"]:focus,
+textarea:focus {
+    /* 1. Remove o contorno padrão (geralmente azul ou preto) que o navegador adiciona */
+    outline: none;
+
+    /* 2. Muda a cor da borda para a sua cor de destaque */
+    border-color: var(--accent-color);
+
+    /* 3. Adiciona um "brilho" suave ao redor do campo, usando a mesma cor de destaque com transparência */
+    box-shadow: 0 0 0 3px rgba(78, 205, 196, 0.4); /* 78, 205, 196 é o RGB da sua --accent-color */
+}
+
+textarea {
+    resize: vertical;
+    min-height: 80px;
+}
+
+/* --- FOOTER --- */
+.site-footer {
+    text-align: center;
+    padding: 20px;
+    margin-top: 40px;
+    font-size: 14px;
+    color: #888;
+}
+
+/* ------------------------------------------------------------------ */
+/* 5. CLASSES UTILITÁRIAS GLOBAIS
+/* Classes pequenas e reutilizáveis para tarefas comuns, como esconder
+/* um elemento.
+/* ------------------------------------------------------------------ */
+.hidden {
+    display: none !important;
+}
+
+.step { 
+    display: none; 
+}
+
+.step.active { 
+    display: block; 
+}
+
+/* ------------------------------------------------------------------ */
+/* 6. MEDIA QUERIES (RESPONSIVIDADE)
+/* Ajusta o layout para telas maiores, como tablets e desktops.
+/* ------------------------------------------------------------------ */
+@media (min-width: 768px) {
+    body {
+        padding: 20px;
+    }
+    .container {
+        padding: 40px;
+        border-radius: 12px;
+        box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+    }
+    header {
+        margin: 0 0 30px 0;
+    }
+}
+
+/* =============================================================== */
+/* === ESTILOS PARA MODAIS E OVERLAYS                          === */
+/* =============================================================== */
+
+/* 1. O Overlay de Fundo (A camada semitransparente)
+/* =============================================================== */
+.modal-overlay {
+  /* Posicionamento */
+  position: fixed; /* Fica fixo na tela, mesmo com scroll */
+  top: 0;
+  left: 0;
+  width: 100vw; /* 100% da largura da tela */
+  height: 100vh; /* 100% da altura da tela */
+  z-index: 1000; /* Garante que fique na frente de todo o resto */
+
+  /* Aparência */
+  background-color: rgba(0, 0, 0, 0.6); /* Fundo preto com 60% de opacidade */
+  
+  /* Centralização do Conteúdo */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  /* Animação de entrada */
+  opacity: 0;
+  animation: fadeIn 0.3s forwards;
+}
+
+/* Animação para o overlay aparecer suavemente */
+@keyframes fadeIn {
+  to {
+    opacity: 1;
+  }
+}
+
+
+/* 2. O Contêiner da Barra de Progresso
+/* =============================================================== */
+.progress-bar-container {
+  /* Aparência */
+  background-color: #fff;
+  padding: 30px 40px;
+  border-radius: 8px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+  text-align: center;
+  width: 90%;
+  max-width: 400px;
+}
+
+.progress-bar-container p {
+  margin-top: 20px;
+  font-size: 1rem;
+  color: #333;
+  font-weight: 500;
+}
+
+
+/* 3. A Barra de Progresso Animada
+/* =============================================================== */
+.progress-bar {
+  height: 10px;
+  width: 100%;
+  background-color: #e0e0e0; /* Cor de fundo da barra */
+  border-radius: 5px;
+  overflow: hidden; /* Essencial para a animação funcionar dentro dos limites */
+}
+
+/* A parte interna e animada da barra */
+.progress-bar::after {
+  content: '';
+  display: block;
+  width: 40%; /* Largura da parte colorida */
+  height: 100%;
+  background-color: #0d6efd; /* Cor principal (azul) */
+  border-radius: 5px;
+
+  /* A mágica da animação: vai e volta */
+  animation: loadingAnimation 1.5s infinite ease-in-out;
+}
+
+/* Animação que move a barra da esquerda para a direita */
+@keyframes loadingAnimation {
+  0% {
+    transform: translateX(-100%);
+  }
+  50% {
+    transform: translateX(250%); /* Move através da barra (100% / 40% de largura = 2.5) */
+  }
+  100% {
+    transform: translateX(250%);
+  }
+}
+
+
+/* 4. Estilos para o Modal de Sucesso (você já deve ter algo parecido)
+/* =============================================================== */
+.modal-content {
+  background-color: #fff;
+  padding: 30px 40px;
+  border-radius: 8px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+  text-align: center;
+  width: 90%;
+  max-width: 500px;
+}
+
+.modal-content h3 {
+  margin-top: 0;
+  color: #28a745; /* Verde para sucesso */
+}
+
+.modal-content p {
+  margin: 15px 0 25px 0;
+  line-height: 1.6;
+}

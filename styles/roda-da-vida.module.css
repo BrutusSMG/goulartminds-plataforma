@@ -1,0 +1,278 @@
+/* ===================================================================== */
+/* 1. ESTRUTURA GERAL E CONTÊINERES PRINCIPAIS */
+/* ===================================================================== */
+.rodaContainerWrapper {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 0;
+    min-height: 800px;
+    width: 100%;
+}
+
+.anelTexto {
+    position: absolute;
+    border-radius: 50%;
+    pointer-events: none;
+}
+
+/* ===================================================================== */
+/* 2. ANEL EXTERNO (GRANDES ÁREAS) */
+/* ===================================================================== */
+.anelGrandeArea {
+    width: 750px;
+    height: 750px;
+    transform: rotate(45deg);
+}
+
+.quadranteTitulo {
+    position: absolute;
+    font-size: 18px;
+    font-weight: 700;
+    color: #555;
+    text-transform: uppercase;
+}
+
+.tituloPessoal { top: 2%; left: 50%; transform: translateX(-50%); }
+.tituloQualidade { top: 50%; right: -9%; transform: translateY(-50%) rotate(90deg); }
+.tituloRelacionamentos { bottom: 2%; left: 50%; transform: translateX(-50%) rotate(-180deg); }
+.tituloProfissional { top: 50%; left: -5%; transform: translateY(-50%) rotate(-90deg); }
+
+.quadranteCor {
+    position: absolute;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    clip-path: polygon(50% 50%, 0% 0%, 100% 0%);
+    z-index: -1;
+}
+
+.quadranteCor::after {
+    content: '';
+    position: absolute;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    border-radius: 50%;
+    box-shadow: inset 0 0 0 50px;
+    color: inherit;
+}
+
+.corPessoal { transform: rotate(0deg); color: #a09f9f; }
+.corQualidade { transform: rotate(90deg); color: #a09f9f; }
+.corRelacionamentos { transform: rotate(180deg); color: #a09f9f; }
+.corProfissional { transform: rotate(270deg); color: #a09f9f; }
+
+/* ===================================================================== */
+/* 3. ANEL INTERNO (SUBÁREAS) */
+/* ===================================================================== */
+.anelSubArea {
+    width: 650px;
+    height: 650px;
+    border: 2px solid #ccc;
+}
+
+.subAreaTitulo {
+    position: absolute;
+    top: 50%; left: 50%;
+    transform-origin: center;
+    font-size: 13px;
+    font-weight: 600;
+    color: #333;
+    white-space: nowrap;
+    text-align: center;
+    line-height: 1.2;
+}
+
+/* ===================================================================== */
+/* 4. NÚCLEO CLICÁVEL (A RODA DA VIDA) */
+/* ===================================================================== */
+.rodaDaVidaContainer {
+    position: relative;
+    width: 550px;
+    height: 550px;
+}
+
+.fatiaContainer {
+    position: absolute;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    clip-path: polygon(50% 50%, 36.8% 0, 63.5% 0);
+    transform-origin: center center;
+    z-index: 10;
+}
+
+.anel {
+    position: absolute;
+    border-radius: 50%;
+    border: 1px solid #ddd;
+    box-sizing: border-box;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    cursor: pointer;
+    transition: background-color 0.9s;
+}
+
+.anel:hover {
+    background-color: rgba(0, 0, 0, 0.05);
+}
+
+.anel span {
+    font-size: 12px;
+    font-weight: bold;
+    color: #555;
+    transition: color 0.2s;
+}
+
+.anelCentral {
+    position: absolute;
+    width: 5.4%;
+    aspect-ratio: 1 / 1;
+    top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: #a3a3a3;
+    border-radius: 50%;
+    z-index: 99;
+    pointer-events: none;
+    border: 1px solid #ccc;
+    pointer-events: auto;
+    cursor: default;
+}
+
+/* ===================================================================== */
+/* 5. LINHAS DE DEMARCAÇÃO */
+/* ===================================================================== */
+.linhaDemarcatoria {
+    position: absolute;
+    background-color: #ccc;
+    z-index: 2;
+    pointer-events: none;
+}
+
+.linhaVertical {
+    width: 3px;
+    height: 750px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 3;
+}
+
+.linhaHorizontal {
+    width: 750px;
+    height: 3px;
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+.linhaInterna {
+    position: absolute;
+    top: 0;
+    left: 50%;
+    transform-origin: bottom center;
+    width: 1px;
+    height: 50%;
+    background-color: #b9b9b9;
+    pointer-events: none;
+    z-index: 1;
+}
+
+/* ===================================================================== */
+/* 6. COMPONENTES DE UI (CAIXAS DE TEXTO, BOTÕES, ETC.) */
+/* ===================================================================== */
+.instructionsBox {
+    background-color: #f8f9fa;
+    border-left: 4px solid #0d6efd;
+    padding: 20px 25px;
+    margin: 20px auto;
+    max-width: 800px;
+    border-radius: 5px;
+}
+
+.instructionsBox h4 { margin-top: 0; font-size: 1.2rem; color: #333; }
+.instructionsBox p { line-height: 1.6; color: #555; }
+.instructionsBox ol { padding-left: 20px; line-height: 1.7; color: #555; }
+.instructionsBox li { margin-bottom: 10px; }
+
+.hidden {
+    display: none;
+}
+
+.resultadoContainer {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 30px;
+    justify-content: center;
+    align-items: flex-start;
+    margin: 40px auto;
+}
+
+.resultadoColuna {
+    flex: 1;
+    min-width: 400px;
+    max-width: 550px;
+    text-align: center;
+}
+
+.resultadoColuna h4 {
+    font-size: 1.2rem;
+    color: #333;
+    margin-bottom: 20px;
+}
+
+.imagemRodaContainer img {
+    max-width: 100%;
+    height: auto;
+    border: 1px solid #c7c5c5;
+    border-radius: 8px;
+    margin-top: 10px;
+}
+
+/* =============================================================== */
+/* === OTIMIZAÇÃO PARA DISPOSITIVOS MÓVEIS (MOBILE-FIRST) === */
+/* =============================================================== */
+@media (max-width: 768px) {
+    .rodaContainerWrapper {
+        width: 95vw;
+        height: 95vw;
+        max-width: 500px;
+        max-height: 500px;
+        margin: 20px auto;
+    }
+
+    .subAreaTitulo {
+        font-size: 10px;
+        line-height: 1.1;
+    }
+
+    .anel span {
+        font-size: 11px;
+    }
+
+    .resultadoContainer {
+        flex-direction: column;
+        gap: 40px;
+    }
+
+    .resultadoColuna {
+        width: 100%;
+    }
+
+    .instructionsBox {
+        padding: 15px;
+        font-size: 15px;
+    }
+}
+
+@media (max-width: 480px) {
+    .subAreaTitulo {
+        font-size: 8px;
+    }
+
+    .anelGrandeArea {
+        display: none;
+    }
+
+    .anel span {
+        font-size: 10px;
+    }
+}

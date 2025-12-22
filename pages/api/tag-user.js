@@ -1,5 +1,5 @@
 // pages/api/tag-user.js
-import prisma from '../../lib/prisma'; // Precisaremos criar este arquivo de conexão
+import prisma from '../../lib/db'; // Precisaremos criar este arquivo de conexão
 
 export default async function handle(req, res) {
   if (req.method !== 'POST') {

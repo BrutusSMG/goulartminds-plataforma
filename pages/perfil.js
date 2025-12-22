@@ -3,148 +3,276 @@
 import { useState, useEffect } from 'react';
 import Head from 'next/head';
 import { useSession } from 'next-auth/react';
-import Header from '../components/Header';
-import Copyright from '../components/Copyright';
-import { AccessDenied } from '../components/AuthGuard'; 
+import PageLayout from '../components/PageLayout'; // Usando PageLayout para consistência
+import { AccessDenied } from '../components/AuthGuard';
+import { getToolDisplayName } from '../lib/tool-mappings';
 
 export default function PerfilPage() {
-  // Usamos o useSession para obter os dados do usuário e o status da sessão.
-  const { data: session, status, update } = useSession();
-  
-  // Estado local para gerenciar o nome no formulário e o feedback para o usuário.
+  // 1. Usamos APENAS o useSession. Ele já nos dá tudo que precisamos.
+  const { data: session, status, update } = useSession();  
+
+  // Estados existentes
   const [name, setName] = useState('');
-  const [message, setMessage] = useState(''); // Para mensagens de sucesso ou erro.
+  const [message, setMessage] = useState('');
   const [isSubmitting, setIsSubmitting] = useState(false);
 
-  // Quando a sessão for carregada, atualize o estado do nome com o nome do usuário.
+  const [newImageFile, setNewImageFile] = useState(null); 
+  const [previewUrl, setPreviewUrl] = useState(null); 
+  const [discProfile, setDiscProfile] = useState('');
+
   useEffect(() => {
-    if (session?.user?.name) {
+    if (session?.user?.name || '') {
       setName(session.user.name);
+      setPreviewUrl(session.user.image || null);
+      setDiscProfile(session.user.discProfile || '');
     }
   }, [session]);
 
-  // Função para lidar com o envio do formulário.
+  const handleImageChange = (e) => {
+    if (e.target.files && e.target.files[0]) {
+      const file = e.target.files[0];
+      
+      // Validação simples de tamanho (ex: 5MB)
+      if (file.size > 5 * 1024 * 1024) {
+        setMessage('A imagem é muito grande. O máximo é 5MB.');
+        return;
+      }
+      
+      setNewImageFile(file); // Armazena o arquivo para o upload
+      setPreviewUrl(URL.createObjectURL(file)); // Cria uma URL local para a pré-visualização
+    }
+  };
+
   const handleUpdateProfile = async (e) => {
     e.preventDefault();
     setIsSubmitting(true);
     setMessage('');
 
-    // Envia uma requisição para uma API que vamos criar.
-    const response = await fetch('/api/user/update-profile', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ name }),
-    });
+    // 1. Coleta todas as possíveis alterações em um único objeto
+    const changes = {};
+    if (name !== session.user.name) {
+      changes.name = name;
+    }
+    if (discProfile !== (session.user.discProfile || '')) { // Compara com o valor da sessão ou string vazia
+      changes.discProfile = discProfile;
+    }
 
-    const result = await response.json();
+    // 2. Verifica se há alguma alteração de texto para salvar
+    if (Object.keys(changes).length > 0) {
+      const profileResponse = await fetch('/api/user/update-profile', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(changes),
+      });
 
-    if (response.ok) {
-      setMessage('Seu nome foi atualizado com sucesso!');
-      await update({ ...session, user: { ...session.user, name: name } });
+      if (!profileResponse.ok) {
+        const result = await profileResponse.json();
+        setMessage(result.message || 'Erro ao atualizar os dados do perfil.');
+        setIsSubmitting(false);
+        return;
+      }
+      
+      // Atualiza a sessão localmente com os dados que foram alterados
+      await update(changes);
+    }
 
+    // 3. Verifica se há uma nova imagem para enviar (lógica separada)
+    if (newImageFile) {
+      const formData = new FormData();
+      formData.append('profileImage', newImageFile);
+
+      const imageResponse = await fetch('/api/user/upload-avatar', {
+        method: 'POST',
+        body: formData,
+      });
+
+      if (!imageResponse.ok) {
+        setMessage('Os dados do perfil foram salvos, mas houve um erro ao enviar a foto.');
+        setIsSubmitting(false);
+        return;
+      }
+
+      const imageData = await imageResponse.json();
+      // Atualiza a sessão localmente com a nova URL da imagem
+      await update({ image: imageData.newImageUrl });
+    }
+
+    // 4. Define a mensagem de sucesso final e finaliza
+    // Verifica se houve alguma alteração (seja de texto ou de imagem)
+    if (Object.keys(changes).length > 0 || newImageFile) {
+      setMessage('Seu perfil foi atualizado com sucesso!');
     } else {
-      setMessage(result.message || 'Ocorreu um erro ao atualizar seu perfil.');
+      setMessage('Nenhuma alteração para salvar.');
     }
     
+    setNewImageFile(null); // Limpa o arquivo de imagem após o envio
     setIsSubmitting(false);
   };
 
-  // 1. Proteção de Acesso: Estado de Carregamento
   if (status === 'loading') {
     return (
-      <>
-        <Head><title>Carregando Perfil...</title></Head>
-        <Header />
-        <main className="container" style={{ textAlign: 'center', padding: '50px' }}><p>Carregando...</p></main>
-        <Copyright />
-      </>
+      <PageLayout title="Carregando Perfil...">
+        <p style={{ textAlign: 'center', padding: '50px' }}>Carregando...</p>
+      </PageLayout>
     );
   }
 
-  // 2. Proteção de Acesso: Usuário não autenticado
   if (status === 'unauthenticated') {
     return (
-      <>
-        <Head><title>Acesso Negado</title></Head>
-        <Header />
-        <main className="container"><AccessDenied /></main>
-        <Copyright />
-      </>
+      <PageLayout title="Acesso Negado">
+        <AccessDenied />
+      </PageLayout>
     );
   }
 
-  // 3. -> CORREÇÃO APLICADA AQUI <-
-  // Só renderiza o conteúdo principal se o status for 'authenticated'
-  if (status === 'authenticated') {
+  // 3. Proteção de Acesso: Usuário não autenticado
+  if (status === 'unauthenticated') {
     return (
-      <>
-        <Head>
-          <title>Meu Perfil - Goulart Minds</title>
-        </Head>
-        <Header />
-        <main className="container">
-          <div className="tool-wrapper" style={{ maxWidth: '600px', margin: '0 auto' }}>
-            <div className="step-header">
-              <h1>Meu Perfil</h1>
-              <p>Gerencie suas informações e preferências.</p>
-            </div>
-            
-            <div className="step-content">
-              <form onSubmit={handleUpdateProfile}>
-                {/* ... (o resto do seu formulário continua aqui dentro, sem alterações) ... */}
-                <div className="question-block">
-                  <label htmlFor="email">E-mail</label>
-                  <input
-                    type="email"
-                    id="email"
-                    value={session.user.email}
-                    disabled
-                    style={{ backgroundColor: '#f2f2f2', cursor: 'not-allowed' }}
-                  />
-                </div>
+      <PageLayout title="Acesso Negado">
+        <AccessDenied />
+      </PageLayout>
+    );
+  }
 
-                <div className="question-block">
-                  <label htmlFor="name">Nome</label>
-                  <input
-                    type="text"
-                    id="name"
-                    value={name}
-                    onChange={(e) => setName(e.target.value)}
-                    placeholder="Como você gostaria de ser chamado?"
-                  />
-                </div>
+  // 4. Conteúdo Principal: Renderizado apenas se o status for 'authenticated'
+  return (
+    <PageLayout title="Meu Perfil">
+      <div style={{ maxWidth: '600px', margin: '0 auto' }}>
+        <h1>Meu Perfil</h1>
+        <p>Gerencie suas informações e preferências.</p>
+        
+        <div style={{ textAlign: 'center', margin: '30px 0' }}>
+          <img
+            src={previewUrl || '/default-avatar.png'} // Caminho para uma imagem padrão na sua pasta /public
+            alt="Foto de Perfil"
+            style={{
+              width: '120px',
+              height: '120px',
+              borderRadius: '50%',
+              objectFit: 'cover',
+              border: '3px solid #eee'
+            }}
+          />
+          <input
+            type="file"
+            id="profileImage"
+            style={{ display: 'none' }}
+            accept="image/png, image/jpeg"
+            onChange={handleImageChange}
+          />
+          <label
+            htmlFor="profileImage"
+            style={{
+              display: 'block',
+              marginTop: '15px',
+              cursor: 'pointer',
+              color: '#0070f3',
+              fontWeight: 'bold'
+            }}
+          >
+            Alterar Foto
+          </label>
+        </div>
+        {/* --- FIM DO NOVO BLOCO DE FOTO DE PERFIL --- */}
 
-                <div className="question-block">
-                  <label>Seu Plano Atual</label>
-                  <div 
-                    style={{ 
-                      padding: '10px 15px', 
-                      border: '1px solid #ccc', 
-                      borderRadius: '5px', 
-                      backgroundColor: '#f2f2f2',
-                      textTransform: 'capitalize'
-                    }}
-                  >
-                    {session.user.plan || 'Gratuito'}
-                  </div>
-                </div>
+        <form onSubmit={handleUpdateProfile}>
+          <div style={{ marginBottom: '20px' }}>
+            <label htmlFor="email" style={{ display: 'block', marginBottom: '5px' }}>E-mail</label>
+            <input
+              type="email"
+              id="email"
+              value={session.user.email}
+              disabled
+              style={{ width: '100%', padding: '10px', backgroundColor: '#f2f2f2', cursor: 'not-allowed', border: '1px solid #ccc', borderRadius: '5px' }}
+            />
+          </div>
 
-                <div className="step-navigation" style={{ borderTop: 'none', padding: '20px 0 0 0' }}>
-                  <button type="submit" className="btn-next" disabled={isSubmitting}>
-                    {isSubmitting ? 'Salvando...' : 'Salvar Alterações'}
-                  </button>
-                </div>
-              </form>
-              
-              {message && <p style={{ textAlign: 'center', marginTop: '20px' }}>{message}</p>}
+          <div style={{ marginBottom: '20px' }}>
+            <label htmlFor="name" style={{ display: 'block', marginBottom: '5px' }}>Nome</label>
+            <input
+              type="text"
+              id="name"
+              value={name}
+              onChange={(e) => setName(e.target.value)}
+              placeholder="Como você gostaria de ser chamado?"
+              style={{ width: '100%', padding: '10px', border: '1px solid #ccc', borderRadius: '5px' }}
+            />
+          </div>
+
+          <div style={{ marginBottom: '20px' }}>
+            <label htmlFor="discProfile" style={{ display: 'block', marginBottom: '5px' }}>
+              Perfil Comportamental DISC
+            </label>
+            <select
+              id="discProfile"
+              value={discProfile}
+              onChange={(e) => setDiscProfile(e.target.value)}
+              style={{ width: '100%', padding: '10px', border: '1px solid #ccc', borderRadius: '5px', backgroundColor: 'white' }}
+            >
+              <option value="">Não sei / Não preenchido</option>
+              <option value="Dominancia">D - Dominância (Executor)</option>
+              <option value="Influencia">I - Influência (Comunicador)</option>
+              <option value="Estabilidade">S - eStabilidade (Planejador)</option>
+              <option value="Conformidade">C - Conformidade (Analista)</option>
+            </select>
+            <p style={{ fontSize: '0.8rem', color: '#666', marginTop: '5px' }}>
+              Não sabe seu perfil? Em breve teremos um teste para te ajudar!
+            </p>
+          </div>
+
+          <div style={{ marginBottom: '20px' }}>
+            <label style={{ display: 'block', marginBottom: '5px' }}>
+              Ferramentas Realizadas
+            </label>
+            <div 
+              style={{ 
+                padding: '10px', 
+                border: '1px solid #ccc', 
+                borderRadius: '5px', 
+                backgroundColor: '#f2f2f2',
+                minHeight: '40px',
+                display: 'flex',
+                flexWrap: 'wrap',
+                gap: '8px'
+              }}
+            >
+              {session.user.completedTools && session.user.completedTools.length > 0 ? (
+                session.user.completedTools.map(toolInternalName => (
+                  <span key={toolInternalName} style={{
+                    backgroundColor: '#0070f3',
+                    color: 'white',
+                    padding: '4px 10px',
+                    borderRadius: '12px',
+                    fontSize: '0.9rem',
+                    fontWeight: 'bold'
+                  }}>
+                    {getToolDisplayName(toolInternalName)}
+                  </span>
+                ))
+              ) : (
+                <span style={{ color: '#666', fontStyle: 'italic' }}>
+                  Nenhuma ferramenta realizada ainda.
+                </span>
+              )}
             </div>
           </div>
-        </main>
-        <Copyright />
-      </>
-    );
-  }
 
-  // 4. Fallback: Se não for nenhum dos status acima, não renderiza nada.
-  return null;
+          <div style={{ marginBottom: '20px' }}>
+            <label style={{ display: 'block', marginBottom: '5px' }}>Seu Plano Atual</label>
+            <div style={{ padding: '10px', border: '1px solid #ccc', borderRadius: '5px', backgroundColor: '#f2f2f2', textTransform: 'capitalize' }}>
+              {session.user.plan || 'Gratuito'}
+            </div>
+          </div>
+
+          <div style={{ marginTop: '30px' }}>
+            <button type="submit" className="primary-btn" disabled={isSubmitting}>
+              {isSubmitting ? 'Salvando...' : 'Salvar Alterações'}
+            </button>
+          </div>
+        </form>
+        
+        {message && <p style={{ textAlign: 'center', marginTop: '20px', fontWeight: 'bold' }}>{message}</p>}
+      </div>
+    </PageLayout>
+  );
 }

@@ -23,19 +23,22 @@ function checkAccess(user, tool) {
     return false;
   }
 
-  // Caso 3: O usuário está logado. Verificamos se o plano dele dá acesso.
-  // O plano do usuário vem da sessão. Usamos 'free' como padrão se não estiver definido.
-  const userPlan = user.plan || 'free';
+  // Caso 3: A ferramenta exige um plano. O plano do usuário está na lista?
+  // A lógica de acesso agora é baseada no array 'tags' do usuário.
+  // Verificamos se alguma das tags do usuário corresponde a algum dos pacotes da ferramenta.
+  // Isso é mais flexível. Ex: se o usuário tem a tag 'premium' e a ferramenta
+  // permite ['premium', 'pro'], o acesso é concedido.
+  
+  // Pega as tags do usuário. Se não houver, usa um array vazio.
+  const userPlan = user.plan || 'free'; // Pega o plano da sessão.
 
-  // A mágica: a ferramenta inclui o plano do usuário em sua lista de pacotes permitidos?
   if (tool.packages.includes(userPlan)) {
     return true;
   }
 
-  // Caso 4: O usuário está logado, mas seu plano não concede acesso.
+  // Caso 4: O plano do usuário não concede acesso.
   return false;
 }
-
 
 /**
  * Hook de autenticação inteligente para proteger páginas de ferramentas.
@@ -45,6 +48,15 @@ function checkAccess(user, tool) {
 export function useSmartAuth(toolId) {
   // Pega o status da sessão (loading, authenticated, unauthenticated) e os dados do usuário
   const { status, data: session } = useSession();
+
+  if (status === 'loading') {
+    return {
+      status: 'loading',
+      hasAccess: false,
+      user: null,
+      tool: null,
+    };
+  }
 
   // Encontra a configuração da ferramenta com base no ID fornecido.
   const toolConfig = tools.find(t => t.id === toolId);

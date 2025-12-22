@@ -3,6 +3,8 @@
 import { useState } from 'react';
 import { signIn } from 'next-auth/react';
 import Head from 'next/head';
+import Header from '@/componentes/Header';
+import Copyright from '@/componentes/Copyright';
 
 // Adicionei um pouco de CSS para o botão do Google e o separador
 const pageStyles = `
@@ -116,7 +118,7 @@ export default function SignInPage() {
               {error && <p style={{ color: 'red', textAlign: 'center' }}>{error}</p>}
 
               <div className="step-navigation" style={{ borderTop: 'none', padding: '20px 0 0 0' }}>
-                <button type="submit" className="btn-next" disabled={loading} style={{ width: '100%' }}>
+                <button type="submit" className="primary-btn" disabled={loading} style={{ width: '100%' }}>
                   {loading ? 'Enviando...' : 'Enviar Link de Acesso'}
                 </button>
               </div>
@@ -124,6 +126,7 @@ export default function SignInPage() {
           </div>
         </div>
       </main>
+      <Copyright />
     </>
   );
 }

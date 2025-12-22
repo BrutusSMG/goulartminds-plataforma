@@ -1,80 +1,62 @@
-// pages/roda-da-vida/index.js
+// pages/roda-da-vida/index.js 
 
+// Importações do React e Next.js
 import React, { useEffect } from 'react';
 import Head from 'next/head';
-import { useAuthProtection, AccessDenied } from '../../components/AuthGuard';
+import Script from 'next/script'; // MUDANÇA: Importado para carregamento otimizado de scripts.
+
+// Importações dos seus componentes e hooks
 import { useSmartAuth } from '../../hooks/useSmartAuth';
 import PageLayout from '../../components/PageLayout';
+import { AccessDenied } from '../../components/AuthGuard';
 import Modals from '@/componentes/Modals';
-import { getSession } from 'next-auth/react';
 
-const FerramentaRodaDaVida = ({ serverSideSecret }) => {
+// MUDANÇA: Importação do CSS Modules para estilização.
+import styles from '../../styles/roda-da-vida.module.css';
 
-  // NOVA FUNÇÃO DE TAGUEAMENTO DENTRO DO REACT
+const FerramentaRodaDaVida = () => {
+  // Função para chamar a API de tagueamento (sem alterações, já estava ótima).
   const handleTagUser = async (tag) => {
     try {
-      // A chamada fetch mais simples possível.
-      // O navegador DEVERIA lidar com os cookies automaticamente.
       const response = await fetch('/api/user/add-tag', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ tag: tag }),
       });
-
       if (response.ok) {
-        console.log(`[React] Tag '${tag}' adicionada com sucesso.`);
+        console.log(`[React] Tag '${tag}' adicionada com sucesso via API.`);
       } else {
         console.error(`[React] Falha ao adicionar tag. Status: ${response.status}`);
       }
     } catch (error) {
-      console.error('[React] Erro de rede:', error);
+      console.error('[React] Erro de rede ao chamar API:', error);
     }
   };
 
-  // 1. Proteção de acesso via hook personalizado
+  // 1. Proteção de acesso via hook personalizado (sem alterações).
   const { status, hasAccess } = useSmartAuth('roda-da-vida');
 
-  // -> MUDANÇA: O useEffect agora depende do 'status' e 'hasAccess'.
+  // MUDANÇA: useEffect simplificado para cuidar apenas da comunicação segura.
   useEffect(() => {
-    // SÓ executa o carregamento dos scripts se a autenticação foi verificada E o usuário tem acesso.
-    if (status === 'authenticated' && hasAccess) {
+    // Função que será acionada quando o script.js disparar o evento 'tagUser'.
+    const handleTagRequest = (event) => {
+      const { tag } = event.detail; // Pega a 'tag' enviada pelo script.
+      if (tag) {
+        console.log(`[React] Evento 'tagUser' recebido com a tag: ${tag}`);
+        handleTagUser(tag); // Chama a função para contatar a API.
+      }
+    };
 
-      window.handleTagUser = handleTagUser;
+    // Adiciona um "ouvinte" de eventos ao documento.
+    document.addEventListener('tagUser', handleTagRequest);
 
-      const html2canvasScript = document.createElement('script');
-      html2canvasScript.src = 'https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js';
-      html2canvasScript.async = true;
-      
-      const chartScript = document.createElement('script' );
-      chartScript.src = 'https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js';
-      chartScript.async = true;
+    // Função de limpeza: remove o "ouvinte" quando o componente é desmontado para evitar vazamentos de memória.
+    return () => {
+      document.removeEventListener('tagUser', handleTagRequest);
+    };
+  }, []); // O array vazio [] garante que esta configuração rode apenas uma vez.
 
-      const mainScript = document.createElement('script' );
-      mainScript.src = '/roda-da-vida/script.js';
-      mainScript.async = true;
-
-      html2canvasScript.onload = () => {
-        document.body.appendChild(chartScript);
-      };
-
-      chartScript.onload = () => {
-        document.body.appendChild(mainScript);
-      };
-
-      document.body.appendChild(html2canvasScript);
-
-      // Função de "limpeza" para remover os scripts ao sair da página
-      return () => {
-        if (document.body.contains(html2canvasScript)) document.body.removeChild(html2canvasScript);
-        if (document.body.contains(chartScript)) document.body.removeChild(chartScript);
-        if (document.body.contains(mainScript)) document.body.removeChild(mainScript);
-      };
-    }
-  }, [status, hasAccess]); // -> MUDANÇA: O array de dependência foi atualizado.
-
-  // -> MUDANÇA: A lógica de renderização condicional agora usa 'status' e 'hasAccess'.
-
-  // Enquanto a sessão está sendo verificada, mostre uma mensagem de carregamento
+  // Lógica de renderização condicional (Carregando... / Acesso Negado).
   if (status === 'loading') {
     return (
       <PageLayout title="Carregando..." hideLoginButton={true}>
@@ -83,7 +65,6 @@ const FerramentaRodaDaVida = ({ serverSideSecret }) => {
     );
   }
 
-  // Se a verificação terminou e o usuário NÃO tem acesso, mostre a tela de acesso negado.
   if (!hasAccess) {
     return (
       <PageLayout title="Acesso Restrito" hideLoginButton={true}>
@@ -91,58 +72,72 @@ const FerramentaRodaDaVida = ({ serverSideSecret }) => {
       </PageLayout>
     );
   }
-  // Se chegou aqui, o usuário tem acesso. Renderize a ferramenta completa.
 
+  // Renderização principal para usuários com acesso.
   return (
-    <PageLayout title="Roda da Vida">
-      
+    <PageLayout title="Roda da Vida" hideProgressBar={true}>
       <Head>
-        <link rel="stylesheet" href="/assets/global-style.css" />
-        <link rel="stylesheet" href="/roda-da-vida/style.css" />
+        <title>Ferramenta Roda da Vida - Goulart Minds</title>
+        {/* MUDANÇA: As tags <link> de CSS foram removidas daqui, pois o CSS agora é importado via JS. */}
       </Head>
+
+      {/* MUDANÇA: Carregamento otimizado dos scripts com o componente <Script> do Next.js. */}
+      {/* Eles carregarão de forma assíncrona sem bloquear a renderização da página. */}
+      <Script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js" strategy="lazyOnload" />
+      <Script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js" strategy="lazyOnload" />
+      <Script src="/roda-da-vida/script.js" strategy="lazyOnload" />
+
       <Modals />
         
-      {/* ETAPA 1: A RODA DA VIDA INTERATIVA */}
+      {/* ETAPA 1: A RODA DA VIDA INTERATIVA (ESQUELETO ) */}
       <section id="step1" className="step active">
-        <div className="instructions-box">
+        <div className={styles.instructionsBox}>
           <h4>Como usar a Roda da Vida?</h4>
-          <p>
-            Esta é uma poderosa ferramenta de autoanálise que te ajudará a ter clareza sobre o seu momento atual. Ao final, você verá um mapa visual da sua vida, identificando áreas de sucesso e pontos que merecem sua atenção.
-          </p>
+          <p>Esta é uma poderosa ferramenta de autoanálise que te ajudará a ter clareza sobre o seu momento atual. Ao final, você verá um mapa visual da sua vida, identificando áreas de sucesso e pontos que merecem sua atenção.</p>
           <p><strong>Siga os 3 passos:</strong></p>
           <ol>
-            <li><strong>Reflita com calma:</strong> Para cada uma das 12 áreas, pense sobre o seu nível de satisfação <strong>hoje</strong>. Não há resposta certa ou errada.</li>
+            <li><strong>Reflita com calma:</strong> Para cada uma das 12 áreas, pense sobre o seu nível de satisfação <strong>hoje</strong>.</li>
             <li><strong>Dê uma nota de 1 a 10:</strong> Clique no número que melhor representa sua satisfação atual em cada fatia da roda.</li>
-            <li><strong>Descubra sua área de alavanca:</strong> Após preencher tudo, observe o resultado. Qual área, se você dedicasse um pouco mais de energia, poderia impulsionar todas as outras?</li>
+            <li><strong>Descubra sua área de alavanca:</strong> Após preencher tudo, observe o resultado.</li>
           </ol>
         </div>
         
-        <div id="roda-container-wrapper">
-          <div className="linha-demarcatoria" id="linha-vertical"></div>
-          <div className="linha-demarcatoria" id="linha-horizontal"></div>
+        {/* ======================================================================= */}
+        {/* === A "PONTE" ENTRE REACT E O SCRIPT LEGADO === */}
+        {/* O script.js vai ler os atributos 'data-style-*' para saber quais nomes de classe usar. */}
+        {/* ======================================================================= */}
+        <div 
+          id="roda-container-wrapper" 
+          className={styles.rodaContainerWrapper}
+          data-style-fatiacontainer={styles.fatiaContainer}
+          data-style-anel={styles.anel}
+          data-style-subareatitulo={styles.subAreaTitulo}
+          data-style-linhainterna={styles.linhaInterna}
+        >
+          {/* MUDANÇA: Elementos estáticos agora usam as classes do objeto 'styles'. */}
+          <div className={`${styles.linhaDemarcatoria} ${styles.linhaVertical}`}></div>
+          <div className={`${styles.linhaDemarcatoria} ${styles.linhaHorizontal}`}></div>
           
-          <div id="anel-grande-area" className="anel-texto">
-            <div className="quadrante-cor" id="cor-pessoal"></div>
-            <div className="quadrante-cor" id="cor-qualidade"></div>
-            <div className="quadrante-cor" id="cor-relacionamentos"></div>
-            <div className="quadrante-cor" id="cor-profissional"></div>
-            <div className="quadrante-titulo" id="titulo-pessoal">PESSOAL</div>
-            <div className="quadrante-titulo" id="titulo-qualidade">QUALIDADE DE VIDA</div>
-            <div className="quadrante-titulo" id="titulo-relacionamentos">RELACIONAMENTOS</div>
-            <div className="quadrante-titulo" id="titulo-profissional">PROFISSIONAL</div>
-          </div>
-
-          <div id="anel-sub-area" className="anel-texto">
-            {/* Os 12 títulos das subáreas serão inseridos aqui pelo JavaScript */}
+          <div className={`${styles.anelGrandeArea} ${styles.anelTexto}`}>
+            <div className={`${styles.quadranteCor} ${styles.corPessoal}`}></div>
+            <div className={`${styles.quadranteCor} ${styles.corQualidade}`}></div>
+            <div className={`${styles.quadranteCor} ${styles.corRelacionamentos}`}></div>
+            <div className={`${styles.quadranteCor} ${styles.corProfissional}`}></div>
+            <div className={`${styles.quadranteTitulo} ${styles.tituloPessoal}`}>PESSOAL</div>
+            <div className={`${styles.quadranteTitulo} ${styles.tituloQualidade}`}>QUALIDADE DE VIDA</div>
+            <div className={`${styles.quadranteTitulo} ${styles.tituloRelacionamentos}`}>RELACIONAMENTOS</div>
+            <div className={`${styles.quadranteTitulo} ${styles.tituloProfissional}`}>PROFISSIONAL</div>
           </div>
           
-          <div id="roda-da-vida-container">
-            {/* As 12 fatias serão inseridas aqui */}
-            <div id="anel-central"></div>
-          </div>
+          {/* Contêiner que será preenchido pelo script.js */}
+          <div id="anel-sub-area" className={`${styles.anelSubArea} ${styles.anelTexto}`}></div>
+          
+          {/* Contêiner que será preenchido pelo script.js */}
+          <div id="roda-da-vida-container" className={styles.rodaDaVidaContainer}></div>
+          <div className={styles.anelCentral}></div>
         </div>
 
-        <div id="reflection-questions-step1" className="reflection-questions hidden">
+        <div id="reflection-questions-step1" className={`${styles.reflectionQuestions} ${styles.hidden}`}>
           <h3>Perguntas para Reflexão</h3>
           <div className="question-group">
             <label htmlFor="reflexao1">Olhando para essa Roda, qual o seu nível de satisfação geral com os resultados da sua vida?</label>
@@ -157,15 +152,15 @@ const FerramentaRodaDaVida = ({ serverSideSecret }) => {
         <button id="goto-step2-btn" className="primary-btn">Ver Minha Roda da Vida</button>
       </section>
 
-      {/* ETAPA 2: RESULTADO E FORMULÁRIO */}
+      {/* ETAPA 2: RESULTADO E FORMULÁRIO (ESQUELETO) */}
       <section id="step2" className="step">
         <h2>Sua Roda da Vida - Resultado</h2>
-        <div id="resultado-container">
-          <div className="resultado-coluna">
+        <div id="resultado-container" className={styles.resultadoContainer}>
+          <div className={styles.resultadoColuna}>
             <h4>Sua Roda da Vida</h4>
-            <div id="imagem-roda-container"></div> 
+            <div id="imagem-roda-container" className={styles.imagemRodaContainer}></div> 
           </div>
-          <div className="resultado-coluna">
+          <div className={styles.resultadoColuna}>
             <h4>Gráfico de Equilíbrio</h4>
             <canvas id="graficoRodaDaVida"></canvas>
           </div>
@@ -183,6 +178,5 @@ const FerramentaRodaDaVida = ({ serverSideSecret }) => {
     </PageLayout>
   );
 };
-
 
 export default FerramentaRodaDaVida;

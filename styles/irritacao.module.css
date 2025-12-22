@@ -1,0 +1,488 @@
+/* ================================================================== */
+/* === ESTILOS ESPECÍFICOS DA FERRAMENTA "MAPA DA IRRITAÇÃO"      === */
+/* ================================================================== */
+
+/* ================================================= */
+/* ESTILOS PARA A NOVA ETAPA 0 (INTRODUÇÃO PERSUASIVA) */
+/* ================================================= */
+
+.introContainer {
+    max-width: 700px;
+    margin: 0 auto;
+}
+
+.introHeader {
+    text-align: center;
+    margin-bottom: 50px;
+}
+
+.introHeader h1 {
+    font-size: clamp(1.8rem, 5vw, 2.5rem);
+    color: var(--primary-color);
+    line-height: 1.2;
+}
+
+.introHeader p {
+    font-size: 1.1rem;
+    color: var(--secondary-color);
+    max-width: 550px;
+    margin: 15px auto 0;
+}
+
+.insight {
+    margin-top: 20px;
+    font-size: 1.2rem;
+    font-weight: 500;
+    color: var(--accent-color);
+}
+
+.divider {
+    border: 0;
+    height: 1px;
+    background-color: #e0e0e0;
+    margin: 50px auto;
+}
+
+.painPointSection h2, .revelationSection h2, .toolIntroSection h2 {
+    text-align: center;
+    color: var(--primary-color);
+    margin-bottom: 25px;
+}
+
+.scenario {
+    font-style: italic;
+    text-align: center;
+    color: #7f8c8d;
+    padding: 15px;
+    background-color: #f8f9fa;
+    border-radius: 8px;
+}
+
+.reaction {
+    text-align: center;
+    font-weight: 600;
+    font-size: 1.1rem;
+    margin-top: 20px;
+    margin-bottom: 50px;
+}
+
+.triggersGrid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 20px;
+    margin-top: 20px;
+}
+
+.triggerCard {
+    background-color: #fff;
+    border: 1px solid var(--border-color);
+    padding: 20px;
+    border-radius: 12px;
+    text-align: center;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+}
+
+.triggerCard h4 {
+    margin: 0 0 10px 0;
+    color: var(--primary-color);
+}
+
+.triggerCard p {
+    margin: 0;
+    color: var(--secondary-color);
+    font-size: 0.95rem;
+}
+
+.toolIntroSection ol {
+    list-style: none;
+    padding: 0 0 50px 0;
+    max-width: 650px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.toolIntroSection li + li {
+    margin-top: 1rem;
+}
+
+.toolIntroSection li {
+	display: flex;
+	align-items: center;
+	gap: 1.5rem;
+	background: aliceblue;
+	padding: 1rem;
+	border-radius: 1rem;
+	width: 80%;
+    margin: 0 auto;
+	box-shadow: 0.25rem 0.25rem 0.75rem rgb(0 0 0 / 0.1);
+    box-sizing: border-box;
+    transition: transform 0.3s ease-out;
+}
+
+.toolIntroSection li::before {
+	counter-increment: list-item;
+	content: counter(list-item);
+	font-weight: 600;
+	width: 2em;
+	height: 2em;
+	background: rgb(105, 104, 104);
+	flex: 0 0 auto;
+	border-radius: 50%;
+	color: white;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+.toolIntroSection li:nth-child(even) {
+	flex-direction: row-reverse;
+	background: lavender;
+	margin-right: -2rem;
+	margin-left: 2rem;
+}
+
+.whyNowSection {
+    background-color: #f0f5ff;
+    padding: 30px;
+    border-radius: 12px;
+    text-align: center;
+    margin: 40px 0;
+}
+
+.whyNowSection h3 {
+    margin-top: 0;
+    color: var(--primary-color);
+}
+
+.goldSentence {
+    font-size: 1.2rem;
+    font-weight: 600;
+    font-style: italic;
+    color: var(--accent-color);
+    margin: 20px 0;
+    display: block;
+}
+
+.ctaSection {
+    text-align: center;
+    padding: 40px 0;
+}
+
+.ctaSection .large-btn {
+    padding: 18px 35px;
+    font-size: 1.2rem;
+    font-weight: 700;
+}
+
+.ctaSection p {
+    margin-top: 5px;
+    color: #7f8c8d;
+    font-size: 0.8rem;
+    font-style: italic;
+    font-weight: 600;
+}
+
+/* ------------------------------------------------------------------ */
+/* 1. ESTILOS DO CARROSSEL DE PERGUNTAS (ETAPA 1)
+/* ------------------------------------------------------------------ */
+.instructionsBox {
+    background-color: #f0f5ff;
+    border-left: 4px solid var(--accent-color);
+    padding: 15px;
+    margin-bottom: 25px;
+    border-radius: 4px;
+}
+
+.carouselContainer {
+    position: relative;
+    overflow: hidden;
+    width: 100%;
+    margin: 20px 0;
+}
+
+.carouselStage {
+    display: flex;
+    transition: transform 0.4s ease-in-out;
+}
+
+/* Estilo individual de cada card de pergunta dentro do carrossel */
+.questionCard {
+    width: calc(100% / 12); /* Garante que cada card ocupe o espaço de 1 pergunta */
+    flex-shrink: 0;
+    box-sizing: border-box;
+    padding: 20px;
+    background-color: #fff;
+    border: 1px solid var(--border-color);
+    border-radius: 12px;
+    margin-bottom: 20px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+    transition: box-shadow 0.2s ease-in-out, transform 0.2s ease-in-out;
+}
+
+/* Texto da pergunta dentro do card */
+.questionText {
+    margin: 0 0 20px 0;
+    line-height: 1.5;
+    font-size: 1.1rem;
+    color: #333;
+}
+
+/* Contêiner para o slider e seu feedback de texto */
+.sliderContainer {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    width: 100%;
+}
+
+/* O slider de irritação */
+.irritationSlider {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 100% !important;
+    height: 8px;
+    background: #e0e0e0;
+    border-radius: 5px;
+    outline: none;
+    cursor: pointer;
+}
+.irritationSlider::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 20px;
+    height: 20px;
+    background: var(--primary-color);
+    border-radius: 50%;
+    border: 2px solid #fff;
+    box-shadow: 0 0 4px rgba(0,0,0,0.2);
+}
+.irritationSlider::-moz-range-thumb {
+    width: 20px;
+    height: 20px;
+    background: var(--primary-color);
+    border-radius: 50%;
+    border: 2px solid #fff;
+    box-shadow: 0 0 4px rgba(0,0,0,0.2);
+}
+
+/* Texto de feedback abaixo do slider (Nível, Legenda) */
+.sliderFeedback {
+    font-size: 1rem;
+    color: var(--secondary-color);
+    text-align: left;
+    font-weight: 500;
+    padding-top: 5px;
+}
+.sliderValue {
+    font-weight: 700;
+    color: var(--primary-color);
+    font-size: 1rem;
+    text-align: center;
+}
+/*.sliderLegend {
+    /* Estilos para a legenda (Ex: "Raramente") podem ser adicionados aqui se necessário */
+/*}
+/* Contêiner da navegação do carrossel (botões e contador) */
+.carouselNavigation {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 20px;
+}
+
+/* Contador de slides (Ex: "1 / 12") */
+.carouselCounter {
+    font-weight: 600;
+    color: var(--secondary-color);
+}
+
+/* ------------------------------------------------------------------ */
+/* 2. ESTILOS DAS ETAPAS DE REFLEXÃO E RESULTADO (ETAPAS 2 E 3)
+/* ------------------------------------------------------------------ */
+
+/* Caixa de mensagem de "Parabéns" */
+.congratsMessage {
+    text-align: left;
+    padding: 25px 30px;
+    border-radius: 12px;
+    border: 1px solid #bde0fe;
+    background: linear-gradient(145deg, #f0f8ff, #e6f2ff); 
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+    margin-bottom: 30px;
+}
+.congratsMessage h2 {
+    font-size: clamp(1.6rem, 5vw, 2rem);
+    color: var(--primary-color);
+    text-align: center;
+    margin-bottom: 15px;
+    animation: pulse-glow 2.5s infinite ease-in-out;
+}
+.congratsMessage h3 {
+    font-size: clamp(1.1rem, 4vw, 1.3rem);
+    color: var(--secondary-color);
+    text-align: center;
+    font-weight: 600;
+    margin-top: 0;
+    margin-bottom: 20px;
+}
+
+/* Animação de brilho para o título de "Parabéns" */
+@keyframes pulse-glow {
+    0% { transform: scale(1); text-shadow: 0 0 5px rgba(10, 37, 64, 0.2); }
+    50% { transform: scale(1.03); text-shadow: 0 0 15px rgba(78, 205, 196, 0.7); }
+    100% { transform: scale(1); text-shadow: 0 0 5px rgba(10, 37, 64, 0.2); }
+}
+
+/* Contêiner para as perguntas de reflexão */
+.reflectionQuestions .formGroup {
+    margin-bottom: 25px;
+}
+.reflectionQuestions label {
+    display: block;
+    font-weight: 600;
+    line-height: 1.4;
+}
+
+/* Grupo do slider de reflexão (0 a 10) */
+.sliderGroup {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-top: 15px;
+}
+.reflectionSlider {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 100%;
+    height: 8px;
+    background: #e0e0e0;
+    border-radius: 5px;
+    outline: none;
+    cursor: pointer;
+}
+.reflectionSlider::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 20px;
+    height: 20px;
+    background: var(--primary-color);
+    border-radius: 50%;
+    border: 2px solid #fff;
+    box-shadow: 0 0 4px rgba(0,0,0,0.2);
+}
+.reflectionSlider::-moz-range-thumb {
+    width: 20px;
+    height: 20px;
+    background: var(--primary-color);
+    border-radius: 50%;
+    border: 2px solid #fff;
+    box-shadow: 0 0 4px rgba(0,0,0,0.2);
+}
+
+/* --- NOVOS ESTILOS PARA O DIAGNÓSTICO PRELIMINAR --- */
+
+.diagnosisPreviewBox {
+    background-color: #f8f9fa;
+    border: 1px solid #e9ecef;
+    border-radius: 12px;
+    padding: 25px;
+    margin-bottom: 30px;
+    text-align: center;
+}
+
+.diagnosisPreviewBox h4 {
+    color: #495057;
+    margin-top: 0;
+    margin-bottom: 20px;
+    font-weight: 600;
+}
+
+.dominantTrigger {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 15px;
+    margin-bottom: 15px;
+}
+
+.triggerIcon {
+    font-size: 2.5rem;
+}
+
+.dominantTrigger h3 {
+    font-size: 1.8rem;
+    color: #c0392b; /* Cor de destaque */
+    margin: 0;
+}
+
+.triggerDescription {
+    font-size: 1.1rem;
+    font-weight: 600;
+    text-align: center;
+    color: #6c757d;
+    max-width: 450px;
+    margin: 0 auto 20px;
+}
+
+.scoreBarContainer {
+    width: 80%;
+    max-width: 300px;
+    height: 12px;
+    background-color: #e0e0e0;
+    border-radius: 6px;
+    margin: 10px auto;
+    overflow: hidden;
+}
+
+.scoreBar {
+    height: 100%;
+    background-color: #c0392b; /* Mesma cor de destaque */
+    border-radius: 6px;
+    transition: width 0.5s ease-in-out;
+}
+
+.scoreText {
+    font-size: 0.8rem;
+    font-weight: 400;
+    color: #495057;
+    text-align: center;
+}
+
+.teaser {
+    text-align: left;
+    max-width: 00px;
+    margin: 30px auto 0;
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 8px;
+}
+
+.teaser ul {
+    padding-left: 25px;
+    margin: 0;
+    color: #343a40;
+}
+
+.teaser li {
+    margin-bottom: 10px;
+}
+
+/* Formulário de captura de email no final */
+.emailForm {
+    margin-top: 0;
+}
+
+/* Opção de checkbox "Quero receber um presente" */
+.giftOption { 
+    margin: 20px 0; 
+    display: flex; 
+    align-items: center; 
+}
+.giftOption input[type="checkbox"] { 
+    margin-right: 10px; 
+    transform: scale(1.3); 
+}
+.giftOption label { 
+    cursor: pointer; 
+}
+

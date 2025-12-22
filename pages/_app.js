@@ -2,9 +2,7 @@
 
 import { useEffect } from 'react';
 import { SessionProvider } from 'next-auth/react';
-
-import '../public/assets/global-style.css';
-import '../public/home-style.css';
+import '../styles/global-style.css';
 
 // Altere a assinatura da função para receber a 'session'
 function MyApp({ Component, pageProps: { session, ...pageProps } }) {
@@ -13,7 +11,6 @@ function MyApp({ Component, pageProps: { session, ...pageProps } }) {
   }, []);
 
   return (
-    // 2. ENVOLVA O COMPONENTE COM O PROVIDER
     <SessionProvider session={session}>
       <Component {...pageProps} />
     </SessionProvider>

@@ -20,23 +20,36 @@ export default async function handle(req, res) {
     return res.status(401).json({ message: 'Não autorizado.' });
   }
 
-  try {
-    // Pega o nome enviado pelo formulário
-    const { name } = req.body;
+  // 1. Pega TODOS os dados enviados pelo formulário
+  const { name, discProfile } = req.body;
 
-    // Tenta atualizar o usuário no banco de dados
+  // 2. Cria um objeto dinâmico SÓ com os dados que realmente foram enviados
+  //    Isso evita erros caso um dos campos venha como 'undefined'.
+  const dataToUpdate = {};
+  if (name !== undefined) {
+    dataToUpdate.name = name;
+  }
+  if (discProfile !== undefined) {
+    dataToUpdate.discProfile = discProfile;
+  }
+
+  // 3. Verifica se há algo para atualizar. Se o usuário só clicou em "Salvar"
+  //    sem mudar nada, não precisamos acessar o banco de dados.
+  if (Object.keys(dataToUpdate).length === 0) {
+    return res.status(400).json({ message: 'Nenhum dado novo para atualizar.' });
+  }
+
+  try {
+    // 4. Atualiza o usuário no banco de dados com o objeto dinâmico
     const updatedUser = await prisma.user.update({
       where: { id: session.user.id },
-      data: { name: name },
+      data: dataToUpdate, // Agora ele salva TUDO que foi enviado!
     });
 
-    // ---- ESPIÃO 3: Confirma que a atualização no banco de dados funcionou ----
     return res.status(200).json({ success: true, user: updatedUser });
 
   } catch (error) {
-    // ---- ESPIÃO 4: Se algo der errado, mostra o erro exato ----
-    console.error('API LOG: ERRO! Ocorreu um problema ao tentar atualizar o banco de dados.');
-    console.error('API LOG: O erro detalhado do Prisma é:', error);
-    return res.status(500).json({ message: 'Ocorreu um erro no servidor.' });
+    console.error('API Error: Falha ao atualizar o perfil no banco de dados.', error);
+    return res.status(500).json({ message: 'Ocorreu um erro no servidor ao salvar os dados.' });
   }
 }

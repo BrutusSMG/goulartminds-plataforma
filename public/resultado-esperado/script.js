@@ -41,9 +41,38 @@ document.addEventListener('DOMContentLoaded', () => {
 
     stepPrevButtons.forEach(button => button.addEventListener('click', () => { if (currentStep > 0) showStep(currentStep - 1); }));
     
-    finalizeButton.addEventListener('click', () => {
+    finalizeButton.addEventListener('click', async () => {
+        finalizeButton.disabled = true;
+        finalizeButton.textContent = 'Finalizando...';
+        try {
+            console.log("Finalizando ferramenta. Tentando salvar a conclusão no perfil...");
+
+        const response = await fetch('/api/tools/complete', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ toolName: 'Resultado_esperado' }) // Identificador interno da ferramenta
+        });
+
+        if (!response.ok) {
+            console.error('Falha ao salvar a conclusão da ferramenta no perfil.');
+        } else {
+            console.log('Conclusão da ferramenta salva com sucesso no perfil!');
+        }
+
         generateFinalSummary();
         showStep(steps.length - 1);
+
+        } catch (error) {
+            // Captura qualquer erro inesperado (ex: problema de rede)
+            console.error('Ocorreu um erro inesperado ao finalizar a ferramenta:', error);
+            // Mesmo em caso de erro, tentamos mostrar o resumo para o usuário
+            generateFinalSummary();
+            showStep(steps.length - 1);
+        } finally {
+            // Este bloco SEMPRE é executado, garantindo que o botão seja reativado
+            finalizeButton.disabled = false;
+            finalizeButton.textContent = 'Finalizar e Ver Resumo';
+        }
     });
 
     // =====================================================================

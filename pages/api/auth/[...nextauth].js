@@ -6,21 +6,17 @@ import EmailProvider from 'next-auth/providers/email';
 import client from '../../../lib/db'; 
 import GoogleProvider from 'next-auth/providers/google';
 
-// -> MUDANÇA: Definimos toda a configuração em uma constante exportável 'authOptions'
+// Variável para o nome do cookie de produção
+const prodCookieName = '__Secure-next-auth.session-token';
+
 export const authOptions = {
-  // 1. Adaptador: Conecta o NextAuth ao nosso banco de dados Prisma
   adapter: PrismaAdapter(client),
 
-  // 2. Provedores: Os métodos de login que vamos oferecer
   providers: [
-    // Adicionando o GoogleProvider com as variáveis de ambiente corretas
     GoogleProvider({
       clientId: process.env.GOOGLE_CLIENT_ID,
       clientSecret: process.env.GOOGLE_CLIENT_SECRET,
     }),
-
-    
-    // O EmailProvider está temporariamente desativado até configurarmos as variáveis de ambiente para ele.
     EmailProvider({
       server: {
         host: process.env.EMAIL_SERVER_HOST,
@@ -32,83 +28,150 @@ export const authOptions = {
       },
       from: process.env.EMAIL_FROM,
     }),
-    
   ],
 
-  // 3. Estratégia de Sessão: Usaremos JSON Web Tokens (JWT)
   session: {
     strategy: 'jwt',
   },
 
-  // 4. Callbacks: Permite customizar o comportamento
-  callbacks: {
-    async jwt({ token }) {
-      // Esta função agora será mais simples, mas muito mais robusta.
-      // A cada vez que um token JWT é verificado (ex: carregamento de página),
-      // nós vamos buscar os dados mais recentes do usuário no banco de dados.
+  // --- CORREÇÃO APLICADA AQUI ---
+  // Lógica de cookies condicional ao ambiente
+  cookies: {
+    sessionToken: {
+      name: process.env.NODE_ENV === 'production' 
+        ? prodCookieName 
+        : 'next-auth.session-token', // Nome diferente e mais simples para dev
+      options: {
+        httpOnly: true,
+        sameSite: 'lax',
+        path: '/',
+        // 'secure' será true apenas em produção
+        secure: process.env.NODE_ENV === 'production',
+        // 'domain' será definido apenas em produção
+        domain: process.env.NODE_ENV === 'production' 
+          ? '.goulartminds.com.br' 
+          : undefined, // Em dev, o navegador usará 'localhost'
+      }
+    },
+  },
 
-      // Se o token não tiver um ID, não podemos fazer nada.
-      if (!token.sub) {
+  callbacks: {
+    // Seus callbacks jwt e session permanecem exatamente como estão.
+    // Eles já estão corretos.
+    async jwt({ token, user, trigger, account } ) {
+
+      // 1. Lógica para quando a sessão é atualizada via update() no frontend
+      if (trigger === "update" && session) {
+        // Atualiza o token com os novos dados recebidos
+        if (session.name) {
+          token.name = session.name;
+        }
+        if (session.image) {
+          token.picture = session.image;
+        }
+        if (session.discProfile !== undefined) {
+          token.discProfile = session.discProfile;
+        }
+        // Retorna o token imediatamente atualizado
         return token;
       }
+      
+      // 2. Lógica para o login inicial e para a verificação normal da sessão
+    // (Mantém sua lógica original, mas com pequenas correções)
+    const userId = token.id || user?.id || token.sub;
+    if (!userId) {
+      return token;
+    }
 
-      // Busca o usuário no banco de dados usando o ID do token (o campo 'sub' é o ID padrão do JWT)
-      const dbUser = await client.user.findUnique({
-        where: {
-          id: token.sub,
-        },
+    // Busca o usuário no banco de dados
+    let dbUser = await prisma.user.findUnique({ // Use 'prisma' ou o nome do seu client
+      where: { id: userId },
+    });
+
+    if (!dbUser) {
+      // Se o usuário não for encontrado no DB, invalida o token
+      return null;
+    }
+
+    const toolTags = dbUser.tags.filter(tag => tag.startsWith('tool_'));
+
+    if (toolTags.length > 0) {
+      // Extrai os nomes das ferramentas (ex: 'tool_irritacao_completed' -> 'Irritacao')
+      const newTools = toolTags.map(tag => {
+        const name = tag.replace('tool_', '').replace('_completed', '');
+        return name.charAt(0).toUpperCase() + name.slice(1); // Capitaliza: 'irritacao' -> 'Irritacao'
       });
 
-      // Se o usuário não for encontrado no banco, algo está errado.
-      if (!dbUser) {
-        return token;
+      // Filtra as ferramentas que ainda não estão em 'completedTools'
+      const uniqueNewTools = newTools.filter(tool => !dbUser.completedTools.includes(tool));
+
+      if (uniqueNewTools.length > 0) {
+        // Filtra as tags antigas, removendo as que foram movidas
+        const remainingTags = dbUser.tags.filter(tag => !tag.startsWith('tool_'));
+
+        // Atualiza o usuário no banco de dados em uma única operação
+        dbUser = await prisma.user.update({
+          where: { id: dbUser.id },
+          data: {
+            completedTools: {
+              push: uniqueNewTools, // Adiciona as novas ferramentas
+            },
+            tags: remainingTags, // Define a nova lista de tags (sem as de ferramentas)
+          },
+        });
+        console.log(`Sincronizadas ${uniqueNewTools.length} ferramentas para o usuário ${dbUser.email}.`);
       }
+    }
 
-      // Atualiza o token com os dados mais recentes do banco de dados.
-      token.name = dbUser.name;
-      token.email = dbUser.email;
-      token.plan = dbUser.plan;
-      token.id = dbUser.id; // Garante que nosso 'id' customizado também esteja lá
+    // Preenche o token com os dados mais recentes do banco de dados
+    return {
+      ...token, // Mantém os dados existentes no token (como 'sub', 'iat', 'exp')
+      id: dbUser.id,
+      name: dbUser.name,
+      email: dbUser.email,
+      picture: dbUser.image, // Use 'picture' para a imagem, é o padrão do JWT
+      plan: dbUser.plan,
+      tags: dbUser.tags,
+      discProfile: dbUser.discProfile, // Pega o discProfile do banco de dados
+      completedTools: dbUser.completedTools,
+    };
+    // --- FIM DA CORREÇÃO ---
+  },
 
-      return token;
-    },
+  async session({ session, token }) {
+    // --- INÍCIO DA CORREÇÃO ---
 
-    async session({ session, token }) {
-      // Agora, a sessão sempre receberá os dados mais frescos que o JWT acabou de buscar.
-      if (session.user) {
-        session.user.id = token.id;
-        session.user.plan = token.plan;
-        session.user.name = token.name;
-        session.user.email = token.email;
-      }
-      return session;
+    // Passa os dados atualizados do token para o objeto de sessão do frontend
+    if (token && session.user) {
+      session.user.id = token.id;
+      session.user.name = token.name;
+      session.user.email = token.email;
+      session.user.image = token.picture; // Passa a imagem para o frontend
+      session.user.plan = token.plan;
+      session.user.tags = token.tags;
+      session.user.discProfile = token.discProfile; // Passa o discProfile para o frontend
+      session.user.completedTools = token.completedTools;
+    }
+    
+    return session;
     },
   },
 
-  // 5. Páginas Customizadas (Opcional, mas recomendado)
   pages: {
-  signIn: '/auth/signin', // Uma página de login customizada
-  verifyRequest: '/auth/verify-request', // Página para "Verifique seu e-mail"
-  error: '/auth/error', // Página para exibir erros de autenticação
+    signIn: '/auth/signin',
+    verifyRequest: '/auth/verify-request',
+    error: '/auth/error',
   },
 
-  // 6. Segredos: Uma chave secreta para assinar os tokens
   secret: process.env.NEXTAUTH_SECRET,
 };
 
-// =========================================================================
-// 2. O NOVO "CAPTURADOR DE ERROS"
-//    Esta função agora envolve a execução do NextAuth.
-// =========================================================================
+// Seu wrapper de erro pode permanecer como está.
 export default async function auth(req, res) {
   try {
-    // Tenta executar o NextAuth normalmente com a configuração acima
     return await NextAuth(req, res, authOptions);
   } catch (error) {
-    // SE ALGO QUEBRAR, NÓS CAPTURAMOS O ERRO AQUI
     console.error("ERRO CATASTRÓFICO NA INICIALIZAÇÃO DO NEXTAUTH:", error);
-
-    // E enviamos uma resposta JSON detalhada em vez de deixar o servidor quebrar
     res.status(500).json({
       success: false,
       message: "Falha crítica na inicialização do NextAuth.",

@@ -1,17 +1,29 @@
 /**
  * Ferramenta Roda da Vida - Goulart Minds
- * Versão Refatorada para ambiente Next.js/Vercel * 
+ * Versão Refatorada para ambiente Next.js/Vercel
  */
 
 // Previne a reinicialização do script em ambientes de desenvolvimento com Hot Reload (HMR)
-if (typeof inicializarRodaDaVida !== 'function') {
+if (typeof window.inicializarRodaDaVida === 'undefined') {
 
-    function inicializarRodaDaVida() {
+    window.inicializarRodaDaVida = function() {
         console.log("Inicializando Ferramenta Roda da Vida...");
 
         // ===============================================================
         // SEÇÃO 1: DECLARAÇÃO DE VARIÁVEIS, CONSTANTES E DADOS
         // ===============================================================
+        
+        // --- MUDANÇA 1: Lendo os nomes das classes do CSS Modules ---
+        const wrapper = document.getElementById('roda-container-wrapper');
+        if (!wrapper) {
+            console.error("Erro crítico: O elemento 'roda-container-wrapper' não foi encontrado no DOM.");
+            return; // Aborta a execução se o container principal não existir.
+        }
+        const CLASSE_FATIA_CONTAINER = wrapper.dataset.styleFatiacontainer;
+        const CLASSE_ANEL = wrapper.dataset.styleAnel;
+        const CLASSE_SUB_AREA_TITULO = wrapper.dataset.styleSubareatitulo;
+        const CLASSE_LINHA_INTERNA = wrapper.dataset.styleLinhainterna;
+
         const estruturaRoda = [
             { subArea: "Saúde e|Disposição", cor: "rgba(231, 76, 60, 0.65)" },
             { subArea: "Desenvolvimento| Intelectual", cor: "rgba(211, 84, 0, 0.65)" },
@@ -31,13 +43,7 @@ if (typeof inicializarRodaDaVida !== 'function') {
         let userScores = {};
         todasSubAreas.forEach(subArea => userScores[subArea] = 0);
 
-        // --- Elementos do DOM ---
         const container = document.getElementById('roda-da-vida-container');
-        if (!container) {
-            console.error("Erro crítico: O elemento 'roda-da-vida-container' não foi encontrado no DOM.");
-            return; // Aborta a execução se o container principal não existir.
-        }
-        
         const containerSubArea = document.getElementById('anel-sub-area');
         const questionsContainer = document.getElementById('reflection-questions-step1');
 
@@ -47,18 +53,20 @@ if (typeof inicializarRodaDaVida !== 'function') {
         
         function renderizarRoda() {
             if (!container) return;
-            container.innerHTML = ''; // Limpa antes de renderizar
+            container.innerHTML = '';
 
             todasSubAreas.forEach((subArea, index) => {
                 const angulo = (index * 30) + 15;
                 const fatiaContainer = document.createElement('div');
-                fatiaContainer.className = 'fatia-container';
+                // --- MUDANÇA 2: Usando a classe lida do data-attribute ---
+                fatiaContainer.className = CLASSE_FATIA_CONTAINER;
                 fatiaContainer.style.transform = `rotate(${angulo}deg)`;
                 fatiaContainer.dataset.subArea = subArea;
 
                 for (let i = 10; i >= 1; i--) {
                     const anel = document.createElement('div');
-                    anel.className = 'anel';
+                    // --- MUDANÇA 2: Usando a classe lida do data-attribute ---
+                    anel.className = CLASSE_ANEL;
                     anel.dataset.value = i;
                     const tamanho = (i + 1) * (100 / 11);
                     anel.style.width = `${tamanho}%`;
@@ -71,14 +79,7 @@ if (typeof inicializarRodaDaVida !== 'function') {
                     fatiaContainer.appendChild(anel);
                 }
                 
-                const anelCentral = document.createElement('div');
-                anelCentral.className = 'anel anel-central';
-                const tamanhoCentral = 1 * (100 / 11);
-                anelCentral.style.width = `${tamanhoCentral}%`;
-                anelCentral.style.height = `${tamanhoCentral}%`;
-                anelCentral.style.top = `${(100 - tamanhoCentral) / 2}%`;
-                anelCentral.style.left = `${(100 - tamanhoCentral) / 2}%`;
-                fatiaContainer.appendChild(anelCentral);
+                // O anel central agora é estático no JSX, não precisa ser criado aqui.
                 
                 container.appendChild(fatiaContainer);
             });
@@ -86,66 +87,67 @@ if (typeof inicializarRodaDaVida !== 'function') {
 
         function renderizarSubtitulos() {
             if (!containerSubArea) return;
-            containerSubArea.innerHTML = ''; // Limpa antes de renderizar
+            containerSubArea.innerHTML = '';
+            const fatorDistancia = 0.93;
 
-            // 1. Mede o tamanho atual do contêiner da roda.
-            const rodaWrapper = document.getElementById('roda-container-wrapper');
-            const diametroAtualDaRoda = rodaWrapper.offsetWidth; // offsetWidth nos dá a largura em pixels.
 
-            // 2. Calcula a distância do centro de forma dinâmica.
-            // O valor 0.48 é um "fator mágico" que posiciona o texto perto da borda.
-            // Ele representa 48% do raio da roda. Você pode ajustar (ex: 0.47 ou 0.49) para um ajuste fino.
-            const distanciaDoCentro = diametroAtualDaRoda * 0.48;
 
             estruturaRoda.forEach((item, index) => {
                 const angulo = (index * 30) + 15;
-                const distanciaDoCentro = 299;
-                const linhas = item.subArea.split('|');
                 
                 const titulo = document.createElement('div');
-                titulo.className = 'sub-area-titulo';
-                titulo.innerHTML = item.subArea.replace(/\|/g, '<br/>');
+                // --- MUDANÇA 2: Usando a classe lida do data-attribute ---
+                titulo.className = CLASSE_SUB_AREA_TITULO;
+                titulo.innerHTML = item.subArea.replace(/\|/g, '<br>');
 
-                const x = 50 + (distanciaDoCentro / 6.5 * Math.cos((angulo - 90) * Math.PI / 180));
-                const y = 50 + (distanciaDoCentro / 6.5 * Math.sin((angulo - 90) * Math.PI / 180));
+                // 1. Calcula o deslocamento a partir do centro.
+                //    '50 * fatorDistancia' resulta em um valor em 'vw' ou '%' relativo ao centro.
+                const offsetX = 50 * fatorDistancia * Math.cos((angulo - 90) * Math.PI / 180);
+                const offsetY = 50 * fatorDistancia * Math.sin((angulo - 90) * Math.PI / 180);
+
+                // 2. Aplica o deslocamento ao posicionamento inicial de 50%
+                //    A função 'calc()' do CSS faz a matemática no navegador.
+                titulo.style.left = `calc(50% + ${offsetX}%)`;
+                titulo.style.top = `calc(50% + ${offsetY}%)`;
                 
-                titulo.style.left = `${x}%`;
-                titulo.style.top = `${y}%`;
+                // 3. Aplica a rotação final para o texto ficar "de pé"
                 titulo.style.transform = `translate(-50%, -50%) rotate(${angulo}deg)`;
+                
                 containerSubArea.appendChild(titulo);
             });
         }
 
         function renderizarLinhasInternas() {
             if (!containerSubArea) return;
-            // Não precisa limpar, pois os subtítulos já limparam
             for (let i = 0; i < 12; i++) {
                 const angulo = i * 30;
                 const linha = document.createElement('div');
-                linha.className = 'linha-interna';
+                // --- MUDANÇA 2: Usando a classe lida do data-attribute ---
+                linha.className = CLASSE_LINHA_INTERNA;
                 linha.style.transform = `rotate(${angulo}deg)`;
                 containerSubArea.appendChild(linha);
             }
         }
 
         function renderizarGraficoResultado() {
-            // A dependência do Chart.js deve ser carregada no HTML/JSX
-            if (typeof Chart === 'undefined') {
-                console.error('Chart.js não foi carregado. O gráfico não pode ser renderizado.');
-                return;
-            }
+            if (typeof Chart === 'undefined') return;
             const ctx = document.getElementById('graficoRodaDaVida').getContext('2d');
             const data = todasSubAreas.map(area => userScores[area]);
             const cores = todasSubAreas.map(area => estruturaRoda.find(item => item.subArea === area).cor);
 
-            new Chart(ctx, {
+            // Destrói gráfico anterior se existir, para evitar sobreposição
+            if (window.myRadarChart instanceof Chart) {
+                window.myRadarChart.destroy();
+            }
+
+            window.myRadarChart = new Chart(ctx, {
                 type: 'radar',
                 data: {
-                    labels: todasSubAreas.map(l => l.replace(/\|/g, ' ')), // Remove quebras de linha para o gráfico
+                    labels: todasSubAreas.map(l => l.split('|')), // Chart.js 4 aceita arrays para multiline
                     datasets: [{
                         label: 'Nível de Satisfação',
                         data: data,
-                        backgroundColor: cores.map(c => c.replace('0.65', '0.5')), // Ajusta opacidade
+                        backgroundColor: cores.map(c => c.replace('0.65', '0.5')),
                         borderColor: cores,
                         borderWidth: 2
                     }]
@@ -162,36 +164,26 @@ if (typeof inicializarRodaDaVida !== 'function') {
                         }
                     },
                     plugins: {
-                        legend: { labels: { font: { size: 14 } } }
-                    }
+                        legend: { display: false } // Legenda pode ser redundante aqui
+                    },
+                    responsive: true,
+                    maintainAspectRatio: true
                 }
             });
         }
 
         function gerarImagemDaRoda() {
-        // Verifica se a biblioteca html2canvas foi carregada
-        if (typeof html2canvas === 'undefined') {
-            console.error('html2canvas não foi carregado. A imagem não pode ser gerada.');
-            return;
+            if (typeof html2canvas === 'undefined') return;
+            const imagemContainer = document.getElementById('imagem-roda-container');
+            if (!wrapper || !imagemContainer) return;
+
+            html2canvas(wrapper).then(canvas => {
+                const imagem = new Image();
+                imagem.src = canvas.toDataURL('image/png');
+                imagemContainer.innerHTML = '';
+                imagemContainer.appendChild(imagem);
+            });
         }
-
-        const rodaWrapper = document.getElementById('roda-container-wrapper');
-        const imagemContainer = document.getElementById('imagem-roda-container');
-
-        if (!rodaWrapper || !imagemContainer) return;
-
-        // Usa a biblioteca para criar um canvas a partir do div da roda
-        html2canvas(rodaWrapper).then(canvas => {
-            // Converte o canvas em uma imagem PNG
-            const imagem = new Image();
-            imagem.src = canvas.toDataURL('image/png');
-            
-            // Limpa o contêiner e adiciona a nova imagem
-            imagemContainer.innerHTML = '';
-            imagemContainer.appendChild(imagem);
-        });
-
-    }
 
         // ===============================================================
         // SEÇÃO 3: EVENT LISTENER GLOBAL
@@ -200,19 +192,17 @@ if (typeof inicializarRodaDaVida !== 'function') {
         document.body.addEventListener('click', (e) => {
             const target = e.target;
 
-            // --- Lógica de clique na Roda (Etapa 1) ---
-            const anelClicado = target.closest('.anel:not(.anel-central)');
-            if (anelClicado) {
-                const fatiaContainer = anelClicado.closest('.fatia-container');
+            const anelClicado = target.closest(`.${CLASSE_ANEL}`);
+            if (anelClicado && !anelClicado.classList.contains('anel-central')) {
+                const fatiaContainer = anelClicado.closest(`.${CLASSE_FATIA_CONTAINER}`);
                 if (fatiaContainer) {
                     const subArea = fatiaContainer.dataset.subArea;
                     const nota = parseInt(anelClicado.dataset.value, 10);
-                    const cor = estruturaRoda.find(item => item.subArea === subArea).cor;
-
                     userScores[subArea] = nota;
                     console.log(`Área: ${subArea}, Nota: ${nota}`);
 
-                    const todosOsAneisDaFatia = fatiaContainer.querySelectorAll('.anel:not(.anel-central)');
+                    const cor = estruturaRoda.find(item => item.subArea === subArea).cor;
+                    const todosOsAneisDaFatia = fatiaContainer.querySelectorAll(`.${CLASSE_ANEL}`);
                     todosOsAneisDaFatia.forEach(anel => {
                         const valorAnel = parseInt(anel.dataset.value, 10);
                         if (valorAnel <= nota) {
@@ -231,7 +221,6 @@ if (typeof inicializarRodaDaVida !== 'function') {
                 }
             }
 
-            // --- Lógica de clique no botão de navegação ---
             if (target.id === 'goto-step2-btn') {
                 const todasPreenchidas = Object.values(userScores).every(score => score > 0);
                 if (!todasPreenchidas) {
@@ -239,17 +228,17 @@ if (typeof inicializarRodaDaVida !== 'function') {
                     return;
                 }
 
-                if (typeof window.handleTagUser === 'function') {
-                    window.handleTagUser('roda-da-vida-concluida');
-                } else {
-                    console.error('Função de tagueamento não encontrada. O tagueamento não ocorrerá.');
-                }
+                // --- MUDANÇA 4: Comunicação segura com React via CustomEvent ---
+                console.log("[Script] Disparando evento 'tagUser' para o React.");
+                const event = new CustomEvent('tagUser', { 
+                  detail: { tag: 'roda-da-vida-concluida' } 
+                });
+                document.dispatchEvent(event);
                 
-                window.handleTagUser('roda-da-vida-concluida');
                 document.getElementById('step1').classList.remove('active');
                 document.getElementById('step2').classList.add('active');
                 window.scrollTo(0, 0);
-                gerarImagemDaRoda()
+                gerarImagemDaRoda();
                 renderizarGraficoResultado();
             }
         });
@@ -261,12 +250,14 @@ if (typeof inicializarRodaDaVida !== 'function') {
         renderizarSubtitulos();
         renderizarLinhasInternas();
 
-        window.addEventListener('resize', () => {
-            console.log('Janela redimensionada, recalculando subtítulos...');
-            renderizarSubtitulos();
-        });
-    }
+        // Recalcula os subtítulos ao redimensionar a janela para manter a responsividade
+        window.addEventListener('resize', renderizarSubtitulos);
+    };
 
-    // Ponto de entrada que inicia a ferramenta
-    inicializarRodaDaVida();
+    // Adiciona um listener para garantir que o DOM esteja pronto antes de executar
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', window.inicializarRodaDaVida);
+    } else {
+        window.inicializarRodaDaVida();
+    }
 }

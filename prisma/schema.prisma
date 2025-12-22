@@ -17,8 +17,10 @@ model User {
   image         String?
   plan          String    @default("free")
   tags          String[]  @default([])
+  completedTools String[]  @default([])
   accounts      Account[]
   sessions      Session[]
+  discProfile   String?
 }
 
 model Account {

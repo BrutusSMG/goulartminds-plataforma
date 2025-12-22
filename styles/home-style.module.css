@@ -1,21 +1,21 @@
 /* Estilos específicos para a página home */
 
 /* 1. Introdução da página */
-.home-intro {
+.homeIntro {
     text-align: center;
     margin-bottom: 40px;
 }
 
 /* --- AJUSTE --- */
 /* Usamos clamp() para o título da home se adaptar a diferentes telas. */
-.home-intro h2 {
-    font-size: clamp(1.75rem, 5vw, 2.25rem); /* Mínimo, Ideal, Máximo */
+.homeIntro h2 {
+    font-size: clamp(1.75rem, 5vw, 2.0rem); /* Mínimo, Ideal, Máximo */
     color: var(--primary-color);
 }
 
 /* --- AJUSTE --- */
 /* Usamos clamp() para o parágrafo de introdução. */
-.home-intro p {
+.homeIntro p {
     font-size: clamp(1rem, 3vw, 1.125rem);
     color: var(--secondary-color);
     max-width: 600px;
@@ -23,7 +23,7 @@
 }
 
 /* 2. Grid que segura os cards das ferramentas */
-.tools-grid {
+.toolsGrid {
     display: grid;
     /* --- AJUSTE --- */
     /* Usamos repeat(auto-fit, ...) para um grid super flexível. */
@@ -34,7 +34,7 @@
 }
 
 /* 3. Estilo individual de cada card */
-.tool-card {
+.toolCard {
     display: flex;
     flex-direction: column;
     background-color: #fff;
@@ -45,37 +45,37 @@
     text-decoration: none; /* Remove o sublinhado do link */
     color: var(--text-color);
     transition: transform 0.2s ease-out, box-shadow 0.2s ease-out;
-    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.05); /* Sombra sutil padrão */
+    box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
 }
 
-.tool-card:hover {
+.toolCard:hover {
     transform: translateY(-5px);
-    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
 }
 
 /* --- AJUSTE --- */
 /* Usamos clamp() para o ícone. */
-.card-icon {
+.cardIcon {
     font-size: clamp(2.5rem, 8vw, 3rem);
     margin-bottom: 15px;
 }
 
 /* --- AJUSTE --- */
 /* Usamos clamp() para o título do card. */
-.tool-card h3 {
+.toolCard h3 {
     font-size: clamp(1.25rem, 4vw, 1.5rem);
     color: var(--primary-color);
     margin: 0 0 10px;
 }
 
-.tool-card p {
+.toolCard p {
     font-size: 1rem; /* Mantemos 1rem (16px) para o corpo do texto, para legibilidade. */
     color: var(--secondary-color);
     flex-grow: 1; /* Faz o parágrafo ocupar o espaço e empurrar o botão para baixo */
     margin-bottom: 20px;
 }
 
-.card-cta {
+.cardCta {
     font-weight: 700;
     color: var(--accent-color);
     font-size: 1rem;
@@ -84,7 +84,7 @@
 /* 4. Estilos para cards de ferramentas futuras (Em Breve) */
 
 /* Deixa o card com uma aparência "desabilitada" */
-.tool-card.disabled {
+.toolCard.disabled {
     pointer-events: none; /* Impede o clique no link */
     user-select: none;    /* Impede a seleção do texto */
     position: relative;   /* Necessário para posicionar o selo "Em breve" */
@@ -92,15 +92,15 @@
 }
 
 /* Deixa o conteúdo do card esmaecido */
-.tool-card.disabled .card-icon,
-.tool-card.disabled h3,
-.tool-card.disabled p,
-.tool-card.disabled .card-cta {
+.toolCard.disabled .card-icon,
+.toolCard.disabled h3,
+.toolCard.disabled p,
+.toolCard.disabled .card-cta {
     opacity: 0.5;
 }
 
 /* Estilo do selo "Em breve" */
-.card-badge {
+.cardBadge {
     position: absolute;
     top: 25px;
     right: -45px;
@@ -120,7 +120,7 @@
 /* ======================================================= */
 
 /* Estilo para o card no estado bloqueado */
-.tool-card.locked {
+.toolCard.locked {
     position: relative; /* Necessário para posicionar o cadeado */
     opacity: 0.6; /* Deixa o card um pouco transparente */
     cursor: not-allowed; /* Muda o cursor para indicar que não é clicável */
@@ -128,13 +128,13 @@
 }
 
 /* Remove o efeito de "levantar" dos cards bloqueados */
-.tool-card.locked:hover {
+.toolCard.locked:hover {
     transform: none;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05); /* Mantém a sombra base */
 }
 
 /* Estilo para o ícone de cadeado */
-.tool-card.locked::before {
+.toolCard.locked::before {
     content: '🔒'; /* O emoji de cadeado */
     position: absolute; /* Posicionamento absoluto em relação ao card */
     top: 15px;
