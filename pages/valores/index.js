@@ -444,8 +444,8 @@ const FerramentaValores = () => {
               <textarea id="motivator-${valueName}" data-value="${valueName}" data-type="motivator" rows="3" placeholder="Ex: Minha 'Honestidade' me ajuda a construir confiança..."></textarea>
             </div>
             <div class="${styles.formGroup}">
-              <label for="saboteur-${valueName}">Sabotador: Como ter o valor '${valueName}' te atrapalha a realizar seu objetivo?</label>
-              <textarea id="saboteur-${valueName}" data-value="${valueName}" data-type="saboteur" rows="3" placeholder="Ex: Às vezes, minha 'Honestidade' excessiva me faz criar conflitos..."></textarea>
+              <label for="sabotador-${valueName}">Sabotador: Como ter o valor '${valueName}' te atrapalha a realizar seu objetivo?</label>
+              <textarea id="sabotador-${valueName}" data-value="${valueName}" data-type="sabotador" rows="3" placeholder="Ex: Às vezes, minha 'Honestidade' excessiva me faz criar conflitos..."></textarea>
             </div>
           `;
           dualityContainer.appendChild(group);
@@ -838,7 +838,7 @@ const FerramentaValores = () => {
 
           {/* Mapeado da frase de impacto "A raiva é o sintoma..." */}
           <p className={styles.coreMessage}>
-            A raiva é o sintoma. <br /><strong>O valor violado é a causa.</strong>
+            A raiva é o sintoma. <br /><strong>O valor violado pode ser a causa.</strong>
           </p>
 
           {/* Mapeado da seção "O problema é que quase ninguém sabe..." */}

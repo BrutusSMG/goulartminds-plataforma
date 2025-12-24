@@ -77,21 +77,20 @@ export const authOptions = {
       }
       
       // 2. Lógica para o login inicial e para a verificação normal da sessão
-    // (Mantém sua lógica original, mas com pequenas correções)
-    const userId = token.id || user?.id || token.sub;
-    if (!userId) {
-      return token;
-    }
+      const userId = token.id || user?.id || token.sub;
+      if (!userId) {
+        return token;
+      }
 
-    // Busca o usuário no banco de dados
-    let dbUser = await prisma.user.findUnique({ // Use 'prisma' ou o nome do seu client
-      where: { id: userId },
-    });
+      // Busca o usuário no banco de dados
+      let dbUser = await client.user.findUnique({
+        where: { id: userId },
+      });
 
-    if (!dbUser) {
-      // Se o usuário não for encontrado no DB, invalida o token
-      return null;
-    }
+      if (!dbUser) {
+        // Se o usuário não for encontrado no DB, invalida o token
+        return null;
+      }
 
     const toolTags = dbUser.tags.filter(tag => tag.startsWith('tool_'));
 
@@ -110,7 +109,7 @@ export const authOptions = {
         const remainingTags = dbUser.tags.filter(tag => !tag.startsWith('tool_'));
 
         // Atualiza o usuário no banco de dados em uma única operação
-        dbUser = await prisma.user.update({
+        dbUser = await client.user.update({
           where: { id: dbUser.id },
           data: {
             completedTools: {
@@ -135,7 +134,6 @@ export const authOptions = {
       discProfile: dbUser.discProfile, // Pega o discProfile do banco de dados
       completedTools: dbUser.completedTools,
     };
-    // --- FIM DA CORREÇÃO ---
   },
 
   async session({ session, token }) {
