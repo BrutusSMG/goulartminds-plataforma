@@ -1,7 +1,7 @@
 // /pages/api/tools/complete.js
 import { getServerSession } from 'next-auth/next';
 import { authOptions } from '../auth/[...nextauth]';
-import client from '../../../lib/db'; // Ajuste o caminho se necessário
+import client from '../../../lib/db'; 
 
 export default async function handle(req, res) {
   if (req.method !== 'POST') {
@@ -19,7 +19,7 @@ export default async function handle(req, res) {
   }
 
   try {
-    await client.user.update({
+    await client.user.updateMany({
       where: { 
         id: session.user.id,
         NOT: {
