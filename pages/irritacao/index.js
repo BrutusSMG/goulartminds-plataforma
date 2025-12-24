@@ -45,6 +45,25 @@ export default function FerramentaIrritacao() {
     useEffect(() => {
         if (typeof window !== 'undefined' && hasAccess && status !== 'loading') {
 
+            const handleCompleteTool = async (toolName) => {
+                // Verifica se o usuário está logado antes de tentar salvar o progresso
+                if (status !== 'authenticated') {
+                    console.log("Usuário não autenticado. Progresso não será salvo.");
+                    return;
+                }
+
+                try {
+                    await fetch('/api/tools/complete', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({ toolName }),
+                    });
+                    console.log(`Ferramenta '${toolName}' marcada como concluída.`);
+                } catch (error) {
+                    console.error('Erro ao marcar ferramenta como concluída:', error);
+                }
+            };
+
             function inicializarFerramenta() {
 
                 // --- 1. DEFINIÇÕES E DADOS ---                
@@ -155,7 +174,7 @@ export default function FerramentaIrritacao() {
                     window.scrollTo(0, 0);
                 });
 
-                document.getElementById('goto-step3-btn')?.addEventListener('click', () => {
+                document.getElementById('goto-step3-btn')?.addEventListener('click', async () => {
                     const reflection1 = document.getElementById('reflection1').value;
                     const reflection2 = document.getElementById('reflection2').value;
                     const reflection3 = document.getElementById('reflection3').value;
@@ -177,6 +196,8 @@ export default function FerramentaIrritacao() {
                     
                     // Chama a nova função para exibir o diagnóstico melhorado
                     exibirDiagnosticoPreliminar(scores);
+
+                    await handleCompleteTool('irritacao');
                     
                     document.getElementById('step2').classList.remove('active');
                     document.getElementById('step3').classList.add('active');

@@ -337,6 +337,23 @@ const FerramentaValores = () => {
       // --- Funções Auxiliares ---
       const isMobile = () => window.innerWidth < 768;
 
+      const handleCompleteTool = async (toolName) => {
+        if (status !== 'authenticated') {
+          console.log("Usuário não autenticado. Progresso não será salvo.");
+          return;
+        }
+        try {
+          await fetch('/api/tools/complete', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ toolName }),
+          });
+            console.log(`Ferramenta '${toolName}' marcada como concluída.`);
+        } catch (error) {
+            console.error('Erro ao marcar ferramenta como concluída:', error);
+        }
+      };
+
       function navigateToStep(stepNumber) {
         document
           .querySelectorAll(".step")
@@ -739,6 +756,7 @@ const FerramentaValores = () => {
             if (target.id === 'goto-step6-btn') {
                 calculateFinalResult();
                 navigateToStep(6);
+                handleCompleteTool('valores');
             }
 
             // --- Lógica do Confronto (Passo 5) ---

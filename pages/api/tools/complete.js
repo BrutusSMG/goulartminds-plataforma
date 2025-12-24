@@ -1,7 +1,7 @@
 // /pages/api/tools/complete.js
 import { getServerSession } from 'next-auth/next';
 import { authOptions } from '../auth/[...nextauth]';
-import prisma from '../../../lib/db'; // Ajuste o caminho se necessário
+import client from '../../../lib/db'; // Ajuste o caminho se necessário
 
 export default async function handle(req, res) {
   if (req.method !== 'POST') {
@@ -14,26 +14,28 @@ export default async function handle(req, res) {
   }
 
   const { toolName } = req.body;
-  if (!toolName) {
-    return res.status(400).json({ message: 'O nome da ferramenta é obrigatório.' });
+  if (!toolName || typeof toolName !== 'string') {
+    return res.status(400).json({ message: 'O nome da ferramenta (string) é obrigatório.' });
   }
 
   try {
-    // Adiciona a nova ferramenta ao array 'completedTools'
-    // Usando 'push' para não duplicar se o usuário refizer a ferramenta
-    const user = await prisma.user.findUnique({ where: { id: session.user.id } });
-    if (!user.completedTools.includes(toolName)) {
-        await prisma.user.update({
-            where: { id: session.user.id },
-            data: {
-                completedTools: {
-                    push: toolName,
-                },
-            },
-        });
-    }
+    await client.user.update({
+      where: { 
+        id: session.user.id,
+        NOT: {
+          completedTools: {
+            has: toolName,
+          },
+        },
+      },
+      data: {
+        completedTools: {
+          push: toolName,
+        },
+      },
+    });
 
-    res.status(200).json({ success: true });
+    res.status(200).json({ success: true, message: 'Progresso salvo.' });
   } catch (error) {
     console.error('API Error: Falha ao salvar a ferramenta concluída.', error);
     res.status(500).json({ message: 'Ocorreu um erro no servidor.' });
