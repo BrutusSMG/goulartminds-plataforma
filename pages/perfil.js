@@ -20,11 +20,16 @@ export default function PerfilPage() {
   const [previewUrl, setPreviewUrl] = useState(null); 
   const [discProfile, setDiscProfile] = useState('');
 
+  const [celular, setCelular] = useState(''); 
+  const [cidade, setCidade] = useState(''); 
+
   useEffect(() => {
-    if (session?.user?.name || '') {
-      setName(session.user.name);
-      setPreviewUrl(session.user.image || null);
-      setDiscProfile(session.user.discProfile || '');
+    if (session) {
+      setName(session.user?.name || '');
+      setPreviewUrl(session.user?.image || null);
+      setDiscProfile(session.user?.discProfile || '');
+      setCelular(session.user?.celular || '');
+      setCidade(session.user?.cidade || '');
     }
   }, [session]);
 
@@ -53,27 +58,43 @@ export default function PerfilPage() {
     if (name !== session.user.name) {
       changes.name = name;
     }
-    if (discProfile !== (session.user.discProfile || '')) { // Compara com o valor da sessão ou string vazia
+    if (discProfile !== (session.user.discProfile || '')) { 
       changes.discProfile = discProfile;
+    }
+
+    if (celular !== (session.user.celular || '')) {
+      changes.celular = celular;
+    }
+
+    if (cidade !== (session.user.cidade || '')) {
+      changes.cidade = cidade;
     }
 
     // 2. Verifica se há alguma alteração de texto para salvar
     if (Object.keys(changes).length > 0) {
-      const profileResponse = await fetch('/api/user/update-profile', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(changes),
-      });
+      try {
+        const profileResponse = await fetch('/api/user/update-profile', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(changes),
+        });
 
-      if (!profileResponse.ok) {
-        const result = await profileResponse.json();
-        setMessage(result.message || 'Erro ao atualizar os dados do perfil.');
-        setIsSubmitting(false);
-        return;
+        if (!profileResponse.ok) {
+          const result = await profileResponse.json();
+          setMessage(result.message || 'Erro ao atualizar os dados do perfil.');
+          setIsSubmitting(false);
+          return;
+        }
+        
+        // Atualiza a sessão localmente com os dados que foram alterados
+        await update(changes);
+        setMessage('Perfil atualizado com sucesso!');
+
+      } catch (error) {
+        setMessage(error.message || 'Ocorreu um erro inesperado.');
       }
-      
-      // Atualiza a sessão localmente com os dados que foram alterados
-      await update(changes);
+    } else {
+      setMessage('Nenhum dado de texto para atualizar.');
     }
 
     // 3. Verifica se há uma nova imagem para enviar (lógica separada)
@@ -197,6 +218,35 @@ export default function PerfilPage() {
               placeholder="Como você gostaria de ser chamado?"
               style={{ width: '100%', padding: '10px', border: '1px solid #ccc', borderRadius: '5px' }}
             />
+          </div>
+
+          <div style={{ display: 'flex', gap: '20px', marginBottom: '20px' }}>
+            {/* Campo Celular (metade da largura) */}
+            <div style={{ flex: 1 }}>
+              <label htmlFor="celular" style={{ display: 'block', marginBottom: '5px' }}>Celular</label>
+              <input
+                type="tel" // Usar type="tel" é bom para semântica e mobile
+                id="celular"
+                value={celular} // Você precisará de um estado 'celular'
+                onChange={(e) => setCelular(e.target.value)}
+                placeholder="(XX) XXXXX-XXXX"
+                style={{ width: '100%', padding: '10px', border: '1px solid #ccc', borderRadius: '5px' }}
+              />
+            </div>
+
+            {/* Campo Cidade (outra metade da largura) */}
+            <div style={{ flex: 1 }}>
+              <label htmlFor="cidade" style={{ display: 'block', marginBottom: '5px' }}>Cidade</label>
+              <input
+                type="text"
+                id="cidade"
+                value={cidade} // Você precisará de um estado 'cidade'
+                onChange={(e) => setCidade(e.target.value)}
+                placeholder="Ex: São Paulo, SP"
+                style={{ width: '100%', padding: '10px', border: '1px solid #ccc', borderRadius: '5px' }}
+              />
+            </div>
+
           </div>
 
           <div style={{ marginBottom: '20px' }}>

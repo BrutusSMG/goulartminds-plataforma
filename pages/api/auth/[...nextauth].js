@@ -58,7 +58,7 @@ export const authOptions = {
   callbacks: {
     // Seus callbacks jwt e session permanecem exatamente como estão.
     // Eles já estão corretos.
-    async jwt({ token, user, trigger, account } ) {
+    async jwt({ token, user, trigger, account, session } ) {
 
       // 1. Lógica para quando a sessão é atualizada via update() no frontend
       if (trigger === "update" && session) {
@@ -133,6 +133,8 @@ export const authOptions = {
       tags: dbUser.tags,
       discProfile: dbUser.discProfile, // Pega o discProfile do banco de dados
       completedTools: dbUser.completedTools,
+      celular: dbUser.celular,
+      cidade: dbUser.cidade,
     };
   },
 
@@ -149,6 +151,8 @@ export const authOptions = {
       session.user.tags = token.tags;
       session.user.discProfile = token.discProfile; // Passa o discProfile para o frontend
       session.user.completedTools = token.completedTools;
+      session.user.celular = token.celular;
+      session.user.cidade = token.cidade;
     }
     
     return session;

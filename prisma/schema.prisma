@@ -21,6 +21,8 @@ model User {
   accounts      Account[]
   sessions      Session[]
   discProfile   String?
+  celular       String?
+  cidade        String?
 }
 
 model Account {

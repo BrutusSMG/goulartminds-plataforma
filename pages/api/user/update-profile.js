@@ -2,7 +2,7 @@
 
 import { getServerSession } from 'next-auth/next';
 import { authOptions } from '../auth/[...nextauth]';
-import prisma from '../../../lib/db';
+import client from '../../../lib/db';
 
 export default async function handle(req, res) {
   // Verifica se o método da requisição é POST
@@ -21,7 +21,7 @@ export default async function handle(req, res) {
   }
 
   // 1. Pega TODOS os dados enviados pelo formulário
-  const { name, discProfile } = req.body;
+  const { name, discProfile, celular, cidade } = req.body;
 
   // 2. Cria um objeto dinâmico SÓ com os dados que realmente foram enviados
   //    Isso evita erros caso um dos campos venha como 'undefined'.
@@ -32,6 +32,12 @@ export default async function handle(req, res) {
   if (discProfile !== undefined) {
     dataToUpdate.discProfile = discProfile;
   }
+  if (celular !== undefined) {
+    dataToUpdate.celular = celular;
+  }
+  if (cidade !== undefined) {
+    dataToUpdate.cidade = cidade;
+  }
 
   // 3. Verifica se há algo para atualizar. Se o usuário só clicou em "Salvar"
   //    sem mudar nada, não precisamos acessar o banco de dados.
@@ -41,9 +47,9 @@ export default async function handle(req, res) {
 
   try {
     // 4. Atualiza o usuário no banco de dados com o objeto dinâmico
-    const updatedUser = await prisma.user.update({
+    const updatedUser = await client.user.update({
       where: { id: session.user.id },
-      data: dataToUpdate, // Agora ele salva TUDO que foi enviado!
+      data: dataToUpdate, 
     });
 
     return res.status(200).json({ success: true, user: updatedUser });
