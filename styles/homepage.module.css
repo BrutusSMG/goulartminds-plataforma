@@ -1,0 +1,279 @@
+/*
+ * Estilos para a Nova Página Inicial
+ * Arquivo: /src/styles/HomePage.module.css
+ */
+
+/* ============================================ */
+/* ESTILOS PARA A SEÇÃO DE ABERTURA (HERO)      */
+/* ============================================ */
+
+.heroSection {
+  position: relative; /* Essencial para posicionar os elementos filhos */
+  height: 70vh; /* Ocupa 70% da altura da tela do visitante */
+  min-height: 400px; /* Altura mínima para telas pequenas */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  color: white; /* Cor do texto */
+  
+  /* A MÁGICA DA IMAGEM DE FUNDO */
+  background-image: url('/image/hero-background_2.jpg'); /* Caminho para sua imagem na pasta 'public' */
+  background-size: cover; /* Cobre toda a área da seção */
+  background-position: center; /* Centraliza a imagem */
+  background-attachment: fixed; /* Efeito de paralaxe sutil ao rolar */
+}
+
+/* Camada escura sobre a imagem para garantir a legibilidade do texto */
+.heroOverlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5); /* Preto com 50% de opacidade */
+  z-index: 1; /* Fica entre a imagem de fundo e o conteúdo de texto */
+}
+
+/* Contêiner do texto, para que fique acima da camada escura */
+.heroContent {
+  position: relative;
+  z-index: 2;
+  max-width: 800px; /* Largura máxima para o texto não ficar muito esticado */
+  padding: 0 20px;
+  animation: fadeInText 1.5s ease-in-out; /* Animação de entrada para o texto */
+}
+
+.heroTitle {
+  font-size: 3.5rem; /* Tamanho grande para o título */
+  font-weight: 600;
+  margin-bottom: 1rem;
+  line-height: 1.2;
+}
+
+.heroSubtitle {
+  font-size: 1.25rem;
+  font-weight: 300;
+  line-height: 1.6;
+  opacity: 0.9; /* Levemente transparente para dar mais foco ao título */
+  color: white;
+}
+
+/* Animação para o texto aparecer suavemente */
+@keyframes fadeInText {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Ajustes para telas menores (celulares) */
+@media (max-width: 768px) {
+  .heroSection {
+    height: 60vh;
+  }
+  .heroTitle {
+    font-size: 2.5rem;
+  }
+  .heroSubtitle {
+    font-size: 1.1rem;
+  }
+}
+
+/* ============================================ */
+/* ESTILOS PARA A SEÇÃO DE EXPLORAÇÃO           */
+/* ============================================ */
+
+.explorationSection {
+  padding: 80px 0;
+  background-color: #f9f9f9; /* Um cinza bem claro para o fundo */
+}
+
+.sectionContainer {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 20px;
+  text-align: center;
+}
+
+.sectionTitle {
+  font-size: 2.5rem;
+  font-weight: 600;
+  margin-bottom: 50px;
+  color: #333;
+}
+
+.cardsGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); /* Grid responsivo */
+  gap: 40px; /* Espaçamento entre os cards */
+}
+
+.card {
+  background-color: white;
+  padding: 40px;
+  border-radius: 8px;
+  text-align: left;
+  text-decoration: none; /* Remove o sublinhado do link */
+  color: inherit; /* Herda a cor do texto do pai */
+  border: 1px solid #eaeaea;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.card:hover {
+  transform: translateY(-10px); /* Efeito de "flutuar" ao passar o mouse */
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.08);
+}
+
+.cardIcon {
+  margin-bottom: 20px;
+  color: var(--primary-color, #0070f3); /* Cor do ícone */
+}
+
+.cardTitle {
+  font-size: 1.5rem;
+  font-weight: 600;
+  margin-bottom: 15px;
+  color: #333;
+}
+
+.cardText {
+  font-size: 1rem;
+  line-height: 1.6;
+  color: #666;
+  margin-bottom: 25px;
+}
+
+.cardLink {
+  font-weight: 600;
+  color: var(--primary-color, #0070f3);
+  text-decoration: none;
+}
+
+/* ============================================ */
+/* ESTILOS PARA A SEÇÃO DE DESTAQUE             */
+/* ============================================ */
+
+.featuredSection {
+  padding: 80px 0;
+  background-color: #ffffff;
+}
+
+/* Cabeçalho da seção, que será sempre centralizado */
+.sectionHeader {
+  text-align: center;
+  margin-bottom: 50px; /* Espaço entre o título e o conteúdo abaixo */
+}
+
+.featuredTag {
+  display: inline-block;
+  margin-bottom: 15px;
+  padding: 5px 12px;
+  background-color: #eef1f5;
+  color: var(--primary-color, #0070f3);
+  font-size: 0.8rem;
+  font-weight: bold;
+  border-radius: 20px;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+}
+
+.featuredTitle {
+  font-size: 2.2rem;
+  font-weight: 600;
+  line-height: 1.3;
+  color: #333;
+  max-width: 700px; /* Evita que o título fique muito largo */
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.featuredSubtitle {
+  font-size: 1.8rem; /* Um pouco menor que o título principal */
+  font-weight: 300; /* Mais fino e leve que o h2 */
+  line-height: 1.4;
+  color: #555; /* Uma cor um pouco mais suave que o preto do título */
+  margin-top: -10px; /* Puxa o subtítulo para mais perto do título principal */
+  margin-bottom: 0; /* Remove a margem inferior padrão do h3 */
+}
+
+/* Contêiner para a imagem e o texto */
+.featuredContent {
+  display: flex;
+  align-items: center;
+  gap: 60px;
+}
+
+.featuredImageContainer {
+  flex: 1;
+  min-width: 0;
+  position: relative;
+  height: 400px;
+}
+
+.featuredImage {
+  width: 90%;
+  height: auto;
+  border-radius: 8px;
+}
+
+.featuredText {
+  flex: 1;
+}
+
+.featuredDescription {
+  font-size: 1.1rem;
+  line-height: 1.7;
+  color: #555;
+  margin-bottom: 20px;
+  text-align: justify;
+}
+
+.featuredLink {
+  font-weight: 600;
+  color: var(--primary-color, #0070f3);
+  text-decoration: none;
+  font-size: 1.1rem;
+}
+
+.featuredLink:hover {
+  text-decoration: underline;
+}
+
+.noArticleContainer {
+  padding: 80px 20px;
+  text-align: center;
+  background-color: #f9f9f9; /* Usa a mesma cor da seção de exploração para consistência */
+  color: #666;
+  font-size: 1.2rem;
+}
+
+/* Ajustes para telas menores (celulares) */
+@media (max-width: 900px) {
+  .featuredContent {
+    /* Empilha a imagem e o texto */
+    flex-direction: column;
+    gap: 40px;
+  }
+
+  .featuredTitle {
+    font-size: 1.8rem;
+  }
+
+  .featuredSubtitle {
+    font-size: 1.4rem;
+    margin-top: -5px;
+  }
+
+  .featuredText {
+    text-align: center;
+  }
+
+  .featuredDescription {
+    text-align: left; 
+  }
+}

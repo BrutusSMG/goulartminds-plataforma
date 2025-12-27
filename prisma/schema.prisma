@@ -8,7 +8,6 @@ datasource db {
   directUrl = env("DIRECT_URL")
 }
 
-// Cole aqui os modelos User, Account, Session, e VerificationToken
 model User {
   id            String    @id @default(cuid())
   name          String?
@@ -23,6 +22,7 @@ model User {
   discProfile   String?
   celular       String?
   cidade        String?
+  role String @default("USER") // Pode ser "USER" ou "ADMIN"
 }
 
 model Account {
@@ -55,4 +55,19 @@ model VerificationToken {
   token      String   @unique
   expires    DateTime
   @@unique([identifier, token])
+}
+
+model Article {
+  id          String    @id @default(cuid())
+  slug        String    @unique // URL amigável (ex: "a-raiva-nao-e-o-problema")
+  title       String
+  subtitle    String?
+  description String    // O resumo que aparece na página inicial
+  imageUrl    String    // URL da imagem de destaque
+  content     String    @db.Text // O conteúdo completo do artigo em Markdown ou HTML
+  
+  likes       Int       @default(0) // O contador de curtidas!
+  
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
 }

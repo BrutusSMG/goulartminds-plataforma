@@ -3,8 +3,27 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   reactStrictMode: true,
-  // Adicione esta configuração para garantir que as variáveis de ambiente
-  // do .env.local sejam reconhecidas pelo processo de build do Next.js.
+
+  // Adicionando a configuração de imagens que faltava
+  images: {
+    remotePatterns: [
+      {
+        protocol: 'http',
+        hostname: 'localhost',
+        port: '3000',
+        pathname: '/**',
+      },
+      // Adicione o domínio de produção aqui também para quando fizer o deploy
+      {
+        protocol: 'https',
+        hostname: 'www.goulartminds.com.br',
+        port: '',
+        pathname: '/**',
+      },
+    ],
+  },
+
+  // Mantendo sua configuração de 'env' original
   env: {
     DATABASE_URL: process.env.DATABASE_URL,
     NEXTAUTH_URL: process.env.NEXTAUTH_URL,
@@ -17,4 +36,5 @@ const nextConfig = {
   },
 };
 
-export default nextConfig;
+// 👇 Mantendo a sua sintaxe de exportação original, que está correta para o seu projeto
+module.exports = nextConfig;

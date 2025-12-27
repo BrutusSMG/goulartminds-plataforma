@@ -1,0 +1,128 @@
+/* 
+ * Estilos para o Modal de Feedback
+ * Arquivo: /src/styles/FeedbackModal.module.css
+ */
+
+/* 1. O Fundo (Overlay) */
+.overlay {
+  position: fixed; /* Cobre a tela inteira, independentemente da rolagem */
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.6); /* Fundo preto semi-transparente */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000; /* Garante que fique acima de todo o resto */
+  animation: fadeIn 0.3s ease-out; /* Animação de entrada */
+}
+
+/* 2. O Contêiner do Modal */
+.modal {
+  background: white;
+  padding: 30px 40px;
+  border-radius: 8px;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+  width: 90%;
+  max-width: 500px; /* Largura máxima para não ficar gigante em telas grandes */
+  position: relative; /* Necessário para posicionar o botão de fechar */
+  animation: slideUp 0.4s ease-out; /* Animação de subida */
+}
+
+/* 3. O Botão de Fechar (X) */
+.closeButton {
+  position: absolute;
+  top: 10px;
+  right: 15px;
+  background: none;
+  border: none;
+  font-size: 2rem;
+  color: #aaa;
+  cursor: pointer;
+  line-height: 1;
+  padding: 0;
+}
+
+.closeButton:hover {
+  color: #333;
+}
+
+/* 4. Estilos do Formulário */
+.formGroup {
+  margin-bottom: 20px;
+}
+
+.formGroup label {
+  display: block;
+  margin-bottom: 8px;
+  font-weight: 600;
+  color: #333;
+}
+
+.formGroup input,
+.formGroup select,
+.formGroup textarea {
+  width: 100%;
+  padding: 12px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  font-size: 1rem;
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.formGroup input:focus,
+.formGroup select:focus,
+.formGroup textarea:focus {
+  outline: none;
+  border-color: var(--primary-color, #0070f3); /* Usa sua cor primária, se definida */
+  box-shadow: 0 0 0 3px rgba(0, 112, 243, 0.2);
+}
+
+/* 5. Botão de Envio */
+.submitButton {
+  width: 100%;
+  padding: 15px;
+  border: none;
+  border-radius: 5px;
+  background-color: var(--primary-color, #0070f3);
+  color: white;
+  font-size: 1.1rem;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.submitButton:hover:not(:disabled) {
+  background-color: var(--primary-color-dark, #005bb5);
+}
+
+.submitButton:disabled {
+  background-color: #ccc;
+  cursor: not-allowed;
+}
+
+/* 6. Mensagens de Feedback (Erro e Sucesso) */
+.errorMessage {
+  color: #d93025;
+  margin-top: 10px;
+  text-align: center;
+}
+
+.successMessage {
+  text-align: center;
+  font-size: 1.2rem;
+  color: #1a73e8;
+  padding: 40px 0;
+}
+
+/* 7. Animações */
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes slideUp {
+  from { transform: translateY(30px); opacity: 0; }
+  to { transform: translateY(0); opacity: 1; }
+}

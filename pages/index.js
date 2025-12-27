@@ -1,72 +1,217 @@
-// No Next.js, cada página é um "componente".
-// Esta função representa a sua página inicial.
-import PageLayout from '../components/PageLayout';
-import Head from 'next/head';
-import styles from '../styles/home-style.module.css';
+// src/pages/index.js
+import PageLayout from "../components/PageLayout";
+import styles from "../styles/homepage.module.css";
+import Link from "next/link";
+import Image from "next/image";
+import client from "../lib/db";
 
-export default function HomePage() {  
+export default function HomePage(props) {
+  const article =
+    props.article?.article !== undefined
+      ? props.article.article
+      : props.article;
+  
   return (
-    <PageLayout title="Início">
-        <div className={styles.homeIntro}>
-            <h2>Bem-vindo(a) à Plataforma Goulart Minds</h2>
-            <p>Um espaço dedicado ao seu desenvolvimento pessoal e profissional. Explore nossas ferramentas e inicie sua jornada de autoconhecimento.</p>
+    <PageLayout title="Goulart Minds | Autoconhecimento e Transformação">
+      {/* =============================================== */}
+      {/* SEÇÃO DE ABERTURA (HERO SECTION)                */}
+      {/* =============================================== */}
+      <section className={styles.heroSection}>
+        <div className={styles.heroOverlay}></div>{" "}
+        {/* Camada para escurecer a imagem */}
+        <div className={styles.heroContent}>
+          <h1 className={styles.heroTitle}>
+            Autoconhecimento não é um destino. É uma direção.
+          </h1>
+          <p className={styles.heroSubtitle}>
+            Acreditamos que a verdadeira transformação não vem de respostas
+            prontas, mas da coragem de fazer as perguntas certas. Este é um
+            espaço para você explorar as camadas da sua própria mente e
+            construir uma vida mais consciente.
+          </p>
         </div>
+      </section>
 
-        <div className={styles.toolsGrid}>
+      <section className={styles.explorationSection}>
+        <div className={styles.sectionContainer}>
+          <h2 className={styles.sectionTitle}>Sua Jornada Começa Aqui</h2>
+          <div className={styles.cardsGrid}>
+            {/* Card 1: Ferramentas */}
+            <Link href="/ferramentas" className={styles.card}>
+              <div className={styles.cardIcon}>
+                {/* Ícone de Bússola (SVG) */}
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="48"
+                  height="48"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="2"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                >
+                  <circle cx="12" cy="12" r="10"></circle>
+                  <polygon points="16.24 7.76 14.12 14.12 7.76 16.24 9.88 9.88 16.24 7.76"></polygon>
+                </svg>
+              </div>
+              <h3 className={styles.cardTitle}>Mapeie seu Mundo Interior</h3>
+              <p className={styles.cardText}>
+                Use nossas ferramentas interativas para descobrir seus gatilhos
+                emocionais, sua hierarquia de valores e seu perfil
+                comportamental.
+              </p>
+              <span className={styles.cardLink}>
+                Explorar Ferramentas &rarr;
+              </span>
+            </Link>
 
-            {/* Card da Ferramenta 1: Mapa da Irritação */}
-            <a href="/irritacao/" className={styles.toolCard} data-tool-id="irritacao">
-                <span className={styles.cardIcon}>😠</span>
-                <h3>Mapa da Sua Irritação</h3>
-                <p>Descubra o que realmente aciona sua reatividade e aprenda a retomar o controle em momentos de estresse.</p>
-                <span className={styles.cardCta}>Começar Agora &rarr;</span>
-            </a>
+            {/* Card 2: Conteúdo (Blog ) */}
+            <Link href="/artigos" className={styles.card}>
+              <div className={styles.cardIcon}>
+                {/* Ícone de Livro (SVG) */}
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="48"
+                  height="48"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="2"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                >
+                  <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path>
+                  <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path>
+                </svg>
+              </div>
+              <h3 className={styles.cardTitle}>Reflexões para o Caminho</h3>
+              <p className={styles.cardText}>
+                Leia nossos artigos e insights sobre inteligência emocional,
+                produtividade e a arte de viver uma vida mais alinhada.
+              </p>
+              <span className={styles.cardLink}>Ler Artigos &rarr;</span>
+            </Link>
 
-            {/* Card da Ferramenta 2: Mapa dos Valores */}
-            <a href="/valores/" className={styles.toolCard} data-tool-id="valores">
-                <span className={styles.cardIcon}>🧭</span>
-                <h3>Mapa dos Seus Valores</h3>
-                <p>Identifique seus valores fundamentais e entenda como eles influenciam suas decisões, motivações e satisfação.</p>
-                <span className={styles.cardCta}>Começar Agora &rarr;</span>
-            </a>
+            {/* Card 3: Sobre Nós */}
+            <Link href="/sobre" className={styles.card}>
+              <div className={styles.cardIcon}>
+                {/* Ícone de Conexão (SVG ) */}
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="48"
+                  height="48"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="2"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                >
+                  <path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+                  <circle cx="8.5" cy="7" r="4"></circle>
+                  <line x1="20" y1="8" x2="20" y2="14"></line>
+                  <line x1="23" y1="11" x2="17" y2="11"></line>
+                </svg>
+              </div>
+              <h3 className={styles.cardTitle}>Quem Guia a Jornada</h3>
+              <p className={styles.cardText}>
+                Conheça a filosofia e as pessoas por trás da Goulart Minds, e
+                entenda nossa missão de unir tecnologia e desenvolvimento
+                humano.
+              </p>
+              <span className={styles.cardLink}>Conhecer a Missão &rarr;</span>
+            </Link>
+          </div>
+        </div>
+      </section>
+
+      {/* SEÇÃO DE DESTAQUE - AGORA DINÂMICA              */}
+      <section className={styles.featuredSection}>
+        <div className={styles.sectionContainer}>
             
-            {/* Card da Ferramenta 3: Roda da Vida */}
-            <a href="/roda-da-vida/" className={`${styles.toolCard} ${styles.disabled}`} data-tool-id="roda-da-vida">
-                <span className={styles.cardBadge}>Em breve</span>
-                <span className={styles.cardIcon}>🎯</span>
-                <h3>Roda da Vida</h3>
-                <p>Faça uma análise completa do seu estado atual e descubra qual área da sua vida, quando melhorada, pode alavancar todas as outras.</p>
-                <span className={styles.cardCta}>Começar Agora &rarr;</span>
-            </a>
-
-            {/* Card da Ferramenta 4: Resultado Esperado */}
-            <a href="/resultado-esperado/" className={`${styles.toolCard} ${styles.disabled}`} data-tool-id="resultado-esperado">
-                <span className={styles.cardBadge}>Em breve</span>
-                <span className={styles.cardIcon}>🌟</span>
-                <h3>Resultado Esperado</h3>
-                <p>Visualize e defina com clareza o futuro que você deseja construir, alinhando suas ações com seus objetivos de vida.</p>
-                <span className={styles.cardCta}>Começar Agora &rarr;</span>
-            </a>
+            {/* 1. O CABEÇALHO DA SEÇÃO AGORA FICA FORA DAS CONDIÇÕES */}
+            <div className={styles.sectionHeader}>
+            <span className={styles.featuredTag}>
+                {/* A tag sempre aparece, mas com texto diferente */}
+                {!article ? 'CONTEÚDO EM DESTAQUE' : 'ARTIGO EM DESTAQUE'}
+            </span>
             
-            {/* Card da Ferramenta 5: Análise Swot (Em Breve) */}
-            <a href="#" className={`${styles.toolCard} ${styles.disabled}`} data-tool-id="swot">
-                <span className={styles.cardBadge}>Em breve</span>
-                <span className={styles.cardIcon}>🔍</span>
-                <h3>Análise Swot Pessoal</h3>
-                <p>Identifique suas Forças, Fraquezas, Oportunidades e Ameaças para traçar um plano de desenvolvimento estratégico.</p>
-                <span className={styles.cardCta}>Começar Agora &rarr;</span>
-            </a>
+            {/* O título e subtítulo só aparecem se houver artigo */}
+            {article && (
+                <>
+                <h2 className={styles.featuredTitle}>{article.title}</h2>
+                {article.subtitle && <h3 className={styles.featuredSubtitle}>{article.subtitle}</h3>}
+                </>
+            )}
+            </div>
 
-            {/* Card da Ferramenta 6: Missão de Vida (Em Breve) */}
-            <a href="#" className={`${styles.toolCard} ${styles.disabled}`} data-tool-id="missao">
-                <span className={styles.cardBadge}>Em breve</span>
-                <span className={styles.cardIcon}>🚀</span>
-                <h3>Declaração de Missão</h3>
-                <p>Crie uma declaração poderosa que servirá como sua bússola, guiando suas escolhas e seu propósito de vida.</p>
-                <span className={styles.cardCta}>Começar Agora &rarr;</span>
-            </a>
+            {/* 2. O CONTEÚDO MUDA DE ACORDO COM A EXISTÊNCIA DO ARTIGO */}
+            {article ? (
+            // SE HOUVER ARTIGO, MOSTRA IMAGEM E TEXTO
+            <div className={styles.featuredContent}>
+                <div className={styles.featuredImageContainer}>
+                <Image
+                    src={article.imageUrl}
+                    alt={article.title}
+                    fill={true}
+                    sizes="100vw"
+                    style={{ objectFit: 'cover' }}
+                    className={styles.featuredImage}
+                    priority={true}
+                />
+                </div>
+                <div className={styles.featuredText}>
+                <p className={styles.featuredDescription}>{article.description}</p>
+                <Link href={`/artigos/${article.slug}`} className={styles.featuredLink}>
+                    Ler o artigo completo &rarr;
+                </Link>
+                </div>
+            </div>
+            ) : (
+            // SE NÃO HOUVER ARTIGO, MOSTRA A MENSAGEM DE "EM BREVE"
+            <div className={styles.noArticleContent}>
+                <p>Estamos preparando o melhor conteúdo para sua jornada de autoconhecimento.<br />
+                    Novos artigos e reflexões em breve. Volte sempre!
+                </p>
+            </div>
+            )}
 
         </div>
+        </section>
+
+      {/* =============================================== */}
+      {/* PRÓXIMAS SEÇÕES VIRÃO AQUI ABAIXO               */}
+      {/* =============================================== */}
     </PageLayout>
   );
+}
+
+export async function getStaticProps() {
+  let articleData = null; // 1. Comece com null
+
+  try {
+    const featuredArticle = await client.article.findFirst({
+      orderBy: { likes: "desc" },
+    });
+
+    // 2. Só atribua um valor se o artigo for encontrado
+    if (featuredArticle) {
+      articleData = JSON.parse(JSON.stringify(featuredArticle));
+    }
+  } catch (error) {
+    // 3. Se houver QUALQUER erro, 'articleData' permanecerá null
+    console.error(
+      "Falha ao buscar artigo em destaque em getStaticProps:",
+      error
+    );
+  }
+
+  // 4. Retorne o resultado. 'articleData' será o objeto do artigo ou null.
+  return {
+    props: {
+      article: articleData,
+    },
+    revalidate: 60,
+  };
 }

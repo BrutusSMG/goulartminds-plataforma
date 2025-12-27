@@ -135,6 +135,7 @@ export const authOptions = {
       completedTools: dbUser.completedTools,
       celular: dbUser.celular,
       cidade: dbUser.cidade,
+      role: dbUser.role,
     };
   },
 
@@ -153,6 +154,7 @@ export const authOptions = {
       session.user.completedTools = token.completedTools;
       session.user.celular = token.celular;
       session.user.cidade = token.cidade;
+      session.user.role = token.role;
     }
     
     return session;
