@@ -1,90 +1,86 @@
 // components/Header.js
 
-import React from 'react';
+import React, { useState } from 'react';
 import { useSession, signIn, signOut } from 'next-auth/react';
 import Link from 'next/link';
+import styles from '../styles/Header.module.css';
 
-const navLinkStyle = {
-  textDecoration: 'none',
-  color: 'var(--text-color)',
-  padding: '0 15px',
-  fontWeight: '500',
-};
-
-// Estilo para o link de admin, para dar um destaque
-const adminLinkStyle = {
-  ...navLinkStyle,
-  color: 'var(--primary-color, #0070f3)',
-  fontWeight: 'bold',
-};
-
-export default function Header({ hideLoginButton }) {
+export default function Header() {
   const { data: session, status } = useSession();
   const loading = status === 'loading';
 
-  return (
-    <header style={{ paddingTop: '20px', borderBottom: '1px solid var(--border-color)', paddingBottom: '10px' }}>
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
 
+  const toggleMenu = () => setIsMenuOpen(!isMenuOpen);
+  const closeMenu = () => {
+    setTimeout(() => {
+      setIsMenuOpen(false);
+    }, 150);
+  };
+
+  return (
+    <header className={styles.header}>
       {/* Seção Superior: Título e Subtítulo */}
-      <div className="header-top" style={{ textAlign: 'center', marginBottom: '20px' }}>
-        <Link href="/" style={{ textDecoration: 'none', color: 'inherit' }}>
+      <div className={styles.headerTop}>
+        <Link href="/" onClick={closeMenu}>
           <h1>Goulart Minds</h1>
           <p>Clareza. Planejamento. Ação.</p>
         </Link>
       </div>      
 
       {/* Seção Inferior: Barra de Navegação Principal */}
-      <div 
-        className="main-nav-bar" 
-        style={{
-          display: 'flex',
-          justifyContent: 'space-between',
-          alignItems: 'center',
-          width: '100%',
-        }}
-      >
+      <div className={styles.mainNavBar}>
+
+        {/* Botão Hambúrguer (só visível no mobile via CSS) */}
+        <button className={styles.hamburger} onClick={toggleMenu}>
+          <span className={styles.hamburgerLine}></span>
+          <span className={styles.hamburgerLine}></span>
+          <span className={styles.hamburgerLine}></span>
+        </button>
+
         {/* Menu de Navegação à Esquerda */}
-        <nav>
-          <ul style={{ listStyle: 'none', margin: 0, padding: 0, display: 'flex', alignItems: 'center' }}>
-            <li><Link href="/" style={navLinkStyle}>Início</Link></li>
-            <li><Link href="/ferramentas" style={navLinkStyle}>Ferramentas</Link></li>
-            <li><Link href="/artigos" style={navLinkStyle}>Blog</Link></li>
+        <nav className={`${styles.navLinks} ${isMenuOpen ? styles.active : ''}`}>
+          <ul className={styles.navList}>
+            <li key="inicio"><Link href="/" className={styles.navLink} onClick={closeMenu}>Início</Link></li>
+            <li key="ferramentas"><Link href="/ferramentas" className={styles.navLink} onClick={closeMenu}>Ferramentas</Link></li>
+            <li key="artigos"><Link href="/artigos" className={styles.navLink} onClick={closeMenu}>Blog</Link></li>
             
-            {/* ======================================================= */}
-            {/* LINK DE ADMIN CONDICIONAL                               */}
-            {/* ======================================================= */}
-            {/* Só renderiza este item da lista se o usuário for admin */}
             {session?.user?.role === 'ADMIN' && (
-              <li>
-                <Link href="/admin/artigos/novo" style={adminLinkStyle}>
-                  + Novo Artigo
-                </Link>
+              <li key="novo-artigo">
+                <Link href="/admin/artigos/novo" className={styles.adminLink} onClick={closeMenu}>+ Novo Artigo</Link>
               </li>
             )}
+
+            {/* Ações do usuário para o menu mobile */}
+            <li key="user-actions-mobile" className={styles.userActionsMobile}>
+              {!loading && !session && (
+                <button onClick={() => { closeMenu(); signIn('email', { callbackUrl: '/' }); }} className="header-login-btn">Entrar com E-mail</button>
+              )}
+              {!loading && session && (
+                <div className={styles.mobileUserLoggedIn}>
+                  <Link href="/perfil" className={styles.welcomeMessage} onClick={closeMenu}>
+                    Olá, {session.user.name?.split(' ')[0] || session.user.email}
+                  </Link>
+                  <button onClick={() => { closeMenu(); signOut(); }} className="header-login-btn">Sair</button>
+                </div>
+              )}
+            </li>
           </ul>
         </nav>
 
-        {/* Controles de Usuário à Direita */}
-        <div className="user-actions">
-          {loading && (
-              <p style={{ margin: 0, fontSize: '0.8rem', color: 'var(--secondary-color)' }}>Carregando...</p>
-          )}
-
+        {/* Controles de Usuário à Direita (versão desktop) */}
+        <div className={styles.userActions}>
+          {loading && <p className={styles.loadingText}>Carregando...</p>}
           {!loading && session && (
-            <div style={{ display: 'flex', alignItems: 'center', gap: '15px' }}>
-              <Link href="/perfil" style={{...navLinkStyle, paddingRight: 0}}>
+            <>
+              <Link href="/perfil" className={styles.welcomeMessage}>
                 Olá, {session.user.name?.split(' ')[0] || session.user.email}
               </Link>
-              <button onClick={() => signOut()} className="header-login-btn">
-                Sair
-              </button>
-            </div>
+              <button onClick={() => signOut()} className="header-login-btn">Sair</button>
+            </>
           )}
-
           {!loading && !session && (
-            <button onClick={() => signIn('email', { callbackUrl: '/' })} className="header-login-btn">
-              Entrar com E-mail
-            </button>
+            <button onClick={() => signIn('email', { callbackUrl: '/' })} className="header-login-btn">Entrar com E-mail</button>
           )}
         </div>
       </div>

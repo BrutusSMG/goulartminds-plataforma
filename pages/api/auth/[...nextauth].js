@@ -56,8 +56,6 @@ export const authOptions = {
   },
 
   callbacks: {
-    // Seus callbacks jwt e session permanecem exatamente como estão.
-    // Eles já estão corretos.
     async jwt({ token, user, trigger, account, session } ) {
 
       // 1. Lógica para quando a sessão é atualizada via update() no frontend

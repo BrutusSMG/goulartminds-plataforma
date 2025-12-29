@@ -3,6 +3,7 @@
 import { getServerSession } from 'next-auth/next';
 import { authOptions } from '../auth/[...nextauth]';
 import client from '../../../lib/db';
+import slugify from 'slugify';
 
 export default async function handle(req, res) {
   if (req.method !== 'PUT') {

@@ -164,7 +164,7 @@ export default function PerfilPage() {
         
         <div style={{ textAlign: 'center', margin: '30px 0' }}>
           <img
-            src={previewUrl || '/default-avatar.png'} // Caminho para uma imagem padrão na sua pasta /public
+            src={previewUrl || 'image/default-avatar.png'} // Caminho para uma imagem padrão na sua pasta /public
             alt="Foto de Perfil"
             style={{
               width: '120px',

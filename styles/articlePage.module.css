@@ -76,6 +76,10 @@
   color: #555;
 }
 
+.mobileOnly {
+  display: none;
+}
+
 /* Ajustes para mobile */
 @media (max-width: 768px) {
   .articleTitle {
@@ -87,4 +91,99 @@
   .imageContainer {
     height: 250px;
   }
+  .desktopOnly {
+    display: none;
+  }
+  .shareLabel {
+    display: none;
+  }
+  /* E mostra o botão de compartilhamento moderno */
+  .mobileOnly {
+    display: inline-block; /* ou 'block' */
+  }
 }
+
+/* Adicione ao final do seu arquivo ArticlePage.module.css */
+
+.interactionBar {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+  margin: 2rem 0;
+  padding-bottom: 1.5rem;
+  border-bottom: 1px solid #eaeaea;
+}
+
+.likeButton {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: none;
+  border: 1px solid #ccc;
+  border-radius: 20px;
+  padding: 8px 16px;
+  cursor: pointer;
+  font-size: 1rem;
+  transition: all 0.2s ease;
+}
+
+.likeButton:hover:not(:disabled) {
+  background-color: #f0f0f0;
+  border-color: #999;
+}
+
+.likeButton:disabled {
+  cursor: not-allowed;
+  color: red; /* Cor do texto quando já curtiu */
+}
+
+.likeButton:disabled svg {
+  transform: scale(1.1); /* Efeito de "pulso" no coração */
+}
+
+.shareLabel { /* Estilo para o texto "Compartilhe:" */
+  font-weight: bold;
+  color: #555;
+  margin-right: 0.5rem;
+}
+
+.shareButtons {
+  display: inline-flex; /* Alinha o SVG no centro */
+  justify-content: center;
+  align-items: center;
+  background-color: transparent; /* Fundo transparente */
+  border: none;
+  padding: 8px;
+  border-radius: 50%; /* Deixa o fundo circular */
+  cursor: pointer;
+  color: #555; /* Cor padrão do ícone */
+  transition: all 0.2s ease;
+}
+
+.shareButtons span {
+  font-weight: bold;
+  color: #555;
+}
+
+.shareButton {
+  text-decoration: none;
+  color: #333;
+  background-color: #f0f0f0;
+  padding: 6px 12px;
+  border-radius: 15px;
+  font-size: 0.9rem;
+  transition: background-color 0.2s;
+}
+
+.shareButton:hover {
+  color: #000; /* Cor do ícone no hover */
+  background-color: #f0f0f0;
+}
+
+/* Adicione ao final do arquivo */
+
+/* Por padrão, o botão mobile está escondido */
+.mobileOnly {
+  display: none;
+}
+
