@@ -7,13 +7,13 @@
 }
 
 .articleHeader {
-  margin-bottom: 40px;
+  margin-bottom: 20px;
   border-bottom: 1px solid #eaeaea;
   padding-bottom: 30px;
 }
 
 .articleTitle {
-  font-size: 3rem;
+  font-size: 2.5rem;
   font-weight: 700;
   line-height: 1.2;
   text-align: center;
@@ -40,7 +40,7 @@
 
 .articleContent {
   font-size: 1.15rem; /* Tamanho de fonte confortável para leitura */
-  line-height: 1.9; /* Espaçamento generoso entre as linhas */
+  line-height: 1; /* Espaçamento generoso entre as linhas */
   color: #333;
 }
 
@@ -101,6 +101,12 @@
   .mobileOnly {
     display: inline-block; /* ou 'block' */
   }
+  .dateInfo {
+    /* Muda o grid para ter apenas uma coluna */
+    grid-template-columns: 1fr;
+    /* Reduz o espaçamento vertical */
+    gap: 0.25rem; /* 4px */
+  }
 }
 
 /* Adicione ao final do seu arquivo ArticlePage.module.css */
@@ -109,8 +115,6 @@
   display: flex;
   align-items: center;
   gap: 1.5rem;
-  margin: 2rem 0;
-  padding-bottom: 1.5rem;
   border-bottom: 1px solid #eaeaea;
 }
 
@@ -187,3 +191,21 @@
   display: none;
 }
 
+.dateInfo {
+  display: grid;
+  grid-template-columns: auto auto;
+  justify-content: left;
+  align-items: center;
+  gap: 0.5rem;
+
+  margin-top: 1rem;
+  margin-bottom: 1.5rem;
+  color: #555;
+  font-size: 0.8rem;
+    
+}
+
+.updatedDate {
+  font-style: italic;
+  color: #777;
+}

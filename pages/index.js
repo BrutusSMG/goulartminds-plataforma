@@ -94,7 +94,7 @@ export default function HomePage(props) {
             </Link>
 
             {/* Card 3: Sobre Nós */}
-            <Link href="/sobre" className={styles.card}>
+            <Link href="/em-construcao" className={styles.card}>
               <div className={styles.cardIcon}>
                 {/* Ícone de Conexão (SVG ) */}
                 <svg
@@ -151,21 +151,21 @@ export default function HomePage(props) {
             // SE HOUVER ARTIGO, MOSTRA IMAGEM E TEXTO
             <div className={styles.featuredContent}>
                 <div className={styles.featuredImageContainer}>
-                <Image
-                    src={article.imageUrl}
-                    alt={article.title}
-                    fill={true}
-                    sizes="100vw"
-                    style={{ objectFit: 'cover' }}
-                    className={styles.featuredImage}
-                    priority={true}
-                />
+                  <Image
+                      src={article.imageUrl}
+                      alt={article.title}
+                      fill={true}
+                      sizes="(max-width: 900px) 100vw, 50vw"
+                      style={{ objectFit: 'cover', borderRadius: '8px'}}
+                      className={styles.featuredImage}
+                      priority={true}
+                  />
                 </div>
                 <div className={styles.featuredText}>
-                <p className={styles.featuredDescription}>{article.description}</p>
-                <Link href={`/artigos/${article.slug}`} className={styles.featuredLink}>
-                    Ler o artigo completo &rarr;
-                </Link>
+                  <p className={styles.featuredDescription}>{article.description}</p>
+                  <Link href={`/artigos/${article.slug}`} className={styles.featuredLink}>
+                      Ler o artigo completo &rarr;
+                  </Link>
                 </div>
             </div>
             ) : (

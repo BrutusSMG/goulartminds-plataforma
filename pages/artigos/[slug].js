@@ -7,6 +7,8 @@ import Image from 'next/image';
 import styles from '../../styles/articlePage.module.css';
 import Head from 'next/head';
 import SocialIcon from '../../components/SocialIcon';
+import { format } from 'date-fns';
+import { ptBR } from 'date-fns/locale';
 
 const HeartIcon = ({ filled }) => (
   <svg
@@ -30,6 +32,9 @@ export default function ArticlePage({ article }) {
   const [likes, setLikes] = useState(article?.likes || 0);
   const [hasLiked, setHasLiked] = useState(false);
   const [articleUrl, setArticleUrl] = useState('');
+  const createdAtDate = new Date(article.createdAt);
+  const updatedAtDate = new Date(article.updatedAt);
+  const hasBeenUpdated = updatedAtDate.getTime() - createdAtDate.getTime() > 60000;
 
   // Verifica no localStorage se o usuário já curtiu este artigo
   useEffect(() => {
@@ -145,7 +150,7 @@ export default function ArticlePage({ article }) {
           </button>
 
           <div className={styles.shareButtons}>
-            <span>Compartilhe:</span>
+            <span>Compartilhe: &nbsp;</span>
             <a href={`https://www.facebook.com/sharer/sharer.php?u=${articleUrl}`} target="_blank" rel="noopener noreferrer" className={`${styles.shareButton} ${styles.desktopOnly}`} aria-label="Compartilhar no Facebook">
               <SocialIcon name="facebook" />
             </a>
@@ -162,8 +167,17 @@ export default function ArticlePage({ article }) {
             <button onClick={handleModernShare} className={`${styles.shareButton} ${styles.mobileOnly}`} aria-label="Compartilhar">
               <SocialIcon name="share" />
             </button>
-
           </div>          
+        </div>
+        <div className={styles.dateInfo}>
+            <span>
+              Publicado em {format(new Date(article.createdAt), "dd 'de' MMMM 'de' yyyy", { locale: ptBR })}
+            </span>
+            {hasBeenUpdated && (
+              <span className={styles.updatedDate}>
+                (Atualizado em {format(new Date(article.updatedAt), "dd 'de' MMMM 'de' yyyy", { locale: ptBR })})
+              </span>
+            )}
         </div>
         
         {/* O conteúdo principal do artigo */}

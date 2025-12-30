@@ -45,7 +45,7 @@
 }
 
 .heroTitle {
-  font-size: 3.5rem; /* Tamanho grande para o título */
+  font-size: 3rem; /* Tamanho grande para o título */
   font-weight: 600;
   margin-bottom: 1rem;
   line-height: 1.2;
@@ -76,9 +76,22 @@
   .heroSection {
     height: 60vh;
   }
-  .heroTitle {
-    font-size: 2.5rem;
+
+  .heroContent {
+    /* Adiciona a propriedade de quebra de palavra como segurança */
+    word-wrap: break-word;
+    overflow-wrap: break-word; /* Versão mais moderna da mesma propriedade */
   }
+
+  .heroTitle {
+    /* --- TÉCNICA DE TIPOGRAFIA RESPONSIVA --- */
+    /* clamp(MIN, IDEAL, MAX) */
+    /* Mínimo: 2rem (32px) */
+    /* Ideal: 8vw (8% da largura da tela) */
+    /* Máximo: 2.8rem (aprox. 45px) */
+    font-size: clamp(2rem, 8vw, 2.8rem);
+  }
+
   .heroSubtitle {
     font-size: 1.1rem;
   }
@@ -90,7 +103,7 @@
 
 .explorationSection {
   padding: 80px 0;
-  background-color: #f9f9f9; /* Um cinza bem claro para o fundo */
+  background-color: #f9f9f9;
 }
 
 .sectionContainer {
@@ -100,8 +113,8 @@
   text-align: center;
 }
 
-.sectionTitle {
-  font-size: 2.5rem;
+.sectionTitle {  
+  font-size: 1.8rem;
   font-weight: 600;
   margin-bottom: 50px;
   color: #333;
@@ -109,8 +122,8 @@
 
 .cardsGrid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); /* Grid responsivo */
-  gap: 40px; /* Espaçamento entre os cards */
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 40px; 
 }
 
 .card {
@@ -131,8 +144,10 @@
 
 .cardIcon {
   margin-bottom: 20px;
-  color: var(--primary-color, #0070f3); /* Cor do ícone */
 }
+.iconColor1 { color: #2a9d8f; } /* Verde-azulado */
+.iconColor2 { color: #e76f51; } /* Laranja-queimado */
+.iconColor3 { color: #f4a261; } /* Amarelo-mostarda */
 
 .cardTitle {
   font-size: 1.5rem;
@@ -154,6 +169,42 @@
   text-decoration: none;
 }
 
+@media (max-width: 768px) {
+  .explorationSection {
+    padding: 60px 0; /* Menos preenchimento vertical no mobile */
+  }
+
+  .sectionTitle {
+    /* 1. Título da Seção em uma linha */
+    white-space: nowrap; /* Impede a quebra de linha */
+    font-size: 1.3rem; /* Reduz um pouco para garantir que caiba */
+  }
+
+  .cardsGrid {
+    /* Ajusta o grid para ter apenas uma coluna no mobile */
+    grid-template-columns: 1fr;
+    gap: 30px; /* Menos espaçamento entre os cards */
+  }
+
+  .card {
+    padding: 30px; /* Menos preenchimento interno nos cards */
+  }
+
+  .cardTitle {
+    /* 3. Título do Card em uma linha */
+    white-space: nowrap;
+    overflow: hidden; /* Esconde o que não couber */
+    text-overflow: ellipsis; /* Adiciona "..." no final se o texto for cortado */
+    font-size: 1.3rem; /* Reduz um pouco o tamanho */
+  }
+
+  .cardText {
+    /* 4. Diminui o texto do card */
+    font-size: 0.9rem;
+    line-height: 1.5;
+  }
+}
+
 /* ============================================ */
 /* ESTILOS PARA A SEÇÃO DE DESTAQUE             */
 /* ============================================ */
@@ -171,11 +222,11 @@
 
 .featuredTag {
   display: inline-block;
-  margin-bottom: 15px;
-  padding: 5px 12px;
-  background-color: #eef1f5;
-  color: var(--primary-color, #0070f3);
-  font-size: 0.8rem;
+  margin-bottom: 50px;
+  padding: 15px 15px;
+  background-color: var(--primary-color, #0070f3); /* Usa a cor primária como fundo */
+  color: white;
+  font-size: 1rem;
   font-weight: bold;
   border-radius: 20px;
   letter-spacing: 1px;
@@ -254,26 +305,48 @@
 
 /* Ajustes para telas menores (celulares) */
 @media (max-width: 900px) {
-  .featuredContent {
-    /* Empilha a imagem e o texto */
-    flex-direction: column;
-    gap: 40px;
+  .featuredSection {
+    padding: 60px 0; /* Menos preenchimento vertical */
   }
 
+  /* 1. Dando mais destaque à tag */
+  .featuredTag {
+    background-color: var(--primary-color, #0070f3); /* Usa a cor primária como fundo */
+    color: white; /* Texto branco para contraste */
+    padding: 8px 16px;
+    font-size: 0.9rem;
+  }
+
+  /* 2. Diminuindo títulos e texto */
   .featuredTitle {
-    font-size: 1.8rem;
+    font-size: 1.8rem; /* Já estava bom, mantido */
   }
 
   .featuredSubtitle {
-    font-size: 1.4rem;
-    margin-top: -5px;
-  }
-
-  .featuredText {
-    text-align: center;
+    font-size: 1.3rem; /* Reduzido */
+    margin-top: 0;
   }
 
   .featuredDescription {
-    text-align: left; 
+    font-size: 1rem; /* Reduzido */
+    text-align: left; /* Mantém o alinhamento à esquerda para melhor leitura de parágrafos */
+  }
+
+  /* 3. Ajustando o layout da imagem e texto */
+  .featuredContent {
+    flex-direction: column; /* Empilha a imagem e o texto */
+    gap: 40px; /* Reduz o espaçamento entre imagem e texto */
+  }
+
+  .featuredImageContainer {
+    width: 100%; /* Garante que o contêiner da imagem ocupe toda a largura */
+    height: 250px; /* Altura fixa para a imagem no mobile, evita que fique muito grande */
+  }
+  
+  /* O seu .featuredImage já deve funcionar bem com o Next/Image, 
+     mas garantir que o contêiner tenha um tamanho definido é crucial. */
+
+  .featuredText {
+    text-align: center; /* Centraliza o link "Leia mais" */
   }
 }
