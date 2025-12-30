@@ -32,6 +32,14 @@ body {
     font-size: 12px;
 }
 
+html {
+  box-sizing: border-box;
+}
+
+*, *:before, *:after {
+  box-sizing: inherit;
+}
+
 /* Classe usada para evitar "flash" de conteúdo sem estilo no carregamento */
 body.loading {
     visibility: hidden;
@@ -42,9 +50,9 @@ body.loading {
 .container {
     width: 100%;
     max-width: 1100px;
-    margin: 0 auto;
+    margin: auto;
     background-color: var(--card-bg-color);
-    padding: 20px 30px;
+    padding: 20px 20px;
     border-radius: 0;
     box-shadow: none;
     box-sizing: border-box;
@@ -59,8 +67,7 @@ h2 {
     font-size: clamp(1.25rem, 3vw, 1.75rem);
     margin-bottom: 25px;
     color: var(--primary-color);
-    font-weight: 700; 
-    margin: 10px; 
+    font-weight: 700;
     padding-bottom: 10px; /* Cria um espaço entre o texto e a nova borda */
     border-bottom: 3px solid var(--accent-color); /* Borda de destaque */
     /*display: inline-block;  Faz a borda ter a largura exata do texto, não da linha inteira */
@@ -113,12 +120,9 @@ header p {
     margin: 0; 
 }
 
-button {
-    font-family: 'Lexend', sans-serif;
-}
-
 /* Botão de login específico do Header */
-.header-login-btn {    
+.header-login-btn {
+    font-family: 'Lexend', sans-serif;   
     font-weight: 600;
     font-size: 0.8rem;
     color: var(--secondary-color);
@@ -128,6 +132,7 @@ button {
     padding: 8px 16px;
     cursor: pointer;
     transition: all 0.2s ease-in-out;
+    margin-right: 40px;
 }
 
 .header-login-btn:hover {
@@ -267,13 +272,19 @@ textarea {
         padding: 20px;
     }
     .container {
-        padding: 40px;
+        padding: 20px;
         border-radius: 12px;
         box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
     }
     header {
         margin: 0 0 30px 0;
-    }
+    }    
+}
+
+@media (max-width: 768px) {
+  .header-login-btn {
+    margin: 0 auto;
+  }  
 }
 
 /* =============================================================== */

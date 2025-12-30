@@ -2,9 +2,9 @@
 
 /* --- ESTRUTURA GERAL --- */
 .header {
-  padding-top: 20px;
+  padding: 20px;
   border-bottom: 1px solid var(--border-color);
-  padding-bottom: 10px;
+  
 }
 .headerTop {
   text-align: center;
@@ -21,7 +21,6 @@
   width: 100%;
   max-width: 1200px;
   margin: 0 auto;
-  padding: 0 1rem;
 }
 
 /* --- NAVEGAÇÃO E LINKS --- */
@@ -130,6 +129,6 @@
   /* Mostra as ações do usuário DENTRO do menu mobile */
   .navLinks.active .userActionsMobile {
     display: block; /* MUITO IMPORTANTE: Mostra o bloco de login/logout */
-    margin-top: 2rem;
+    
   }
 }

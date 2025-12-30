@@ -3,25 +3,31 @@
  * Arquivo: /src/styles/HomePage.module.css
  */
 
+ .container {
+    width: 100%;
+    max-width: 1100px;
+    background-color: #f9f9f9;
+    padding: 0 20px 30px 20px;
+    margin: 20px auto;
+    box-shadow: none;
+    box-sizing: border-box;
+}
+
 /* ============================================ */
 /* ESTILOS PARA A SEÇÃO DE ABERTURA (HERO)      */
 /* ============================================ */
-
 .heroSection {
   position: relative; /* Essencial para posicionar os elementos filhos */
-  height: 70vh; /* Ocupa 70% da altura da tela do visitante */
-  min-height: 400px; /* Altura mínima para telas pequenas */
+  height: 60vh;
   display: flex;
   align-items: center;
   justify-content: center;
   text-align: center;
-  color: white; /* Cor do texto */
-  
-  /* A MÁGICA DA IMAGEM DE FUNDO */
-  background-image: url('/image/hero-background_2.jpg'); /* Caminho para sua imagem na pasta 'public' */
-  background-size: cover; /* Cobre toda a área da seção */
-  background-position: center; /* Centraliza a imagem */
-  background-attachment: fixed; /* Efeito de paralaxe sutil ao rolar */
+  color: white;  
+  background-image: url('/image/hero-background_2.jpg'); 
+  background-size: cover;
+  background-position: center;
+  background-attachment: fixed;
 }
 
 /* Camada escura sobre a imagem para garantir a legibilidade do texto */
@@ -73,8 +79,11 @@
 
 /* Ajustes para telas menores (celulares) */
 @media (max-width: 768px) {
+  .container{
+    padding: 0 0 20px 0;
+  }
   .heroSection {
-    height: 60vh;
+    height: 50vh;
   }
 
   .heroContent {
@@ -102,8 +111,7 @@
 /* ============================================ */
 
 .explorationSection {
-  padding: 80px 0;
-  background-color: #f9f9f9;
+  padding: 80px 0;  
 }
 
 .sectionContainer {
@@ -114,16 +122,16 @@
 }
 
 .sectionTitle {  
-  font-size: 1.8rem;
+  font-size: 2rem;
   font-weight: 600;
-  margin-bottom: 50px;
   color: #333;
 }
 
 .cardsGrid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-  gap: 40px; 
+  gap: 40px;
+  width: 100%;
 }
 
 .card {
@@ -171,13 +179,13 @@
 
 @media (max-width: 768px) {
   .explorationSection {
-    padding: 60px 0; /* Menos preenchimento vertical no mobile */
+    padding: 40px 0; /* Menos preenchimento vertical no mobile */
+    
   }
 
   .sectionTitle {
-    /* 1. Título da Seção em uma linha */
     white-space: nowrap; /* Impede a quebra de linha */
-    font-size: 1.3rem; /* Reduz um pouco para garantir que caiba */
+    font-size: 1.5rem; /* Reduz um pouco para garantir que caiba */
   }
 
   .cardsGrid {
@@ -188,12 +196,14 @@
 
   .card {
     padding: 30px; /* Menos preenchimento interno nos cards */
-  }
+    width: 100%;      /* O card pode ocupar até 100% da largura */
+    max-width: 330px; /* Mas não mais que 340px */
+    margin-left: auto;  /* Mágica da centralização */
+    margin-right: auto; /* Mágica da centralização */
+ }
 
   .cardTitle {
-    /* 3. Título do Card em uma linha */
-    white-space: nowrap;
-    overflow: hidden; /* Esconde o que não couber */
+    
     text-overflow: ellipsis; /* Adiciona "..." no final se o texto for cortado */
     font-size: 1.3rem; /* Reduz um pouco o tamanho */
   }
@@ -210,19 +220,17 @@
 /* ============================================ */
 
 .featuredSection {
-  padding: 80px 0;
-  background-color: #ffffff;
+  padding: 80px 20px;
 }
 
-/* Cabeçalho da seção, que será sempre centralizado */
 .sectionHeader {
   text-align: center;
-  margin-bottom: 50px; /* Espaço entre o título e o conteúdo abaixo */
+  margin-bottom: 50px;
 }
 
 .featuredTag {
   display: inline-block;
-  margin-bottom: 50px;
+  margin-bottom: 15px;
   padding: 15px 15px;
   background-color: var(--primary-color, #0070f3); /* Usa a cor primária como fundo */
   color: white;
@@ -239,17 +247,15 @@
   line-height: 1.3;
   color: #333;
   max-width: 700px; /* Evita que o título fique muito largo */
-  margin-left: auto;
-  margin-right: auto;
+  margin: 0 auto;
 }
 
 .featuredSubtitle {
-  font-size: 1.8rem; /* Um pouco menor que o título principal */
-  font-weight: 300; /* Mais fino e leve que o h2 */
+  font-size: 1.8rem;
+  font-weight: 300; 
   line-height: 1.4;
   color: #555; /* Uma cor um pouco mais suave que o preto do título */
-  margin-top: -10px; /* Puxa o subtítulo para mais perto do título principal */
-  margin-bottom: 0; /* Remove a margem inferior padrão do h3 */
+  margin-top: 10px;
 }
 
 /* Contêiner para a imagem e o texto */
@@ -257,6 +263,8 @@
   display: flex;
   align-items: center;
   gap: 60px;
+  max-width: 1200px;
+  margin: 0 auto;
 }
 
 .featuredImageContainer {
@@ -264,12 +272,6 @@
   min-width: 0;
   position: relative;
   height: 400px;
-}
-
-.featuredImage {
-  width: 90%;
-  height: auto;
-  border-radius: 8px;
 }
 
 .featuredText {
@@ -280,8 +282,8 @@
   font-size: 1.1rem;
   line-height: 1.7;
   color: #555;
-  margin-bottom: 20px;
-  text-align: justify;
+  margin-bottom: 30px;
+  text-align: left;
 }
 
 .featuredLink {
@@ -296,49 +298,51 @@
 }
 
 .noArticleContainer {
-  padding: 80px 20px;
   text-align: center;
-  background-color: #f9f9f9; /* Usa a mesma cor da seção de exploração para consistência */
+  padding: 60px 20px;
+  max-width: 700px;
+  margin: 0 auto;
   color: #666;
   font-size: 1.2rem;
+  line-height: 1.7;
+  border: 2px dashed #e0e0e0; 
+  border-radius: 8px;
 }
 
 /* Ajustes para telas menores (celulares) */
 @media (max-width: 900px) {
   .featuredSection {
-    padding: 60px 0; /* Menos preenchimento vertical */
+    padding: 40px 20px; /* Menos preenchimento vertical */
+  }
+  .sectionHeader {
+    margin-bottom: 40px; /* Um pouco menos de margem no mobile */
   }
 
   /* 1. Dando mais destaque à tag */
   .featuredTag {
-    background-color: var(--primary-color, #0070f3); /* Usa a cor primária como fundo */
-    color: white; /* Texto branco para contraste */
     padding: 8px 16px;
     font-size: 0.9rem;
   }
 
   /* 2. Diminuindo títulos e texto */
   .featuredTitle {
-    font-size: 1.8rem; /* Já estava bom, mantido */
+    font-size: 1.8rem;
   }
 
   .featuredSubtitle {
-    font-size: 1.3rem; /* Reduzido */
-    margin-top: 0;
-  }
-
-  .featuredDescription {
-    font-size: 1rem; /* Reduzido */
-    text-align: left; /* Mantém o alinhamento à esquerda para melhor leitura de parágrafos */
+    font-size: 1.2rem;
+    margin-top: 5px;
   }
 
   /* 3. Ajustando o layout da imagem e texto */
   .featuredContent {
-    flex-direction: column; /* Empilha a imagem e o texto */
-    gap: 40px; /* Reduz o espaçamento entre imagem e texto */
+    flex-direction: column; 
+    gap: 30px; 
+    padding: 0;
   }
 
   .featuredImageContainer {
+    flex: none;
     width: 100%; /* Garante que o contêiner da imagem ocupe toda a largura */
     height: 250px; /* Altura fixa para a imagem no mobile, evita que fique muito grande */
   }
@@ -347,6 +351,11 @@
      mas garantir que o contêiner tenha um tamanho definido é crucial. */
 
   .featuredText {
-    text-align: center; /* Centraliza o link "Leia mais" */
+    width: 100%;
+  }
+  
+  .featuredDescription {
+    font-size: 1rem; /* Reduzido */
+    text-align: left; /* Mantém o alinhamento à esquerda para melhor leitura de parágrafos */
   }
 }
