@@ -9,7 +9,7 @@ import Head from 'next/head';
 import SocialIcon from '../../components/SocialIcon';
 import { format } from 'date-fns';
 import { ptBR } from 'date-fns/locale';
-import Comments from '../../components/comments';
+import Comments from '../../../components/Comments';
 
 function HeartIcon({ filled }) {
   return (
