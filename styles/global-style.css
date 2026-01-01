@@ -38,6 +38,8 @@ html {
 
 *, *:before, *:after {
   box-sizing: inherit;
+  padding: 0;
+  margin: 0;
 }
 
 /* Classe usada para evitar "flash" de conteúdo sem estilo no carregamento */
@@ -132,7 +134,6 @@ header p {
     padding: 8px 16px;
     cursor: pointer;
     transition: all 0.2s ease-in-out;
-    margin-right: 40px;
 }
 
 .header-login-btn:hover {
@@ -283,7 +284,7 @@ textarea {
 
 @media (max-width: 768px) {
   .header-login-btn {
-    margin: 0 auto;
+    margin: 0;
   }  
 }
 

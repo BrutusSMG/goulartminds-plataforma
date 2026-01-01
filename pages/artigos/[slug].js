@@ -9,21 +9,24 @@ import Head from 'next/head';
 import SocialIcon from '../../components/SocialIcon';
 import { format } from 'date-fns';
 import { ptBR } from 'date-fns/locale';
+import Comments from '../../components/comments';
 
-const HeartIcon = ({ filled }) => (
-  <svg
-    width="24"
-    height="24"
-    viewBox="0 0 24 24"
-    fill={filled ? 'red' : 'none'}
-    stroke="currentColor"
-    strokeWidth="2"
-    strokeLinecap="round"
-    strokeLinejoin="round"
-  >
-    <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path>
-  </svg>
-);
+function HeartIcon({ filled }) {
+  return (
+    <svg
+      width="24"
+      height="24"
+      viewBox="0 0 24 24"
+      fill={filled ? 'red' : 'none'}
+      stroke="currentColor"
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    >
+      <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path>
+    </svg>
+  );
+}
 
 export default function ArticlePage({ article }) {
   // Se getStaticProps não encontrar o artigo, o fallback já terá retornado 404.
@@ -185,6 +188,11 @@ export default function ArticlePage({ article }) {
           className={styles.articleContent}
           dangerouslySetInnerHTML={{ __html: article.content }} 
         />
+        <div className={styles.authorSection}>
+          <span className={styles.authorLabel}>Elaborado por:</span>
+          <p className={styles.authorName}>{article.author.name}</p>
+        </div>
+        <Comments articleId={article.id} />
       </article>
     </PageLayout>
   );
@@ -211,6 +219,14 @@ export async function getStaticProps({ params }) {
   try {
     const article = await client.article.findUnique({
       where: { slug: params.slug },
+        include: {
+          author: {
+            select: {
+              name: true,
+              image: true, // Podemos pegar a imagem do autor também!
+            },
+          },
+        },
     });
 
     if (!article) {

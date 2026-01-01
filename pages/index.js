@@ -5,6 +5,12 @@ import Link from "next/link";
 import Image from "next/image";
 import client from "../lib/db";
 
+const QuoteIcon = () => (
+  <svg width="48" height="48" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+    <path d="M13 14.725C13 11.585 15.585 9 18.725 9C21.865 9 24 11.585 24 14.725C24 17.865 21.865 21 18.725 21H18.5C15.46 21 13 18.54 13 15.5V14.725ZM0 14.725C0 11.585 2.585 9 5.725 9C8.865 9 11 11.585 11 14.725C11 17.865 8.865 21 5.725 21H5.5C2.46 21 0 18.54 0 15.5V14.725Z" fillOpacity="0.1"/>
+  </svg>
+);
+
 export default function HomePage(props) {
   const article =
     props.article?.article !== undefined
@@ -20,19 +26,31 @@ export default function HomePage(props) {
         {/* =============================================== */}
         <section className={styles.heroSection}>
           <div className={styles.heroOverlay}></div>{" "}
-          {/* Camada para escurecer a imagem */}
           <div className={styles.heroContent}>
             <h1 className={styles.heroTitle}>
-              Autoconhecimento não é um destino. É uma direção.
-            </h1>
-            <p className={styles.heroSubtitle}>
-              Acreditamos que a verdadeira transformação não vem de respostas
+              Autoconhecimento não é um destino.<br />
+              É uma direção.
+            </h1>            
+          </div>
+        </section>        
+        
+        <section className={styles.introSection}>
+        {/* 1. O contêiner externo que terá o fundo com gradiente */}
+        <div className={styles.gradientBorderContainer}>
+          {/* 2. O card interno com o conteúdo e fundo branco */}
+          <div className={styles.introCard}>
+            <div className={styles.introIcon}>
+              <QuoteIcon />
+            </div>
+            <p className={styles.introSubtitle}>
+              Acreditamos que a verdadeira transformação não vem de respostas 
               prontas, mas da coragem de fazer as perguntas certas. Este é um
               espaço para você explorar as camadas da sua própria mente e
               construir uma vida mais consciente.
             </p>
           </div>
-        </section>
+        </div>
+      </section>
 
         <section className={styles.explorationSection}>
           <div className={styles.sectionContainer}>

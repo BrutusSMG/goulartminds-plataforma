@@ -19,6 +19,7 @@
 .heroSection {
   position: relative; /* Essencial para posicionar os elementos filhos */
   height: 60vh;
+  min-height: 350px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -51,18 +52,49 @@
 }
 
 .heroTitle {
-  font-size: 3rem; /* Tamanho grande para o título */
+  font-size: 3.5rem; /* Tamanho grande para o título */
   font-weight: 600;
   margin-bottom: 1rem;
-  line-height: 1.2;
 }
 
-.heroSubtitle {
-  font-size: 1.25rem;
+.introSection {
+  padding: 40px 20px 0; /* Espaçamento generoso */
+  background-color: #fff;
+}
+.gradientBorderContainer {
+  max-width: 850px;
+  margin: 0 auto;
+  padding: 5px; /* A LARGURA DA SUA BORDA! */
+  border-radius: 12px; /* Borda arredondada para o contêiner externo */
+  position: relative;
+  background: linear-gradient(
+    90deg, /* Direção do gradiente (da esquerda para a direita) */
+    rgba(0, 112, 243, 0),   /* Cor inicial: cor primária, totalmente transparente */
+    rgba(0, 112, 243, 0.8), /* Cor do meio: cor primária, 80% opaca */
+    rgba(0, 112, 243, 0)    /* Cor final: cor primária, totalmente transparente */
+  );
+}
+
+.introCard {
+  padding: 40px;
+  background-color: #f9f9f9; /* Fundo do card (pode ser branco ou cinza claro) */
+  border-radius: 10px; /* Borda um pouco menor que a do pai para um efeito perfeito */
+  text-align: center;
+}
+
+.introIcon {
+  color: var(--primary-color, #0070f3);
+  opacity: 0.5;
+  margin-bottom: 10px;
+}
+
+.introSubtitle {
+  font-size: 1.3rem;
   font-weight: 300;
-  line-height: 1.6;
-  opacity: 0.9; /* Levemente transparente para dar mais foco ao título */
-  color: white;
+  line-height: 1.7;
+  color: #333;
+  margin: 0;
+  font-style: italic;
 }
 
 /* Animação para o texto aparecer suavemente */
@@ -100,10 +132,16 @@
     /* Máximo: 2.8rem (aprox. 45px) */
     font-size: clamp(2rem, 8vw, 2.8rem);
   }
-
-  .heroSubtitle {
+   .introSection {
+    padding: 20px 0;
+  }
+  .introCard {
+    padding: 20px;
+  }
+  .introSubtitle {
     font-size: 1.1rem;
   }
+
 }
 
 /* ============================================ */
@@ -111,7 +149,7 @@
 /* ============================================ */
 
 .explorationSection {
-  padding: 80px 0;  
+  padding: 80px 0 0 0;  
 }
 
 .sectionContainer {
