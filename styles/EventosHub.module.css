@@ -1,0 +1,214 @@
+/* /styles/EventosHub.module.css */
+
+.hubContainer {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 2rem 1rem;
+}
+
+.hubHeader {
+  text-align: center;
+  margin-bottom: 3rem;
+}
+
+.hubHeader h1 {
+  font-size: 2.5rem;
+  margin-bottom: 0.5rem;
+}
+
+.hubHeader p {
+  font-size: 1.1rem;
+  color: #666;
+}
+
+.cityFilter {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-bottom: 3rem;
+}
+
+.cityFilter button {
+  font-family: 'Lexend', sans-serif;
+  background-color: #f0f0f0;
+  border: 1px solid #ddd;
+  padding: 8px 16px;
+  border-radius: 20px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.cityFilter button:hover {
+  background-color: #e0e0e0;
+}
+
+.cityFilter button.active {
+  background-color: #0070f3; /* Cor primária para o filtro ativo */
+  color: white;
+  border-color: #0070f3;
+}
+
+.eventsGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  gap: 2rem;
+}
+
+/* ===================================================== */
+/* === ESTILOS DOS CARDS (A PARTE MAIS IMPORTANTE) === */
+/* ===================================================== */
+
+/* Estilo base para todos os cards de evento */
+.eventCard {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  min-height: 350px;
+  padding: 24px;
+  border-radius: 16px;
+  overflow: hidden;
+  text-decoration: none;
+  color: #ffffff;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  background-size: cover;
+  background-position: center;
+}
+
+.eventCard:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 12px 24px rgba(0, 0, 0, 0.25);
+}
+
+/* A sobreposição escura */
+.eventCard::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(180deg, rgba(0,0,0,0.1) 20%, rgba(0,0,0,0.8) 100%);
+  z-index: 1;
+  transition: background-color 0.3s ease;
+}
+
+.eventCard:hover::before {
+  background-color: rgba(0, 0, 0, 0.1); /* Clareia um pouco no hover para destacar a imagem */
+}
+
+/* O container do conteúdo textual */
+.cardContent {
+  position: relative;
+  z-index: 2; /* Coloca o conteúdo ACIMA da sobreposição */
+}
+
+/* --- Classes específicas para cada imagem de fundo --- */
+
+.cmcCard {
+  background-color: #1a2a45; 
+}
+
+.cmcCard::after {
+  content: '';
+  position: absolute;
+  
+  /* Posicionamento e tamanho da imagem */
+  top: 20px; /* Distância do topo */
+  right: 20px; /* Distância da direita */
+  width: 280px;  /* Largura da imagem */
+  height: 280px; /* Altura da imagem */
+
+  /* A imagem em si */
+  background-image: url('/image/mentalidade-de-cura.png');
+  background-size: contain; /* Garante que a imagem inteira caiba no espaço definido */
+  background-repeat: no-repeat; /* Evita que a imagem se repita */
+  
+  /* Efeitos visuais */
+  opacity: 0.8; /* Leve transparência para integrar melhor ao fundo */
+  z-index: 0; /* Coloca a imagem atrás de tudo, mas acima da cor de fundo */
+  transition: transform 0.4s ease;
+}
+
+/* Efeito de hover para o card CMC */
+.cmcCard:hover::after {
+  transform: scale(1.05) rotate(3deg); /* Animação sutil na imagem ao passar o mouse */
+}
+
+
+.imeCard {
+  /* Quando tiver a imagem, descomente e ajuste a linha abaixo */
+  /* background-image: url('/image/sua-imagem-ime.png'); */
+  
+  /* Cor de fundo temporária para o IME */
+  background-color: #2c3e50;
+}
+
+/* 2. Usa o pseudo-elemento ::after para posicionar a imagem do IME */
+.imeCard::after {
+  content: '';
+  position: absolute;
+  
+  /* Posicionamento e tamanho da imagem (usando os mesmos 280px) */
+  top: 20px;
+  right: 20px;
+  width: 280px;
+  height: 280px;
+
+  /* --- ATENÇÃO: SUBSTITUA PELO NOME REAL DA SUA IMAGEM --- */
+  background-image: url('/image/ime.webp');
+  
+  background-size: contain;
+  background-repeat: no-repeat;
+  
+  /* Efeitos visuais (os mesmos do CMC para consistência) */
+  opacity: 0.8;
+  z-index: 0;
+  transition: transform 0.4s ease;
+}
+
+/* Efeito de hover para o card IME (consistente com o CMC) */
+.imeCard:hover::after {
+  transform: scale(1.05) rotate(3deg);
+}
+
+/* Ajustes finos nos textos para garantir a legibilidade */
+.eventTypeTag {
+  display: inline-block;
+  padding: 4px 10px;
+  border-radius: 8px;
+  font-size: 0.8rem;
+  font-weight: bold;
+  margin-bottom: 1rem;
+  background-color: rgba(255, 255, 255, 0.2);
+  color: #fff;
+  backdrop-filter: blur(5px);
+}
+
+.eventDate {
+  font-size: 2.25rem;
+  color: #fff;
+  text-shadow: 1px 1px 3px rgba(0,0,0,0.5);
+  margin: 0;
+}
+
+.eventCityState {
+  font-size: 1.1rem;
+  color: #f0f0f0;
+  margin-bottom: 1.5rem;
+}
+
+.eventAction {
+  font-weight: bold;
+  color: #fff;
+  font-size: 1rem;
+}
+
+.noEventsMessage {
+  text-align: center;
+  padding: 4rem 1rem;
+  background-color: #f9f9f9;
+  border-radius: 8px;
+  grid-column: 1 / -1; /* Faz a mensagem ocupar toda a largura da grade */
+}

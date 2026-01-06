@@ -4,12 +4,12 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "dev": "npx dotenv -e .env.local -- next dev",
-    "build": "npx dotenv -e .env.local -- next build",
-    "start": "npx dotenv -e .env.local -- next start",
-    "lint": "next lint",
-    "postinstall": "prisma generate"
-  },
+  "dev": "npx dotenv -e .env.local -- next dev",
+  "build": "npx dotenv -e .env.local -- cross-env DATABASE_URL=%DIRECT_URL% next build",
+  "start": "next start",
+  "lint": "next lint",
+  "postinstall": "prisma generate"
+},
   "repository": {
     "type": "git",
     "url": "git+https://github.com/BrutusSMG/goulartminds-plataforma.git"
@@ -34,11 +34,13 @@
     "pg": "^8.11.5",
     "react": "18.2.0",
     "react-dom": "18.2.0",
+    "react-quill": "^2.0.0",
     "resend": "^6.6.0",
     "slugify": "^1.6.6"
   },
   "devDependencies": {
     "@types/node": "20.12.7",
+    "cross-env": "^10.1.0",
     "dotenv-cli": "^11.0.0",
     "prisma": "5.12.1",
     "typescript": "5.4.5"

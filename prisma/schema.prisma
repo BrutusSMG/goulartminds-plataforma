@@ -25,7 +25,7 @@ model User {
   role String @default("USER") // Pode ser "USER" ou "ADMIN"
   articles      Article[]
   comments      Comment[]
-  commentLikes  CommentLike[]
+  commentReactions CommentReaction[]
 }
 
 model Account {
@@ -86,19 +86,40 @@ model Comment {
   articleId String
   author    User      @relation(fields: [authorId], references: [id], onDelete: Cascade)
   authorId  String
-  likes     CommentLike[]
+  parentId  String?   
+  parent    Comment?  @relation("Replies", fields: [parentId], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  replies   Comment[] @relation("Replies")
+
+  reactions CommentReaction[]
 }
 
-model CommentLike {
-  // Chave primária composta para garantir que um usuário só possa curtir um comentário uma vez
-  @@id([userId, commentId])
+model CommentReaction {
+  id        String   @id @default(cuid()) 
+  type      String   
 
-  // RELAÇÕES:
-  // A curtida pertence a um usuário
-  user      User      @relation(fields: [userId], references: [id], onDelete: Cascade)
-  userId    String
-
-  // A curtida pertence a um comentário
-  comment   Comment   @relation(fields: [commentId], references: [id], onDelete: Cascade)
   commentId String
+  comment   Comment  @relation(fields: [commentId], references: [id], onDelete: Cascade)
+
+  userId    String
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  
+  @@unique([commentId, userId, type])
+}
+
+model Event {
+  id              String    @id @default(cuid())
+  
+  // Informações Essenciais que Variam
+  type            String    // "CMC" ou "IME"
+  date            DateTime  // Data e hora de início do evento
+  city            String    // "Petrolina", "Jaú", etc.
+  state           String    // "PE", "SP", etc.
+  venueName       String?   // Nome do local, ex: "Nobile Suites Del Rio"
+  venueAddress    String?   // Endereço completo do local
+  registrationLink String   // Link para a plataforma de compra (Sympla, etc.)
+  status          String    // "ATIVO", "ESGOTADO", "EM_BREVE", "CANCELADO"
+  
+  // Campos de controle
+  createdAt       DateTime  @default(now())
+  updatedAt       DateTime  @updatedAt
 }

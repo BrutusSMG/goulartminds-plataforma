@@ -7,8 +7,8 @@
     width: 100%;
     max-width: 1100px;
     background-color: #f9f9f9;
-    padding: 0 20px 30px 20px;
-    margin: 20px auto;
+    padding: 0 20px;
+    margin: 20px 0 0 0;
     box-shadow: none;
     box-sizing: border-box;
 }
@@ -58,8 +58,8 @@
 }
 
 .introSection {
-  padding: 40px 20px 0; /* Espaçamento generoso */
-  background-color: #fff;
+  padding: 40px 40px; /* Espaçamento generoso */
+  background-color: #f9f9f9;
 }
 .gradientBorderContainer {
   max-width: 850px;
@@ -89,7 +89,7 @@
 }
 
 .introSubtitle {
-  font-size: 1.3rem;
+  font-size: 1.1rem;
   font-weight: 300;
   line-height: 1.7;
   color: #333;
@@ -155,7 +155,7 @@
 .sectionContainer {
   max-width: 1200px;
   margin: 0 auto;
-  padding: 0 20px;
+  padding: 20px 20px;
   text-align: center;
 }
 

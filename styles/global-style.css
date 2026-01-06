@@ -238,15 +238,6 @@ textarea {
     min-height: 80px;
 }
 
-/* --- FOOTER --- */
-.site-footer {
-    text-align: center;
-    padding: 20px;
-    margin-top: 40px;
-    font-size: 14px;
-    color: #888;
-}
-
 /* ------------------------------------------------------------------ */
 /* 5. CLASSES UTILITÁRIAS GLOBAIS
 /* Classes pequenas e reutilizáveis para tarefas comuns, como esconder

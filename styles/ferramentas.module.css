@@ -3,7 +3,7 @@
 /* 1. Introdução da página */
 .homeIntro {
     text-align: center;
-    margin-bottom: 40px;
+    margin: 60px 0;
 }
 
 /* --- AJUSTE --- */
@@ -31,6 +31,7 @@
     /* Isso substitui a necessidade da media query para o grid. */
     grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
     gap: 30px; /* Espaçamento entre os cards */
+    padding-bottom: 40px;
 }
 
 /* 3. Estilo individual de cada card */

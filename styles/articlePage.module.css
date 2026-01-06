@@ -40,7 +40,7 @@
 
 .articleContent {
   font-size: 1.15rem; /* Tamanho de fonte confortável para leitura */
-  line-height: 1; /* Espaçamento generoso entre as linhas */
+  line-height: 1.4; /* Espaçamento generoso entre as linhas */
   color: #333;
 }
 
@@ -56,6 +56,30 @@
 
 .articleContent p {
   margin-bottom: 25px;
+}
+
+.articleContent ul,
+.articleContent ol {
+  padding-left: 25px; /* Espaço à esquerda para os marcadores */
+  margin-bottom: 20px; /* Mesma margem inferior dos parágrafos para consistência */
+}
+
+/* Estilos para cada item da lista (li) */
+.articleContent li {
+  margin-bottom: 10px; /* Espaço entre os itens da lista */
+  line-height: 1; /* Garante um bom espaçamento de linha dentro de cada item */
+  font-size: 1rem;
+}
+
+/* Estilo específico para os marcadores de listas não ordenadas */
+.articleContent ul li::marker {
+  color: var(--primary-color, #0070f3); /* Deixa a bolinha com a cor primária */
+  font-size: 1em; /* Deixa a bolinha um pouco maior e mais visível */
+}
+
+.articleContent ol li::marker {
+  font-weight: 600; /* Deixa os números em negrito */
+  color: #333;
 }
 
 .articleContent a {
@@ -177,6 +201,7 @@
   border-radius: 15px;
   font-size: 0.9rem;
   transition: background-color 0.2s;
+  margin-right: 5px;
 }
 
 .shareButton:hover {
@@ -211,7 +236,7 @@
 }
 
 .authorSection {
-  margin-bottom: 4rem;
+  padding-top: 0.5rem;
   padding-bottom: 2rem;
   border-top: 1px solid #eaeaea;
   display: flex;
@@ -232,7 +257,7 @@
 }
 
 .authorName {
-  font-size: 1.1rem;
+  font-size: 0.9rem;
   font-weight: 600;
   margin: 0;
 }

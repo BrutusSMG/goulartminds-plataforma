@@ -10,19 +10,19 @@ export default async function handle(req, res) {
 
   const session = await getServerSession(req, res, authOptions);
 
-  // Proteção da API: só permite que administradores criem artigos
   if (!session || session.user.role !== 'ADMIN') {
     return res.status(403).json({ message: 'Acesso negado.' });
   }
 
   const { title, subtitle, slug, imageUrl, description, content } = req.body;
 
-  // Validação básica
   if (!title || !slug || !imageUrl || !description || !content) {
     return res.status(400).json({ message: 'Todos os campos obrigatórios devem ser preenchidos.' });
   }
 
   try {
+    const authorId = session.user.id; 
+
     const newArticle = await client.article.create({
       data: {
         title,
@@ -31,11 +31,17 @@ export default async function handle(req, res) {
         imageUrl,
         description,
         content,
+        author: {         // 2. Adiciona a relação com o autor
+          connect: {
+            id: authorId, // 3. Conecta com o ID do usuário logado
+          },
+        },                // 4. Fim da adição
       },
     });
+    // 👆 --- FIM DA CORREÇÃO --- 👆
+
     res.status(201).json(newArticle);
   } catch (error) {
-    // Trata o erro de slug duplicado
     if (error.code === 'P2002') {
       return res.status(409).json({ message: 'Erro: O "slug" (URL) já existe. Escolha outro.' });
     }

@@ -46,14 +46,21 @@ export default function Header() {
               <li key="inicio"><Link href="/" className={styles.navLink} onClick={closeMenu}>Início</Link></li>
               <li key="ferramentas"><Link href="../ferramentas" className={styles.navLink} onClick={closeMenu}>Ferramentas</Link></li>
               <li key="artigos"><Link href="/artigos" className={styles.navLink} onClick={closeMenu}>Blog</Link></li>
-              <li key="eventos"><Link href="/em-construcao" className={styles.navLink} onClick={closeMenu}>Eventos</Link></li>
+              <li key="eventos"><Link href="/eventos" className={styles.navLink} onClick={closeMenu}>Eventos</Link></li>
               
               {session?.user?.role === 'ADMIN' && (
-                <li key="novo-artigo">
+                <>
+                  <li key="novo-artigo">
                   <Link href="/admin/artigos/novo" className={styles.adminLink} onClick={closeMenu}>+ Novo Artigo</Link>
                 </li>
+                <li key="gerenciar-eventos">
+                <Link href="/admin/eventos" className={styles.adminLink} onClick={closeMenu}>
+                      + Gerenciar Eventos
+                    </Link>
+                </li>
+                </>               
+                
               )}
-              {/* O <li> com as ações do usuário foi REMOVIDO daqui */}
             </ul>
           </nav>
         </div>

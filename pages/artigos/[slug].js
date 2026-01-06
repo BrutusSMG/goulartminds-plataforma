@@ -172,10 +172,11 @@ export default function ArticlePage({ article }) {
             </button>
           </div>          
         </div>
+
         <div className={styles.dateInfo}>
             <span>
               Publicado em {format(new Date(article.createdAt), "dd 'de' MMMM 'de' yyyy", { locale: ptBR })}
-            </span>
+            </span><br />
             {hasBeenUpdated && (
               <span className={styles.updatedDate}>
                 (Atualizado em {format(new Date(article.updatedAt), "dd 'de' MMMM 'de' yyyy", { locale: ptBR })})
@@ -183,15 +184,17 @@ export default function ArticlePage({ article }) {
             )}
         </div>
         
+        <div className={styles.authorSection}>
+          <span className={styles.authorLabel}>Elaborado por:</span>
+          <p className={styles.authorName}>{article.author.name}</p>
+        </div>
+        
         {/* O conteúdo principal do artigo */}
         <div 
           className={styles.articleContent}
           dangerouslySetInnerHTML={{ __html: article.content }} 
         />
-        <div className={styles.authorSection}>
-          <span className={styles.authorLabel}>Elaborado por:</span>
-          <p className={styles.authorName}>{article.author.name}</p>
-        </div>
+        
         <Comments articleId={article.id} />
       </article>
     </PageLayout>

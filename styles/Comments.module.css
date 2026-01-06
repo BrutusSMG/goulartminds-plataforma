@@ -122,3 +122,101 @@
   font-style: italic;
   color: #666;
 }
+
+/* Em /styles/Comments.module.css */
+
+.reactionButton {
+  /* seus estilos normais */
+  background: #f0f2f5;
+  border: none;
+  padding: 6px 12px;
+  border-radius: 20px;
+  cursor: pointer;
+}
+
+.reacted {
+  /* A mesma base do botão normal, mas com cores diferentes */
+  background: #e7f3ff; /* Um azul claro */
+  color: #1877f2; /* Um azul mais forte */
+  border: none;
+  padding: 6px 12px;
+  border-radius: 20px;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+/* Em /styles/Comments.module.css */
+
+.reactionSummary {
+  display: flex;
+  gap: 8px;
+  margin-top: 8px;
+  padding-left: 10px;
+}
+
+.reactionIcon {
+  background-color: #f0f2f5;
+  border-radius: 10px;
+  padding: 2px 6px;
+  font-size: 0.8rem;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.actionButton {
+  background: none;
+  border: none;
+  padding: 0;
+  margin: 0 8px; /* Adiciona um espaçamento entre os botões */
+  color: #606770; /* Um cinza escuro, mas não preto */
+  font-weight: bold;
+  font-size: 0.85rem;
+  cursor: pointer;
+  transition: color 0.2s ease;
+}
+
+.actionButton:hover {
+  color: #1c1e21; /* Escurece um pouco no hover */
+  text-decoration: underline;
+}
+
+/* Estilo para botões de cancelamento ou menos importantes */
+.ghostButton {
+  background: none;
+  border: 1px solid #ccd0d5; /* Borda sutil */
+  padding: 8px 16px;
+  border-radius: 6px;
+  color: #4b4f56;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.ghostButton:hover {
+  background-color: #f0f2f5; /* Um fundo cinza muito claro no hover */
+}
+
+/* Container para os botões do formulário de edição */
+.editActions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 8px;
+  margin-top: 8px;
+}
+.deleteButton {
+  background: none;
+  border: none;
+  padding: 0;
+  margin: 0 8px;
+  color: #e74c3c; /* Um tom de vermelho para perigo */
+  font-weight: bold;
+  font-size: 0.85rem;
+  cursor: pointer;
+  transition: color 0.2s ease;
+}
+
+.deleteButton:hover {
+  color: #c0392b; /* Vermelho mais escuro no hover */
+  text-decoration: underline;
+}

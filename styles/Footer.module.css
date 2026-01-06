@@ -1,0 +1,92 @@
+/* src/styles/Footer.module.css */
+
+/* --- ESTILO PADRÃO (MOBILE) --- */
+.footerContainer {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  padding: 40px 20px;
+  margin-top: 0;
+  border-top: 1px solid #eaeaea;
+  background-color: #f9f9f9;
+}
+
+.footerTop {
+  display: flex;
+  flex-direction: column; /* Empilha botão e ícones no mobile */
+  align-items: center;
+  gap: 30px;
+  width: 100%;
+  padding-bottom: 30px;
+  border-bottom: 1px solid #ddd;
+}
+
+.feedbackButton {
+  font-family: 'Lexend', sans-serif;
+  background-color: var(--primary-color, #0070f3);
+  color: white;
+  border: none;
+  padding: 12px 24px; /* Botão maior no mobile para fácil toque */
+  border-radius: 8px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.socialLinks {
+  display: flex;
+  gap: 1.5rem;
+}
+
+.socialIcon {
+  color: #555;
+  transition: color 0.2s ease;
+}
+
+.socialIcon:hover {
+  color: var(--primary-color, #0070f3);
+}
+
+.footerBottom {
+  padding-top: 30px;
+  text-align: center;
+}
+
+.copyrightText {
+  margin: 0;
+  font-size: 0.9rem;
+  color: #888;
+}
+
+
+/* ======================================================================== */
+/* AJUSTES PARA DESKTOP (telas maiores que 768px)                           */
+/* ======================================================================== */
+
+@media (min-width: 769px) {
+  .footerContainer {
+    align-items: center; /* Centraliza o conteúdo do rodapé */
+    padding-top: 40px;
+  }
+
+  .footerTop, .footerBottom {
+    width: 100%;
+    max-width: 1200px; /* Limita a largura do conteúdo */
+  }
+
+  .footerTop {
+    flex-direction: column; /* MANTÉM empilhado */
+    align-items: center; /* MANTÉM centralizado */
+    border-bottom: none; /* Remove a linha no desktop para um visual mais limpo */
+    padding-bottom: 0;
+    gap: 25px; /* Espaço menor entre botão e ícones */
+  }
+
+  .feedbackButton {
+    padding: 10px 20px; /* Botão menor no desktop */
+  }
+
+  .footerBottom {
+    padding-top: 25px; /* Espaço entre ícones e copyright */
+  }
+}
