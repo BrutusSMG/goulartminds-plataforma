@@ -72,7 +72,7 @@ h2 {
     font-weight: 700;
     padding-bottom: 10px; /* Cria um espaço entre o texto e a nova borda */
     border-bottom: 3px solid var(--accent-color); /* Borda de destaque */
-    /*display: inline-block;  Faz a borda ter a largura exata do texto, não da linha inteira */
+    display: inline-block; 
 }
 
 h3 { 

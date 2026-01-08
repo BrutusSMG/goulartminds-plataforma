@@ -1,6 +1,6 @@
-// src/components/Header.js
+// /components/Header.js
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useSession, signIn, signOut } from 'next-auth/react';
 import Link from 'next/link';
 import styles from '../styles/Header.module.css';
@@ -10,73 +10,70 @@ export default function Header() {
   const loading = status === 'loading';
 
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-
   const toggleMenu = () => setIsMenuOpen(!isMenuOpen);
-  const closeMenu = () => {
-    setTimeout(() => {
-      setIsMenuOpen(false);
-    }, 150);
-  };
+
+  useEffect(() => {
+    if (isMenuOpen) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = 'unset';
+    }
+    return () => {
+      document.body.style.overflow = 'unset';
+    };
+  }, [isMenuOpen]);
 
   return (
     <header className={styles.header}>
-      {/* Seção Superior: Título e Subtítulo */}
+      <div 
+        className={`${styles.overlay} ${isMenuOpen ? styles.active : ''}`}
+        onClick={toggleMenu} 
+      />
       <div className={styles.headerTop}>
-        <Link href="/" onClick={closeMenu}>
+        <Link href="/">
           <h1>Goulart Minds</h1>
           <p>Clareza. Planejamento. Ação.</p>
         </Link>
-      </div>      
+      </div>
 
-      {/* Seção Inferior: Barra de Navegação Principal */}
       <div className={styles.mainNavBar}>
-
-        {/* --- LADO ESQUERDO DA BARRA DE NAVEGAÇÃO --- */}
         <div className={styles.navLeft}>
-          {/* Botão Hambúrguer (só visível no mobile) */}
-          <button className={styles.hamburger} onClick={toggleMenu} aria-label="Abrir menu">
-            <span className={styles.hamburgerLine}></span>
-            <span className={styles.hamburgerLine}></span>
-            <span className={styles.hamburgerLine}></span>
+          <button className={`${styles.hamburger} ${isMenuOpen ? styles.active : ''}`} onClick={toggleMenu} aria-label="Abrir ou fechar menu" aria-expanded={isMenuOpen}>
+            <div className={styles.hamburgerBox}>
+              <div className={styles.hamburgerInner}></div>
+            </div>
           </button>
 
-          {/* Menu de Navegação (contém APENAS os links) */}
           <nav className={`${styles.navLinks} ${isMenuOpen ? styles.active : ''}`}>
             <ul className={styles.navList}>
-              <li key="inicio"><Link href="/" className={styles.navLink} onClick={closeMenu}>Início</Link></li>
-              <li key="ferramentas"><Link href="../ferramentas" className={styles.navLink} onClick={closeMenu}>Ferramentas</Link></li>
-              <li key="artigos"><Link href="/artigos" className={styles.navLink} onClick={closeMenu}>Blog</Link></li>
-              <li key="eventos"><Link href="/eventos" className={styles.navLink} onClick={closeMenu}>Eventos</Link></li>
+              <li key="inicio"><Link href="/" className={styles.navLink} onClick={toggleMenu}>Início</Link></li>
+              <li key="ferramentas"><Link href="/ferramentas" className={styles.navLink} onClick={toggleMenu}>Ferramentas</Link></li>
+              <li key="artigos"><Link href="/artigos" className={styles.navLink} onClick={toggleMenu}>Blog</Link></li>
+              <li key="eventos"><Link href="/eventos" className={styles.navLink} onClick={toggleMenu}>Eventos</Link></li>
               
               {session?.user?.role === 'ADMIN' && (
                 <>
                   <li key="novo-artigo">
-                  <Link href="/admin/artigos/novo" className={styles.adminLink} onClick={closeMenu}>+ Novo Artigo</Link>
-                </li>
-                <li key="gerenciar-eventos">
-                <Link href="/admin/eventos" className={styles.adminLink} onClick={closeMenu}>
-                      + Gerenciar Eventos
-                    </Link>
-                </li>
-                </>               
-                
+                    <Link href="/admin/artigos/novo" className={styles.adminLink} onClick={toggleMenu}>+ Novo Artigo</Link>
+                  </li>
+                  <li key="gerenciar-eventos">
+                    <Link href="/admin/eventos" className={styles.adminLink} onClick={toggleMenu}>+ Gerenciar Eventos</Link>
+                  </li>
+                </>                
               )}
             </ul>
           </nav>
         </div>
 
-        {/* --- LADO DIREITO DA BARRA DE NAVEGAÇÃO --- */}
         <div className={styles.navRight}>
           {loading && <p className={styles.loadingText}>Carregando...</p>}
           
-          {/* Se NÃO estiver logado, mostra o botão "Entrar" */}
           {!loading && !session && (
             <button onClick={() => signIn('email', { callbackUrl: '/' })} className="header-login-btn">
               Entrar com E-mail
             </button>
           )}
 
-          {/* Se ESTIVER logado, mostra Olá/Sair */}
           {!loading && session && (
             <div className={styles.userActions}>
               <Link href="/perfil" className={styles.welcomeMessage}>

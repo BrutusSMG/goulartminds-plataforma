@@ -13,8 +13,15 @@
   margin-bottom: 40px;
 }
 
+.tableContainer {
+  width: 100%;
+  overflow-x: auto; /* A MÁGICA ACONTECE AQUI */
+  -webkit-overflow-scrolling: touch; /* Melhora a experiência de rolagem em iOS */
+}
+
 .table {
   width: 100%;
+  min-width: 700px; /* Defina uma largura mínima para a tabela */
   border-collapse: collapse;
   text-align: left;
 }

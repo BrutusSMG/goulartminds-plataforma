@@ -1,4 +1,4 @@
-// src/pages/admin/artigos/editar/[slug].js
+// /pages/admin/artigos/editar/[slug].js
 
 import { useState } from 'react';
 import { useRouter } from 'next/router';
@@ -35,6 +35,7 @@ export default function EditarArtigoPage({ initialArticle }) {
   const [imageUrl, setImageUrl] = useState(initialArticle.imageUrl);
   const [description, setDescription] = useState(initialArticle.description);
   const [content, setContent] = useState(initialArticle.content);
+  const [published, setPublished] = useState(initialArticle.published);
   
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [error, setError] = useState('');
@@ -44,29 +45,43 @@ export default function EditarArtigoPage({ initialArticle }) {
     e.preventDefault();
     setIsSubmitting(true);
     setError('');
+    
+    try {
+      const response = await fetch('/api/articles/update', {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          originalSlug: initialArticle.slug,
+          title,
+          subtitle,
+          imageUrl,
+          description,
+          content,
+          published,
+        }),
+      });
 
-    const response = await fetch('/api/articles/update', {
-      method: 'PUT', // Usamos PUT para atualizações
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        originalSlug: initialArticle.slug, // Passa o slug original para encontrar o artigo
-        title,
-        subtitle,
-        imageUrl,
-        description,
-        content,
-      }),
-    });
+      // Se a resposta da API não for 'ok' (ex: erro 400, 500),
+      // nós mesmos lançamos um erro para ser pego pelo 'catch'.
+      if (!response.ok) {
+        const data = await response.json();
+        throw new Error(data.message || 'Erro ao atualizar o artigo.');
+      }
 
-    setIsSubmitting(false);
-
-    if (response.ok) {
+      // Se tudo deu certo, processamos a resposta
       const updatedArticle = await response.json();
       alert('Artigo atualizado com sucesso!');
-      router.push(`/artigos/${updatedArticle.slug}`); // Redireciona para a página do artigo
-    } else {
-      const data = await response.json();
-      setError(data.message || 'Erro ao atualizar o artigo.');
+      router.push(`/artigos/${updatedArticle.slug}`);
+
+    } catch (err) {
+      // Captura tanto erros de rede (fetch falhou) quanto erros lançados por nós (response não ok)
+      console.error("Falha ao submeter o formulário:", err);
+      setError(err.message);
+
+    } finally {
+      // Este bloco é executado SEMPRE, seja em caso de sucesso ou de erro.
+      // Garante que o botão de salvar seja reabilitado.
+      setIsSubmitting(false);
     }
   };
 
@@ -100,6 +115,22 @@ export default function EditarArtigoPage({ initialArticle }) {
             <div className={styles.formGroup}>
               <label htmlFor="content">Conteúdo do Artigo (em HTML)</label>
               <textarea id="content" rows="15" value={content} onChange={(e) => setContent(e.target.value)} required />
+            </div>
+
+            <div className={styles.formGroupCheckbox}>
+              <input
+                type="checkbox"
+                id="published"
+                name="published"
+                checked={published}
+                onChange={(e) => setPublished(e.target.checked)}
+              />
+              <div className={styles.checkboxTextContainer}>
+                <label htmlFor="published">
+                  Publicar este artigo?
+                </label>
+                <p>Se marcado, o artigo ficará visível para todos no blog.</p>
+              </div>
             </div>
             
             {error && <p className={styles.errorMessage}>{error}</p>}

@@ -32,11 +32,7 @@
   gap: 1.5rem;
 }
 
-/* --- 2. Links de Navegação --- */
-.navLinks {
-  display: flex;
-}
-
+/* --- 2. Links de Navegação (Desktop) --- */
 .navList {
   list-style: none;
   margin: 0;
@@ -59,7 +55,7 @@
   font-weight: bold;
 }
 
-/* --- 3. Ações do Usuário (ÚNICO contêiner) --- */
+/* --- 3. Ações do Usuário --- */
 .userActions {
   display: flex;
   align-items: center;
@@ -76,22 +72,130 @@
   color: var(--secondary-color);
 }
 
-/* --- 4. Menu Hambúrguer (Mobile) --- */
+/* ======================================================================== */
+/* ESTILOS DO MENU MOBILE (A NOVA LÓGICA)                                   */
+/* ======================================================================== */
+
+/* --- 4. Ícone Hambúrguer e Animação para 'X' --- */
+
+/* O botão em si, sempre visível mas escondido no desktop pela media query */
 .hamburger {
-  display: none; /* Escondido no desktop */
-  cursor: pointer;
-  background: none;
+  display: none; /* Escondido por padrão (desktop-first) */
+  position: relative;
+  width: 40px;
+  height: 40px;
+  padding: 0;
+  background: transparent;
   border: none;
-  padding: 10px;
-  z-index: 1001;
+  cursor: pointer;
+  z-index: 1050; /* Fica na frente de tudo, exceto o menu em si */
 }
 
-.hamburgerLine {
-  display: block;
-  width: 25px;
-  height: 2px;
-  margin: 6px 0;
+.hamburgerBox {
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+
+/* A linha do meio do hambúrguer */
+.hamburgerInner {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 28px;
+  height: 3px;
   background-color: var(--text-color, #333);
+  border-radius: 2px;
+  transition: transform 0.2s ease-in-out, background-color 0.2s ease-in-out;
+}
+
+/* As linhas de cima e de baixo, criadas com pseudo-elementos */
+.hamburgerInner::before,
+.hamburgerInner::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  width: 100%;
+  height: 3px;
+  background-color: var(--text-color, #333);
+  border-radius: 2px;
+  transition: transform 0.2s ease-in-out;
+}
+
+.hamburgerInner::before {
+  transform: translateY(-8px); /* Posição da linha de cima */
+}
+
+.hamburgerInner::after {
+  transform: translateY(8px); /* Posição da linha de baixo */
+}
+
+/* ANIMAÇÃO PARA O 'X' QUANDO O MENU ESTÁ ATIVO */
+.hamburger.active .hamburgerInner {
+  background-color: transparent; /* A linha do meio some */
+}
+
+.hamburger.active .hamburgerInner::before {
+  transform: rotate(45deg); /* A linha de cima rotaciona */
+}
+
+.hamburger.active .hamburgerInner::after {
+  transform: rotate(-45deg); /* A linha de baixo rotaciona */
+}
+
+
+/* --- 5. Painel do Menu (Drawer) e Overlay --- */
+
+/* O painel que desliza */
+.navLinks {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 80%; /* Ocupa 80% da largura da tela */
+  max-width: 320px; /* Mas no máximo 320px */
+  height: 100vh; 
+  padding-top: 200px; /* Aumentamos o valor para garantir que funcione */
+  padding-left: 80px;
+  padding-right: 40px;
+  padding-bottom: 40px; /* Espaçamento interno (topo, lados, base) */
+  background-color: #ffffff;
+  box-shadow: 4px 0px 15px rgba(0, 0, 0, 0.1);
+  z-index: 1040;
+
+  /* Animação de deslize */
+  transform: translateX(-100%); /* Começa fora da tela, à esquerda */
+  transition: transform 0.3s cubic-bezier(0.77, 0, 0.175, 1);
+  
+  /* Escondido no desktop pela media query */
+  display: none;
+}
+
+/* Quando o menu está ativo, ele desliza para dentro */
+.navLinks.active {
+  transform: translateX(0);
+}
+
+/* A sobreposição escura que cobre o resto da página */
+.overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 1030; /* Fica atrás do menu, mas na frente do conteúdo */
+  
+  /* Animação de fade */
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.3s ease, visibility 0.3s ease;
+}
+
+/* Quando o menu está ativo, o overlay aparece */
+.overlay.active {
+  opacity: 1;
+  visibility: visible;
 }
 
 
@@ -101,39 +205,26 @@
 
 @media (max-width: 768px) {
 
-  /* Mostra o hambúrguer e esconde os links da barra principal */
-  .hamburger {
+  /* Mostra o hambúrguer e o painel do menu */
+  .hamburger,
+  .navLinks {
     display: block;
   }
 
-  .navLinks {
+  .navLeft > .navList {
     display: none;
   }
 
-  /* Estilo do Menu Ativo (Aberto) */
-  .navLinks.active {
-    display: flex;
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100vh;
-    background-color: rgba(255, 255, 255, 0.9);
-    backdrop-filter: blur(5px);
-    z-index: 1000;
-    justify-content: center;
-    align-items: center;
+  /* Estilo da lista de links DENTRO do painel mobile */
+  .navLinks .navList {
+    display: flex; /* Garante que a lista se comporte como flex */
+    flex-direction: column; /* Itens um embaixo do outro */
+    align-items: flex-start; /* Alinhados à esquerda */
+    gap: 2rem; /* Espaço entre os itens */
   }
 
-  .navLinks.active .navList {
-    flex-direction: column;
-    gap: 2.5rem;
+  .navLinks .navLink {
+    font-size: 1.2rem; /* Tamanho da fonte dos links no menu */
+    font-weight: 600;
   }
-
-  .navLinks.active .navLink {
-    font-size: 1.5rem;
-  }
-
-  /* As ações do usuário (.userActions) permanecem visíveis por padrão.
-     Não precisamos de nenhuma regra extra para elas no mobile. */
 }

@@ -17,10 +17,10 @@ const cidadesDisponiveis = {
 export default function NovoEventoPage() {
   const router = useRouter();
   const [formData, setFormData] = useState({
-    type: '',
+    type: 'CMC',
     date: '',
-    city: '',
-    state: '',
+    city: 'Petrolina',
+    state: 'PE',
     venueName: '',
     venueAddress: '',
     registrationLink: '',
@@ -128,7 +128,7 @@ export default function NovoEventoPage() {
             {error && <p className={styles.error}>{error}</p>}
 
             <button type="submit" className="primary-btn" disabled={isSubmitting}>
-              {isSubmitting ? 'Salvando...' : 'Salvar Turma'}
+              {isSubmitting ? 'Salvando...' : 'Salvar Evento'}
             </button>
           </form>
         </div>

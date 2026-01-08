@@ -1,12 +1,18 @@
 /* src/styles/adminForm.module.css */
 .formContainer { max-width: 800px; margin: 40px auto; }
-.formGroup { margin-bottom: 20px; }
+.formGroup { display: flex; flex-direction: column; margin-bottom: 20px; flex: 1;; }
 .formGroup label { display: block; font-weight: 600; margin-bottom: 8px; }
 .formGroup input, .formGroup textarea { width: 100%; padding: 12px; border: 1px solid #ccc; border-radius: 4px; font-size: 1rem; }
 .submitButton { background-color: var(--primary-color, #0070f3); color: white; padding: 15px 25px; border: none; border-radius: 4px; font-size: 1.1rem; cursor: pointer; }
 .submitButton:disabled { background-color: #ccc; cursor: not-allowed; }
 .errorMessage { color: red; margin-bottom: 15px; }
 .successMessage { color: green; margin-bottom: 15px; }
+
+.formRow {
+  display: flex;
+  gap: 20px; /* Espaço entre as duas colunas */
+  align-items: flex-start; /* Alinha os topos dos dois grupos */
+}
 
 .fileInput {
   width: 0.1px;
@@ -90,4 +96,56 @@
   background-color: #f0f2f5;
   cursor: not-allowed;
   color: #6c757d;
+}
+
+.formGroupCheckbox {
+  display: flex;
+  align-items: flex-start; /* Alinha o checkbox e o bloco de texto no topo */
+  gap: 12px; /* Espaço entre o checkbox e os textos */
+  margin-top: 25px;
+  margin-bottom: 35px;
+  padding: 16px;
+  background-color: #f8f9fa; /* Um fundo cinza muito claro para destacar a área */
+  border-left: 4px solid #0d6efd; /* Uma borda de destaque azul (cor de bootstrap primary) */
+  border-radius: 5px;
+}
+
+/* Estilo para o input do checkbox em si */
+.formGroupCheckbox input[type="checkbox"] {
+  /* Aumenta o tamanho do checkbox para ser mais fácil de clicar */
+  width: 20px;
+  height: 20px;
+  margin-top: 4px; /* Ajusta a posição vertical para alinhar melhor com o título */
+  cursor: pointer;
+  /* Remove a aparência padrão para customizar (opcional avançado) */
+  /* appearance: none; */
+}
+
+/* Container para o label e o parágrafo, para que fiquem empilhados */
+.checkboxTextContainer {
+  display: flex;
+  flex-direction: column;
+  gap: 4px; /* Pequeno espaço entre o label e o parágrafo de ajuda */
+}
+
+/* Estilo para o label (o texto principal) que fica ao lado do checkbox */
+.formGroupCheckbox label {
+  font-weight: 600;
+  font-size: 1.05rem;
+  cursor: pointer; /* O cursor vira uma mãozinha ao passar por cima do texto também */
+}
+
+/* Estilo para o parágrafo de ajuda abaixo do label */
+.formGroupCheckbox p {
+  margin: 0; /* Remove margens padrão do parágrafo */
+  font-size: 0.9rem;
+  color: #6c757d; /* Um cinza mais suave para o texto de ajuda */
+  line-height: 1.4;
+}
+
+@media (max-width: 768px) {
+  .formRow {
+    flex-direction: column; /* Em telas pequenas, volta a ser um embaixo do outro */
+    gap: 0; /* Remove o espaço lateral, já que agora estão empilhados */
+  }
 }

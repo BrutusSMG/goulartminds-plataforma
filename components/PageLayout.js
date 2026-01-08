@@ -27,6 +27,8 @@ export default function PageLayout({ children, title, hideLoginButton = false })
     <>
       <Head>
         <title>{title ? `${title} - Goulart Minds` : 'Goulart Minds'}</title>
+        <link rel="icon" href="/image/logo-icon.png" type="image/png" />
+        <link rel="apple-touch-icon" href="/image/logo-icon.png" />
       </Head>
 
       <div className="container"> 

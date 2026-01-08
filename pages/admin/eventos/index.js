@@ -67,6 +67,7 @@ export default function AdminEventosPage({ events: initialEvents }) {
           </div>          
 
           {events.length > 0 ? (
+            <div className={styles.tableContainer}>
             <table className={styles.table}>
               <thead>
                 <tr>
@@ -117,6 +118,7 @@ export default function AdminEventosPage({ events: initialEvents }) {
                 ))}
               </tbody>
             </table>
+            </div>
           ) : (
             <p>Nenhum evento cadastrado ainda.</p>
           )}

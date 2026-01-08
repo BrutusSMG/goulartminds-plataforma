@@ -15,7 +15,7 @@ export default function BlogIndexPage({ articles }) {
     <PageLayout title="Blog">
       <div className={styles.blogContainer}>
         <header className={styles.blogHeader}>
-          <h1>Nosso Blog</h1>
+          <h1>BlogIE</h1>
           <p>Reflexões, ferramentas e insights para sua jornada de autoconhecimento.</p>
         </header>
 
