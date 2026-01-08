@@ -8,6 +8,8 @@
   "build": "npx dotenv -e .env.local -- cross-env DATABASE_URL=%DIRECT_URL% next build",
   "start": "next start",
   "lint": "next lint",
+  "prisma:migrate": "npx dotenv -e .env.local -- prisma migrate dev",
+  "prisma:studio": "npx dotenv -e .env.local -- prisma studio",
   "postinstall": "prisma generate"
 },
   "repository": {
