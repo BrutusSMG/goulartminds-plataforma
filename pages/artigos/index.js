@@ -1,4 +1,4 @@
-// src/pages/blog/index.js
+// /pages/blog/index.js
 
 import PageLayout from '../../components/PageLayout';
 import client from '../../lib/db';
@@ -66,7 +66,7 @@ export default function BlogIndexPage({ articles }) {
   );
 }
 // FUNÇÃO DE BUSCA DE DADOS (EXECUTADA NO SERVIDOR)
-export async function getStaticProps() {
+export async function getServerSideProps() {
   try {
     const articles = await client.article.findMany({
       // Ordena os artigos do mais novo para o mais antigo
@@ -80,8 +80,6 @@ export async function getStaticProps() {
         // Garante que os dados sejam serializáveis (convertíveis para JSON)
         articles: JSON.parse(JSON.stringify(articles)),
       },
-      // Revalida a página a cada 60 segundos para buscar novos artigos
-      revalidate: 60,
     };
   } catch (error) {
     console.error("Erro ao buscar artigos para a página do blog:", error);
