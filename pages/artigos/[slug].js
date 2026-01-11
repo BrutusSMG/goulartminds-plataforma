@@ -203,18 +203,13 @@ export default function ArticlePage({ article }) {
 
 // 1. getStaticPaths: Informa ao Next.js quais artigos existem
 export async function getStaticPaths() {
-  try {
-    const articles = await client.article.findMany({
-      select: { slug: true },
-    });
-    const paths = articles.map((article) => ({
-      params: { slug: article.slug.replace(/^\//, ''),},
-    }));
-    return { paths, fallback: 'blocking' };
-  } catch (error) {
-    console.error("Erro em getStaticPaths:", error);
-    return { paths: [], fallback: 'blocking' };
-  }
+  console.log("Executando getStaticPaths em modo de fallback (sem query no banco).");
+  // Temporariamente, não vamos chamar o banco de dados.
+  // Retornamos uma lista vazia e deixamos o 'fallback' cuidar do resto.
+  return {
+    paths: [], // Retorna um array vazio
+    fallback: 'blocking', // 'blocking' é crucial aqui
+  };
 }
 
 // 2. getStaticProps: Busca os dados para um artigo específico
