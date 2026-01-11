@@ -1,4 +1,4 @@
-// src/pages/artigos/[slug].js
+// /pages/artigos/[slug].js
 
 import { useState, useEffect } from 'react';
 import PageLayout from '../../components/PageLayout';

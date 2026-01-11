@@ -73,6 +73,13 @@ export async function getServerSideProps() {
       orderBy: {
         createdAt: 'desc',
       },
+      include: {
+        author: {
+          select: {
+            name: true,
+          },
+        },
+      },
     });
 
     return {
