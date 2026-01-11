@@ -208,7 +208,7 @@ export async function getStaticPaths() {
       select: { slug: true },
     });
     const paths = articles.map((article) => ({
-      params: { slug: article.slug },
+      params: { slug: article.slug.replace(/^\//, ''),},
     }));
     return { paths, fallback: 'blocking' };
   } catch (error) {
