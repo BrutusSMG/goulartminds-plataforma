@@ -26,7 +26,7 @@ export default function BlogIndexPage({ articles }) {
             <div key={article.id} className={styles.articleCard}>
               
               {/* Este Link envolve apenas a parte clicável para o usuário comum */}
-              <Link href={`/artigos/${article.slug}`} className={styles.cardLinkWrapper}>
+              <Link href={`/artigos/${article.slug.replace(/^\//, '')}`} className={styles.cardLinkWrapper}>
                 <div className={styles.cardImageContainer}>
                   <Image
                     src={article.imageUrl}
@@ -47,7 +47,7 @@ export default function BlogIndexPage({ articles }) {
               {/* Ele fica dentro do .map() e tem acesso à variável 'article' */}
               {session?.user?.role === 'ADMIN' && (
                 <div className={styles.editButtonContainer}>
-                  <Link href={`/admin/artigos/editar/${article.slug}`} className={styles.editButton}>
+                  <Link href={`/admin/artigos/editar/${article.slug.replace(/^\//, '')}`} className={styles.editButton}>
                     Editar
                   </Link>
                 </div>
