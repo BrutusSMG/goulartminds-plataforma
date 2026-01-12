@@ -277,7 +277,7 @@ export default function FerramentaIrritacao() {
 
     // --- RENDERIZAÇÃO DO JSX (Com mudanças) ---
     return (
-        <PageLayout title="Mapeamento de Irritação">
+        <>
             
             <Modals />
 
@@ -286,7 +286,7 @@ export default function FerramentaIrritacao() {
 
                     {/* 1. Quebra de Padrão */}
                     <div className={styles.introHeader}>
-                        <h1>Você não se irrita por causa das situações.</h1>
+                        <h1>Você não se irrita por causa das situações.</h1>                        
                         <p>Na prática, o que nos tira do controle quase nunca é o que acontece... <strong>é o gatilho interno que aquilo ativa.</strong></p>
                         <div className={styles.insight}>
                             👉 Não é falta de controle. <strong>É falta de consciência.</strong>
@@ -422,11 +422,11 @@ export default function FerramentaIrritacao() {
                     <input type="tel" id="user-whatsapp" placeholder="Seu WhatsApp (Opcional)" />
                     <div className={styles.giftOption}>
                         <input type="checkbox" id="wants-gift" />
-                        <label htmlFor="wants-gift">Quero receber um presente!</label>
+                        {/*<label htmlFor="wants-gift">Quero receber um presente!</label>*/}
                     </div>
                     <button id="send-report-btn" className="primary-btn">Quero Receber Meu Relatório</button>
                 </div>
             </section>
-        </PageLayout>
+        </>
     );
 }

@@ -10,20 +10,75 @@ import PageLayout from "../../components/PageLayout";
 import client from "../../lib/db";
 import styles from "../../styles/EventosHub.module.css";
 
-export default function EventosHubPage({ events }) {
+// COMPONENTE AUXILIAR REUTILIZÁVEL PARA O CARD DO EVENTO
+const EventCard = ({ event }) => {
+  const isCMC = event.type === "CMC";
+  const eventDate = new Date(event.date);
+  const linkHref = isCMC ? `/em-construcao` : event.registrationLink;
+  const LinkComponent = isCMC ? Link : "a";
+  const cardClass = isCMC ? styles.cmcCard : styles.imeCard;
+
+  return (
+    <LinkComponent
+      key={event.id}
+      href={linkHref}
+      target={!isCMC ? "_blank" : undefined}
+      rel={!isCMC ? "noopener noreferrer" : undefined}
+      className={`${styles.eventCard} ${cardClass}`}
+    >
+      <div className={styles.cardContent}>
+        <div className={styles.cardTop}>
+          <h3 className={styles.eventDate}>
+            {format(eventDate, "dd 'de' MMMM", { locale: ptBR })}
+          </h3>
+        </div>
+        <div className={styles.cardBottom}>
+          <p className={styles.eventCityState}>
+            {event.city}, {event.state}
+          </p>
+          <span className={styles.eventAction}>
+            {isCMC ? 'Ver Detalhes' : 'Inscreva-se Agora'} &rarr;
+          </span>
+        </div>
+      </div>
+    </LinkComponent>
+  );
+};
+
+export default function EventosHubPage({ allEvents }) {
   const [selectedCity, setSelectedCity] = useState(null);
 
-  const uniqueCities = useMemo(() => {
-    const cities = new Set(events.map((event) => event.city));
-    return Array.from(cities);
-  }, [events]);
+  // 1. SEPARA OS EVENTOS EM LISTAS DE 'ATIVOS' E 'EM BREVE'
+  const { activeEvents, upcomingEvents } = useMemo(() => {
+    const active = [];
+    const upcoming = [];
+    allEvents.forEach(event => {
+      if (event.status === 'ATIVO') {
+        active.push(event);
+      } else if (event.status === 'EM_BREVE') {
+        upcoming.push(event);
+      }
+    });
+    return { activeEvents: active, upcomingEvents: upcoming };
+  }, [allEvents]);
 
-  const filteredEvents = useMemo(() => {
-    if (!selectedCity) {
-      return events;
-    }
-    return events.filter((event) => event.city === selectedCity);
-  }, [events, selectedCity]);
+  // 2. APLICA O FILTRO DE CIDADE À LISTA DE EVENTOS ATIVOS
+  const filteredActiveEvents = useMemo(() => {
+    if (!selectedCity) return activeEvents;
+    return activeEvents.filter((event) => event.city === selectedCity);
+  }, [activeEvents, selectedCity]);
+  
+  // 3. APLICA O FILTRO DE CIDADE À LISTA DE EVENTOS EM BREVE
+  const filteredUpcomingEvents = useMemo(() => {
+    if (!selectedCity) return upcomingEvents;
+    return upcomingEvents.filter((event) => event.city === selectedCity);
+  }, [upcomingEvents, selectedCity]);
+
+  // 4. CRIA A LISTA DE CIDADES ÚNICAS PARA OS BOTÕES DE FILTRO
+  const uniqueCities = useMemo(() => {
+    const cities = new Set(allEvents.map((event) => event.city));
+    return Array.from(cities);
+  }, [allEvents]);
 
   return (
     <PageLayout title="Próximos Eventos">
@@ -41,7 +96,7 @@ export default function EventosHubPage({ events }) {
           <p>Selecione sua cidade para ver os eventos disponíveis.</p>
         </header>
 
-        {uniqueCities.length > 0 ? (
+        {uniqueCities.length > 0 && (
           <div className={styles.cityFilter}>
             <button
               onClick={() => setSelectedCity(null)}
@@ -59,65 +114,47 @@ export default function EventosHubPage({ events }) {
               </button>
             ))}
           </div>
-        ) : null}
+        )}
 
-        <main className={styles.eventsGrid}>
-          {events.length > 0 ? (
-            <>
-              {filteredEvents.length > 0 ? (
-                filteredEvents.map((event) => {
-                  const isCMC = event.type === "CMC";
-                  const eventDate = new Date(event.date);
-                  const linkHref = isCMC
-                    ? `/em-construcao`
-                    : event.registrationLink;
-                  const LinkComponent = isCMC ? Link : "a";
-                  const cardClass = isCMC ? styles.cmcCard : styles.imeCard;
+        <main>
+          {/* SEÇÃO DE EVENTOS CONFIRMADOS (ATIVOS) */}
+          {filteredActiveEvents.length > 0 && (
+            <section className={styles.eventsSection}>
+              <h2 className={styles.sectionTitle}>Eventos Confirmados</h2>
+              <div className={styles.eventsGrid}>
+                {filteredActiveEvents.map((event) => (
+                  <EventCard key={event.id} event={event} />
+                ))}
+              </div>
+            </section>
+          )}
 
-                  return (
-                    <LinkComponent
-                      key={event.id}
-                      href={linkHref}
-                      target={!isCMC ? "_blank" : undefined}
-                      rel={!isCMC ? "noopener noreferrer" : undefined}
-                      className={`${styles.eventCard} ${cardClass}`}
-                    >
-                      <div className={styles.cardContent}>
-                        <div className={styles.cardTop}>                          
-                          <h3 className={styles.eventDate}>
-                            {format(eventDate, "dd 'de' MMMM", { locale: ptBR })}
-                          </h3>                          
-                        </div>
+          {/* SEÇÃO DE PRÓXIMAS DATAS (EM BREVE) */}
+          {filteredUpcomingEvents.length > 0 && (
+            <section className={styles.eventsSection}>
+              <h2 className={styles.sectionTitle}>Próximas Datas (Sujeito a Alteração)</h2>
+              <div className={styles.eventsGrid}>
+                {filteredUpcomingEvents.map((event) => (
+                  <EventCard key={event.id} event={event} />
+                ))}
+              </div>
+            </section>
+          )}
 
-                        {/* --- 👇 NOVO CONTAINER PARA A BASE (AÇÃO) 👇 --- */}
-                        <div className={styles.cardBottom}>
-                          <p className={styles.eventCityState}>
-                            {event.city}, {event.state}
-                          </p>
-                          <span className={styles.eventAction}>
-                            {isCMC ? 'Ver Detalhes' : 'Inscreva-se Agora'} &rarr;
-                          </span>
-                        </div>
-                      </div>
-                    </LinkComponent>
-                  );
-                })
-              ) : (
-
-                <div className={styles.noEventsMessage}>
+          {/* MENSAGEM DE "NENHUM EVENTO ENCONTRADO" */}
+          {filteredActiveEvents.length === 0 && filteredUpcomingEvents.length === 0 && (
+            <div className={styles.noEventsMessage}>
+              {selectedCity ? (
+                <>
                   <p>Nenhum evento encontrado para a cidade selecionada.</p>
                   <p>Selecione "Todas" para ver as opções disponíveis.</p>
-                </div>
+                </>
+              ) : (
+                <>
+                  <h2>Em Breve</h2>
+                  <p>Estamos planejando os próximos eventos. Volte em breve para novidades!</p>
+                </>
               )}
-            </>
-          ) : (
-
-            <div className={styles.noEventsMessage}>
-              <h2>Em Breve</h2>
-              <p>
-                Estamos planejando os próximos eventos. Volte em breve para
-                novidades!
-              </p>
             </div>
           )}
         </main>
@@ -127,9 +164,11 @@ export default function EventosHubPage({ events }) {
 }
 
 export async function getServerSideProps() {
-  const events = await client.event.findMany({
+  const allEvents = await client.event.findMany({
     where: {
-      status: "ATIVO", // Busca apenas eventos com o status 'ATIVO'
+      status: {
+        in: ["ATIVO", "EM_BREVE"],
+      },
     },
     orderBy: {
       date: "asc",
@@ -138,7 +177,7 @@ export async function getServerSideProps() {
 
   return {
     props: {
-      events: JSON.parse(JSON.stringify(events)),
+      allEvents: JSON.parse(JSON.stringify(allEvents)),
     },
   };
 }

@@ -158,6 +158,20 @@
   margin-top: 0;
 }
 
+.eventsSection {
+  margin-bottom: 60px; /* Espaço entre as seções "Confirmados" e "Em Breve" */
+  align-items: center;
+}
+
+.sectionTitle {
+  font-size: 2rem;
+  color: var(--text-primary);
+  margin-bottom: 30px;
+  padding-bottom: 10px;
+  border-bottom: 2px solid var(--primary-color);
+  display: inline-block;
+}
+
 @media (max-width: 768px) {
   .eventCard {
     min-height: 280px; 

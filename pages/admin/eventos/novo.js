@@ -70,7 +70,7 @@ export default function NovoEventoPage() {
     <AdminGuard>
       <PageLayout title="Criar Novo Evento">
         <div className={styles.adminContainer}>
-          <h1>Criar Novo Evento (Turma)</h1>
+          <h1>Criar Novo Evento</h1>
           <form onSubmit={handleSubmit} className={styles.form}>
             <div className={styles.formRow}>
               <div className={styles.formGroup}>
@@ -81,8 +81,8 @@ export default function NovoEventoPage() {
                 </select>
               </div>
               <div className={styles.formGroup}>
-                <label htmlFor="date">Data e Hora do Evento</label>
-                <input type="datetime-local" name="date" value={formData.date} onChange={handleChange} required />
+                <label htmlFor="date">Data</label>
+                <input type="date" name="date" value={formData.date} onChange={handleChange} required />
               </div>
             </div>
 
