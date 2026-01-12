@@ -1,4 +1,4 @@
-// src/pages/index.js
+// /pages/index.js
 import PageLayout from "../components/PageLayout";
 import styles from "../styles/homepage.module.css";
 import Link from "next/link";
@@ -214,6 +214,9 @@ export async function getStaticProps() {
 
   try {
     const featuredArticle = await client.article.findFirst({
+      where: {
+        published: true, // Garante que apenas artigos publicados sejam considerados
+      },
       orderBy: { likes: "desc" },
     });
 

@@ -13,13 +13,24 @@
 
 .introHeader {
     text-align: center;
-    margin-bottom: 50px;
+    margin: 150px auto;
 }
 
 .introHeader h1 {
-    font-size: clamp(1.8rem, 5vw, 2.5rem);
+    font-size: clamp(3.8rem, 5vw, 3.5rem);
     color: var(--primary-color);
     line-height: 1.2;
+}
+
+.divimage {
+    position: relative;
+    min-height: 350px;
+}
+
+.imagem {
+    background-image: url('/image/close-up fotorrealis.png');
+    background-attachment: fixed;
+    background-repeat: no-repeat;
 }
 
 .introHeader p {

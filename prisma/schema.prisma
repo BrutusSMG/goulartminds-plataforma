@@ -68,6 +68,7 @@ model Article {
   description String    // O resumo que aparece na página inicial
   imageUrl    String    // URL da imagem de destaque
   content     String    @db.Text // O conteúdo completo do artigo em Markdown ou HTML
+  published   Boolean   @default(false)
   
   likes       Int       @default(0) // O contador de curtidas!
   

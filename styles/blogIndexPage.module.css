@@ -29,6 +29,7 @@
 }
 
 .articleCard {
+  position: relative;
   display: flex;
   flex-direction: column;
   background-color: white;
@@ -120,4 +121,18 @@
 
 .editButton:hover {
   background-color: rgba(0, 0, 0, 0.8);
+}
+
+.draftBadge {
+  position: absolute;
+  top: 16px;
+  left: 16px;
+  background-color: #e67e22; /* Laranja para chamar a atenção */
+  color: #ffffff;
+  padding: 5px 10px;
+  border-radius: 5px;
+  font-size: 12px;
+  font-weight: bold;
+  z-index: 10; /* Garante que fique acima da imagem */
+  box-shadow: 0 2px 5px rgba(0,0,0,0.2);
 }

@@ -1,5 +1,6 @@
 // /pages/blog/index.js
 
+import { getSession } from 'next-auth/react';
 import PageLayout from '../../components/PageLayout';
 import client from '../../lib/db';
 import Link from 'next/link';
@@ -15,7 +16,7 @@ export default function BlogIndexPage({ articles }) {
     <PageLayout title="Blog">
       <div className={styles.blogContainer}>
         <header className={styles.blogHeader}>
-          <h1>BlogIE</h1>
+          <h1>Blog IE</h1>
           <p>Reflexões, ferramentas e insights para sua jornada de autoconhecimento.</p>
         </header>
 
@@ -24,6 +25,11 @@ export default function BlogIndexPage({ articles }) {
             // O 'div' pai do card agora tem a 'key' e a classe.
             // Ele precisa ter 'position: relative' no CSS.
             <div key={article.id} className={styles.articleCard}>
+
+              {/* 👇 TAG DE RASCUNHO PARA ADMINS 👇 */}
+              {!article.published && session?.user?.role === 'ADMIN' && (
+                <span className={styles.draftBadge}>RASCUNHO</span>
+              )}
               
               {/* Este Link envolve apenas a parte clicável para o usuário comum */}
               <Link href={`/artigos/${article.slug.replace(/^\//, '')}`} className={styles.cardLinkWrapper}>
@@ -66,10 +72,25 @@ export default function BlogIndexPage({ articles }) {
   );
 }
 // FUNÇÃO DE BUSCA DE DADOS (EXECUTADA NO SERVIDOR)
-export async function getServerSideProps() {
+export async function getServerSideProps(context) {
   try {
+    // 1. Pega a sessão do usuário NO LADO DO SERVIDOR
+    const session = await getSession(context);
+
+    // 2. Define o filtro padrão: apenas artigos publicados
+    const whereClause = {
+      published: true,
+    };
+
+    // 3. Se o usuário da sessão for um ADMIN, remove o filtro para buscar TUDO
+    if (session?.user?.role === 'ADMIN') {
+      delete whereClause.published; // Remove a propriedade 'published' do filtro
+    }
+
+    // 4. Executa a busca no banco de dados com a cláusula 'where' correta
     const articles = await client.article.findMany({
       // Ordena os artigos do mais novo para o mais antigo
+      where: whereClause,
       orderBy: {
         createdAt: 'desc',
       },
