@@ -1,6 +1,7 @@
 // /pages/artigos/[slug].js
 
 import { useState, useEffect } from 'react';
+import { getSession } from 'next-auth/react'; 
 import PageLayout from '../../components/PageLayout';
 import client from '../../lib/db';
 import Image from 'next/image';
@@ -28,18 +29,19 @@ function HeartIcon({ filled }) {
   );
 }
 
+// Componente principal da página (sem alterações na lógica interna)
 export default function ArticlePage({ article }) {
-  // Se getStaticProps não encontrar o artigo, o fallback já terá retornado 404.
-  // Esta verificação é uma segurança extra.
-  
-  const [likes, setLikes] = useState(article?.likes || 0);
+  if (!article) {
+    return <PageLayout title="Artigo não encontrado"><p>Desculpe, este artigo não foi encontrado.</p></PageLayout>;
+  }
+
+  const [likes, setLikes] = useState(article.likes || 0);
   const [hasLiked, setHasLiked] = useState(false);
   const [articleUrl, setArticleUrl] = useState('');
   const createdAtDate = new Date(article.createdAt);
   const updatedAtDate = new Date(article.updatedAt);
   const hasBeenUpdated = updatedAtDate.getTime() - createdAtDate.getTime() > 60000;
 
-  // Verifica no localStorage se o usuário já curtiu este artigo
   useEffect(() => {
     if (typeof window !== 'undefined') {
       setArticleUrl(window.location.href);
@@ -51,17 +53,11 @@ export default function ArticlePage({ article }) {
   }, [article.slug]);
 
   const handleLike = async () => {
-    if (hasLiked) return; // Não permite curtir mais de uma vez
-
-    // Atualiza a UI imediatamente para uma melhor experiência
+    if (hasLiked) return;
     setLikes(likes + 1);
     setHasLiked(true);
-
-    // Salva no localStorage para persistir a curtida
     const likedArticles = JSON.parse(localStorage.getItem('likedArticles') || '[]');
     localStorage.setItem('likedArticles', JSON.stringify([...likedArticles, article.slug]));
-
-    // Envia a requisição para a API
     try {
       await fetch('/api/articles/like', {
         method: 'POST',
@@ -70,12 +66,10 @@ export default function ArticlePage({ article }) {
       });
     } catch (error) {
       console.error('Erro ao registrar a curtida:', error);
-      // Opcional: reverter a UI se a API falhar
     }
   };
 
   const handleModernShare = async () => {
-    // Verifica se o navegador suporta o Web Share API
     if (navigator.share) {
       try {
         await navigator.share({
@@ -84,13 +78,11 @@ export default function ArticlePage({ article }) {
           url: articleUrl,
         });
       } catch (error) {
-        // O erro 'AbortError' acontece se o usuário fecha a caixa de diálogo, não precisa logar.
         if (error.name !== 'AbortError') {
           console.error('Erro ao compartilhar:', error);
         }
       }
     } else {
-      // Fallback para navegadores que não suportam: copiar para a área de transferência
       try {
         await navigator.clipboard.writeText(articleUrl);
         alert('Link copiado para a área de transferência!');
@@ -101,24 +93,16 @@ export default function ArticlePage({ article }) {
     }
   };
 
-  if (!article) {
-    return <PageLayout title="Artigo não encontrado"><p>Desculpe, este artigo não foi encontrado.</p></PageLayout>;
-  }
-
   return (
     <PageLayout title={article.title}>
       <Head>
         <title>{article.title}</title>
         <meta name="description" content={article.description} />
-        
-        {/* --- Open Graph / Facebook --- */}
         <meta property="og:type" content="article" />
         <meta property="og:url" content={articleUrl} />
         <meta property="og:title" content={article.title} />
         <meta property="og:description" content={article.description} />
         <meta property="og:image" content={article.imageUrl} />
-
-        {/* --- Twitter --- */}
         <meta property="twitter:card" content="summary_large_image" />
         <meta property="twitter:url" content={articleUrl} />
         <meta property="twitter:title" content={article.title} />
@@ -130,28 +114,23 @@ export default function ArticlePage({ article }) {
         <header className={styles.articleHeader}>
           <h1 className={styles.articleTitle}>{article.title}</h1>
           {article.subtitle && <h2 className={styles.articleSubtitle}>{article.subtitle}</h2>}
-          
-          {/* A imagem de destaque do artigo */}
           <div className={styles.imageContainer}>
-            {/* 👇 COMPONENTE IMAGE ATUALIZADO 👇 */}
             <Image 
               src={article.imageUrl} 
               alt={article.title} 
-              fill={true} // Nova sintaxe
-              sizes="100vw" // Nova propriedade obrigatória com 'fill'
-              style={{ objectFit: 'cover' }} // Nova sintaxe para objectFit
-              priority={true} // Carrega esta imagem primeiro, pois é a mais importante (LCP)
+              fill={true}
+              sizes="100vw"
+              style={{ objectFit: 'cover' }}
+              priority={true}
             />
           </div>
         </header>
 
-        {/* --- BARRA DE INTERAÇÃO (LIKES) --- */}
         <div className={styles.interactionBar}>
           <button onClick={handleLike} className={styles.likeButton} disabled={hasLiked}>
             <HeartIcon filled={hasLiked} />
             <span>{likes}</span>
           </button>
-
           <div className={styles.shareButtons}>
             <span>Compartilhe: &nbsp;</span>
             <a href={`https://www.facebook.com/sharer/sharer.php?u=${articleUrl}`} target="_blank" rel="noopener noreferrer" className={`${styles.shareButton} ${styles.desktopOnly}`} aria-label="Compartilhar no Facebook">
@@ -163,10 +142,9 @@ export default function ArticlePage({ article }) {
             <a href={`https://api.whatsapp.com/send?text=${article.title} - ${articleUrl}`} target="_blank" rel="noopener noreferrer" className={`${styles.shareButton} ${styles.desktopOnly}`} aria-label="Compartilhar no WhatsApp">
               <SocialIcon name="whatsapp" />
             </a>
-            <a href={`https://twitter.com/intent/tweet?url=${articleUrl}&text=${encodeURIComponent(article.title )}`} target="_blank" rel="noopener noreferrer" className={`${styles.shareButton} ${styles.desktopOnly}`} aria-label="Compartilhar no Twitter/X">
+            <a href={`https://twitter.com/intent/tweet?url=${articleUrl}&text=${encodeURIComponent(article.title  )}`} target="_blank" rel="noopener noreferrer" className={`${styles.shareButton} ${styles.desktopOnly}`} aria-label="Compartilhar no Twitter/X">
               <SocialIcon name="twitter" />
             </a>
-            {/* Botão Moderno para Mobile com Ícone */}
             <button onClick={handleModernShare} className={`${styles.shareButton} ${styles.mobileOnly}`} aria-label="Compartilhar">
               <SocialIcon name="share" />
             </button>
@@ -176,7 +154,8 @@ export default function ArticlePage({ article }) {
         <div className={styles.dateInfo}>
             <span>
               Publicado em {format(new Date(article.createdAt), "dd 'de' MMMM 'de' yyyy", { locale: ptBR })}
-            </span><br />
+            </span>  
+
             {hasBeenUpdated && (
               <span className={styles.updatedDate}>
                 (Atualizado em {format(new Date(article.updatedAt), "dd 'de' MMMM 'de' yyyy", { locale: ptBR })})
@@ -189,7 +168,6 @@ export default function ArticlePage({ article }) {
           <p className={styles.authorName}>{article.author.name}</p>
         </div>
         
-        {/* O conteúdo principal do artigo */}
         <div 
           className={styles.articleContent}
           dangerouslySetInnerHTML={{ __html: article.content }} 
@@ -201,42 +179,25 @@ export default function ArticlePage({ article }) {
   );
 }
 
-// 1. getStaticPaths: Informa ao Next.js quais artigos existem
-export async function getStaticPaths() {
-  try {
-    const articles = await client.article.findMany({
-      select: { slug: true },
-    });
-    const paths = articles.map((article) => ({
-      params: { slug: article.slug.replace(/^\//, ''),},
-    }));
-    return { paths, fallback: 'blocking' };
-  } catch (error) {
-    console.error("Erro em getStaticPaths:", error);
-    return { paths: [], fallback: 'blocking' };
-  }
-}
 
-// 2. getStaticProps: Busca os dados para um artigo específico
+// =================================================================================
+//  A ÚNICA FUNÇÃO DE BUSCA DE DADOS PARA ESTA PÁGINA
+//  As funções getStaticPaths e getStaticProps foram removidas para evitar conflito.
+// =================================================================================
 export async function getServerSideProps(context) {
   try {
-    // 1. Pega o slug da URL e a sessão do usuário
     const { slug } = context.params;
     const session = await getSession(context);
 
-    // 2. Define o filtro padrão: slug correspondente E artigo publicado
     const whereClause = {
       slug: slug,
       published: true,
     };
 
-    // 3. Se o usuário for ADMIN, remove a restrição de 'published'
-    //    Isso permite que o admin veja seus próprios rascunhos
     if (session?.user?.role === 'ADMIN') {
       delete whereClause.published;
     }
 
-    // 4. Busca o artigo no banco de dados com o filtro correto
     const article = await client.article.findFirst({
       where: whereClause,
       include: {
@@ -249,22 +210,17 @@ export async function getServerSideProps(context) {
       },
     });
 
-    // 5. Se nenhum artigo for encontrado (seja por não existir ou por ser um rascunho para um usuário comum)
     if (!article) {
-      return {
-        notFound: true, // Retorna uma página 404 de verdade, que é o comportamento correto.
-      };
+      return { notFound: true };
     }
 
-    // 6. Se o artigo for encontrado, passa os dados para a página
     return {
       props: {
         article: JSON.parse(JSON.stringify(article)),
       },
     };
-
   } catch (error) {
-    console.error(`Erro em getServerSideProps para o slug ${context.params.slug}:`, error);
+    console.error(`Erro em getServerSideProps para o slug: ${context.params?.slug || 'desconhecido'}`, error);
     return { notFound: true };
   }
 }
