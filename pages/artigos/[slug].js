@@ -218,32 +218,53 @@ export async function getStaticPaths() {
 }
 
 // 2. getStaticProps: Busca os dados para um artigo específico
-export async function getStaticProps({ params }) {
+export async function getServerSideProps(context) {
   try {
-    const article = await client.article.findUnique({
-      where: { slug: params.slug },
-        include: {
-          author: {
-            select: {
-              name: true,
-              image: true, // Podemos pegar a imagem do autor também!
-            },
-          },
-        },
-    });
+    // 1. Pega o slug da URL e a sessão do usuário
+    const { slug } = context.params;
+    const session = await getSession(context);
 
-    if (!article) {
-      return { notFound: true };
+    // 2. Define o filtro padrão: slug correspondente E artigo publicado
+    const whereClause = {
+      slug: slug,
+      published: true,
+    };
+
+    // 3. Se o usuário for ADMIN, remove a restrição de 'published'
+    //    Isso permite que o admin veja seus próprios rascunhos
+    if (session?.user?.role === 'ADMIN') {
+      delete whereClause.published;
     }
 
+    // 4. Busca o artigo no banco de dados com o filtro correto
+    const article = await client.article.findFirst({
+      where: whereClause,
+      include: {
+        author: {
+          select: {
+            name: true,
+            image: true,
+          },
+        },
+      },
+    });
+
+    // 5. Se nenhum artigo for encontrado (seja por não existir ou por ser um rascunho para um usuário comum)
+    if (!article) {
+      return {
+        notFound: true, // Retorna uma página 404 de verdade, que é o comportamento correto.
+      };
+    }
+
+    // 6. Se o artigo for encontrado, passa os dados para a página
     return {
       props: {
         article: JSON.parse(JSON.stringify(article)),
       },
-      revalidate: 60,
     };
+
   } catch (error) {
-    console.error(`Erro em getStaticProps para o slug ${params.slug}:`, error);
+    console.error(`Erro em getServerSideProps para o slug ${context.params.slug}:`, error);
     return { notFound: true };
   }
 }
