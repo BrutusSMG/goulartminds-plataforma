@@ -87,7 +87,7 @@ export default function HomePage(props) {
               </Link>
 
               {/* Card 2: Conteúdo (Blog ) */}
-              <Link href="/artigos" className={styles.card}>
+              <Link href="/blog" className={styles.card}>
                 <div className={styles.cardIcon}>
                   {/* Ícone de Livro (SVG) */}
                   <svg
@@ -183,7 +183,7 @@ export default function HomePage(props) {
                   </div>
                   <div className={styles.featuredText}>
                     <p className={styles.featuredDescription}>{article.description}</p>
-                    <Link href={`/artigos/${article.slug}`} className={styles.featuredLink}>
+                    <Link href={`/blog/${article.slug}`} className={styles.featuredLink}>
                         Ler o artigo completo &rarr;
                     </Link>
                   </div>

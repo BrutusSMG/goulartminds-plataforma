@@ -1,4 +1,4 @@
-// /pages/admin/artigos/novo.js
+// /pages/admin/blog/novo.js
 
 import { useState } from "react";
 import { useRouter } from "next/router";
@@ -89,7 +89,7 @@ export default function NovoArtigoPage() {
       }
 
       // Sucesso! Redireciona para a página do novo artigo
-      router.push(`/artigos/${slug}`);
+      router.push(`/blog/${slug}`);
     } catch (err) {
       setError(err.message);
     } finally {

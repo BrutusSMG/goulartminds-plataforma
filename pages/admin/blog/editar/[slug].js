@@ -1,4 +1,4 @@
-// /pages/admin/artigos/editar/[slug].js
+// /pages/admin/blog/editar/[slug].js
 
 import { useState } from 'react';
 import { useRouter } from 'next/router';
@@ -71,7 +71,7 @@ export default function EditarArtigoPage({ initialArticle }) {
       // Se tudo deu certo, processamos a resposta
       const updatedArticle = await response.json();
       alert('Artigo atualizado com sucesso!');
-      router.push(`/artigos/${updatedArticle.slug}`);
+      router.push(`/blog/${updatedArticle.slug}`);
 
     } catch (err) {
       // Captura tanto erros de rede (fetch falhou) quanto erros lançados por nós (response não ok)

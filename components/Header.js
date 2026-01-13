@@ -48,13 +48,13 @@ export default function Header() {
             <ul className={styles.navList}>
               <li key="inicio"><Link href="/" className={styles.navLink} onClick={toggleMenu}>Início</Link></li>
               <li key="ferramentas"><Link href="/ferramentas" className={styles.navLink} onClick={toggleMenu}>Ferramentas</Link></li>
-              <li key="artigos"><Link href="/artigos" className={styles.navLink} onClick={toggleMenu}>Blog</Link></li>
+              <li key="blog"><Link href="/blog" className={styles.navLink} onClick={toggleMenu}>Blog</Link></li>
               <li key="eventos"><Link href="/eventos" className={styles.navLink} onClick={toggleMenu}>Eventos</Link></li>
               
               {session?.user?.role === 'ADMIN' && (
                 <>
                   <li key="novo-artigo">
-                    <Link href="/admin/artigos/novo" className={styles.adminLink} onClick={toggleMenu}>+ Novo Artigo</Link>
+                    <Link href="/admin/blog/novo" className={styles.adminLink} onClick={toggleMenu}>+ Novo Artigo</Link>
                   </li>
                   <li key="gerenciar-eventos">
                     <Link href="/admin/eventos" className={styles.adminLink} onClick={toggleMenu}>+ Gerenciar Eventos</Link>

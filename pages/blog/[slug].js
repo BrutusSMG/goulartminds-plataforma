@@ -1,4 +1,4 @@
-// /pages/artigos/[slug].js
+// /pages/blog/[slug].js
 
 import { useState, useEffect } from 'react';
 import { getSession } from 'next-auth/react'; 
