@@ -263,6 +263,9 @@ textarea {
     body {
         padding: 20px;
     }
+    body.full-page-layout {
+        padding: 0;
+    }
     .container {
         padding: 20px;
         border-radius: 12px;

@@ -35,15 +35,13 @@ export default function Modals() {
   }, []); // O array vazio [] garante que este useEffect rode apenas uma vez.
   
   // =======================================================
-  // === MUDANÇA CRÍTICA AQUI ===
   // Função que será chamada quando o botão "Ok" for clicado.
   // =======================================================
   const handleSuccessOkClick = () => {
     // 1. Fecha o modal de sucesso.
     setIsSuccessVisible(false);
 
-    // 2. Dispara um evento global para que a ferramenta saiba que deve resetar.
-    
+    // 2. Dispara um evento global para que a ferramenta saiba que deve resetar.    
     window.location.reload();
   };
 
@@ -63,8 +61,16 @@ export default function Modals() {
       {isSuccessVisible && (
         <div id="success-modal" className="modal-overlay">
           <div className="modal-content">
-            <h3>Relatório Enviado!</h3>
-            <p>Seu diagnóstico completo e o plano de ação foram enviados para o seu e-mail. Verifique sua caixa de entrada (e a de spam).</p>
+            <h3>Tudo certo! Estamos preparando seu relatório.</h3>
+            <p>
+              Seus dados foram recebidos com sucesso. Nosso sistema já está montando seu relatório completo e o plano de ação.
+            </p>
+            <p style={{ fontWeight: 'bold', color: '#2c3e50' }}>
+              Em até 5 minutos, ele chegará no seu e-mail.
+            </p>
+            <p style={{ fontSize: '11px', color: '#7f8c8d', marginTop: '15px' }}>
+              (Não se esqueça de verificar sua caixa de spam ou promoções, ok?)
+            </p>
             {/* Este botão agora fecha o modal ao ser clicado */}
             <button 
               id="success-ok-btn" 
