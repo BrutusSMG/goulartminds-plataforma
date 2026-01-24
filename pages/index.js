@@ -210,14 +210,14 @@ export default function HomePage(props) {
 }
 
 export async function getStaticProps() {
-  let articleData = null; // 1. Comece com null
+  let articleData = null;
 
   try {
     const featuredArticle = await client.article.findFirst({
       where: {
         published: true, // Garante que apenas artigos publicados sejam considerados
       },
-      orderBy: { likes: "desc" },
+      orderBy: { createdAt: "desc" },
     });
 
     // 2. Só atribua um valor se o artigo for encontrado
