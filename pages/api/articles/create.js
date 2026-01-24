@@ -14,7 +14,7 @@ export default async function handle(req, res) {
     return res.status(403).json({ message: 'Acesso negado.' });
   }
 
-  const { title, subtitle, slug, imageUrl, description, content } = req.body;
+  const { title, subtitle, slug, imageUrl, description, content, published } = req.body;
 
   if (!title || !slug || !imageUrl || !description || !content) {
     return res.status(400).json({ message: 'Todos os campos obrigatórios devem ser preenchidos.' });
@@ -31,14 +31,14 @@ export default async function handle(req, res) {
         imageUrl,
         description,
         content,
-        author: {         // 2. Adiciona a relação com o autor
+        published: !!published,
+        author: {
           connect: {
-            id: authorId, // 3. Conecta com o ID do usuário logado
+            id: authorId, 
           },
-        },                // 4. Fim da adição
+        }, 
       },
     });
-    // 👆 --- FIM DA CORREÇÃO --- 👆
 
     res.status(201).json(newArticle);
   } catch (error) {
