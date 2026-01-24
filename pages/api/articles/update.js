@@ -15,7 +15,11 @@ export default async function handle(req, res) {
     return res.status(403).json({ message: 'Acesso negado.' });
   }
 
-  const { originalSlug, title, subtitle, content, imageUrl } = req.body;
+  const { originalSlug, title, subtitle, content, imageUrl, published, description } = req.body;
+
+  if (!originalSlug) {
+    return res.status(400).json({ message: 'O slug original do artigo é necessário para a atualização.' });
+  }
 
   try {
     const updatedArticle = await client.article.update({
@@ -25,12 +29,17 @@ export default async function handle(req, res) {
         subtitle,
         content,
         imageUrl,
-        slug: slugify(title), // Gera um novo slug caso o título mude
+        description, // Adicionado para consistência
+        slug: slugify(title, { lower: true, strict: true }), // Gera um novo slug caso o título mude
+        published: !!published,
       },
     });
     res.status(200).json(updatedArticle);
   } catch (error) {
     console.error("Erro ao atualizar o artigo:", error);
+    if (error.code === 'P2002' && error.meta?.target?.includes('slug')) {
+        return res.status(409).json({ message: 'Erro: O novo título gera um "slug" (URL) que já existe. Por favor, ajuste o título.' });
+    }
     res.status(500).json({ message: 'Erro no servidor ao atualizar o artigo.' });
   }
 }
