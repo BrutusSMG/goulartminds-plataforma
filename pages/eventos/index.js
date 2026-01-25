@@ -11,21 +11,20 @@ import client from "../../lib/db";
 import styles from "../../styles/EventosHub.module.css";
 
 // COMPONENTE AUXILIAR REUTILIZÁVEL PARA O CARD DO EVENTO
-const EventCard = ({ event }) => {
-  const isCMC = event.type === "CMC";
+const EventCard = ({ event }) => {  
   const eventDate = new Date(event.date);
-  const linkHref = isCMC ? `/em-construcao` : event.registrationLink;
-  const LinkComponent = isCMC ? Link : "a";
+  const hasUrl = event.registrationLink && event.registrationLink.trim() !== '';
+  const LinkComponent = hasUrl ? 'a' : Link;
+  const linkProps = {
+    href: hasUrl ? event.registrationLink : '/em-construcao',
+    // Adiciona target="_blank" apenas se for um link externo (tag 'a')
+    ...(hasUrl && { target: '_blank', rel: 'noopener noreferrer' }),
+  };
+  const isCMC = event.type === "CMC";
   const cardClass = isCMC ? styles.cmcCard : styles.imeCard;
 
   return (
-    <LinkComponent
-      key={event.id}
-      href={linkHref}
-      target={!isCMC ? "_blank" : undefined}
-      rel={!isCMC ? "noopener noreferrer" : undefined}
-      className={`${styles.eventCard} ${cardClass}`}
-    >
+    <LinkComponent {...linkProps} className={`${styles.eventCard} ${cardClass}`}>
       <div className={styles.cardContent}>
         <div className={styles.cardTop}>
           <h3 className={styles.eventDate}>
@@ -37,7 +36,8 @@ const EventCard = ({ event }) => {
             {event.city}, {event.state}
           </p>
           <span className={styles.eventAction}>
-            {isCMC ? 'Ver Detalhes' : 'Inscreva-se Agora'} &rarr;
+            {/* O texto do botão também pode ser condicional */}
+            {hasUrl ? (isCMC ? 'Ver Detalhes' : 'Inscreva-se Agora') : 'Em Breve'} &rarr;
           </span>
         </div>
       </div>

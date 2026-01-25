@@ -117,7 +117,7 @@ model Event {
   state           String    // "PE", "SP", etc.
   venueName       String?   // Nome do local, ex: "Nobile Suites Del Rio"
   venueAddress    String?   // Endereço completo do local
-  registrationLink String   // Link para a plataforma de compra (Sympla, etc.)
+  registrationLink String?  // Link para a plataforma de compra (Sympla, etc.)
   status          String    // "ATIVO", "ESGOTADO", "EM_BREVE", "CANCELADO"
   
   // Campos de controle
