@@ -150,55 +150,55 @@ export default function HomePage(props) {
         <section className={styles.featuredSection}>
           <div className={styles.sectionContainer}>
               
-              {/* 1. O CABEÇALHO DA SEÇÃO AGORA FICA FORA DAS CONDIÇÕES */}
-              <div className={styles.sectionHeader}>
+            {/* 1. O CABEÇALHO DA SEÇÃO AGORA FICA FORA DAS CONDIÇÕES */}
+            <div className={styles.sectionHeader}>
               <span className={styles.featuredTag}>
-                  {/* A tag sempre aparece, mas com texto diferente */}
-                  {!article ? 'CONTEÚDO EM DESTAQUE' : 'ARTIGO EM DESTAQUE'}
+                {/* A tag sempre aparece, mas com texto diferente */}
+                {!article ? 'CONTEÚDO EM DESTAQUE' : 'ARTIGO EM DESTAQUE'}
               </span>
               
               {/* O título e subtítulo só aparecem se houver artigo */}
               {article && (
-                  <>
-                  <h2 className={styles.featuredTitle}>{article.title}</h2>
-                  {article.subtitle && <h3 className={styles.featuredSubtitle}>{article.subtitle}</h3>}
-                  </>
+                <>
+                <h2 className={styles.featuredTitle}>{article.title}</h2>
+                {article.subtitle && <h3 className={styles.featuredSubtitle}>{article.subtitle}</h3>}
+                </>
               )}
-              </div>
-
-              {/* 2. O CONTEÚDO MUDA DE ACORDO COM A EXISTÊNCIA DO ARTIGO */}
-              {article ? (
-              // SE HOUVER ARTIGO, MOSTRA IMAGEM E TEXTO
-              <div className={styles.featuredContent}>
-                  <div className={styles.featuredImageContainer}>
-                    <Image
-                        src={article.imageUrl}
-                        alt={article.title}
-                        fill={true}
-                        sizes="(max-width: 900px) 100vw, 50vw"
-                        style={{ objectFit: 'cover', borderRadius: '8px'}}
-                        className={styles.featuredImage}
-                        priority={true}
-                    />
-                  </div>
-                  <div className={styles.featuredText}>
-                    <p className={styles.featuredDescription}>{article.description}</p>
-                    <Link href={`/blog/${article.slug}`} className={styles.featuredLink}>
-                        Ler o artigo completo &rarr;
-                    </Link>
-                  </div>
-              </div>
-              ) : (
-              // SE NÃO HOUVER ARTIGO, MOSTRA A MENSAGEM DE "EM BREVE"
-              <div className={styles.noArticleContent}>
-                  <p>Estamos preparando o melhor conteúdo para sua jornada de autoconhecimento.<br />
-                      Novos artigos e reflexões em breve. Volte sempre!
-                  </p>
-              </div>
-              )}
-
             </div>
-          </section>
+
+            {/* 2. O CONTEÚDO MUDA DE ACORDO COM A EXISTÊNCIA DO ARTIGO */}
+            {article ? (
+            // SE HOUVER ARTIGO, MOSTRA IMAGEM E TEXTO
+            <div className={styles.featuredContent}>
+              <div className={styles.featuredImageContainer}>
+                <Image
+                  src={article.imageUrl}
+                  alt={article.title}
+                  fill={true}
+                  sizes="(max-width: 900px) 100vw, 50vw"
+                  style={{ objectFit: 'cover', borderRadius: '8px'}}
+                  className={styles.featuredImage}
+                  priority={true}
+                />
+              </div>
+              <div className={styles.featuredText}>
+                <p className={styles.featuredDescription}>{article.description}</p>
+                <Link href={`/blog/${article.slug}`} className={styles.featuredLink}>
+                  Ler o artigo completo &rarr;
+                </Link>
+              </div>
+            </div>
+            ) : (
+            // SE NÃO HOUVER ARTIGO, MOSTRA A MENSAGEM DE "EM BREVE"
+            <div className={styles.noArticleContent}>
+              <p>Estamos preparando o melhor conteúdo para sua jornada de autoconhecimento.<br />
+                Novos artigos e reflexões em breve. Volte sempre!
+              </p>
+            </div>
+            )}
+
+          </div>
+        </section>
 
         {/* =============================================== */}
         {/* PRÓXIMAS SEÇÕES VIRÃO AQUI ABAIXO               */}
