@@ -112,7 +112,7 @@ export default function NovoEventoPage() {
 
             <div className={styles.formGroup}>
               <label htmlFor="registrationLink">Link de Inscrição (Sympla, etc.)</label>
-              <input type="url" name="registrationLink" value={formData.registrationLink} onChange={handleChange} required />
+              <input type="url" name="registrationLink" value={formData.registrationLink} onChange={handleChange} />
             </div>
 
             <div className={styles.formGroup}>
