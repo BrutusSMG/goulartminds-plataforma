@@ -568,7 +568,7 @@ const FerramentaValores = () => {
         userResponsesRef.current.email = email;
         userResponsesRef.current.whatsapp = document.getElementById('user-whatsapp')?.value || '';
 
-        const webAppUrl = "https://script.google.com/macros/s/AKfycbysIFVX-92bgdD8XyWwoWxU0xzGrmTfdmkzfLdTr_OZEuOI33kDaJvxMEYP-jFBz3c/exec";
+        const webAppUrl = "https://script.google.com/macros/s/AKfycbyZ3-z22JopJar4BWi7iSzAruNBVX-sZTJSaihfK2OGyCuorHgF-3SjdVU40fPitdRU/exec";
 
         fetch(webAppUrl, {
           method: "POST",
