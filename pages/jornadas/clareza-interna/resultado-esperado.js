@@ -7,7 +7,7 @@ import { useAuthProtection, AccessDenied } from "../../../components/AuthGuard";
 import { useSmartAuth } from "../../../hooks/useSmartAuth";
 import styles from "../../../styles/jornadas/resultado-esperado.module.css";
 import { completeTool } from "../../../lib/tools";
-import PageLayout from "../../../componentes/PageLayout";
+import PageLayout from "../../../components/PageLayout";
 
 export default function FerramentaResultadoEsperado() {
     // 1. Verifica o estado de autenticação do usuário
