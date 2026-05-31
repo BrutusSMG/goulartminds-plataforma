@@ -18,7 +18,7 @@ export default function HomePage(props) {
       : props.article;
   
   return (
-    <PageLayout title="Goulart Minds | Autoconhecimento e Transformação">
+    <PageLayout title="Goulart Minds | Clareza. Planejamento. Ação.">
 
       <div className={styles.container}>
         {/* =============================================== */}

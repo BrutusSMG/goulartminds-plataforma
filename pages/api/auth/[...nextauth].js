@@ -36,7 +36,7 @@ export const authOptions = {
 
   // --- CORREÇÃO APLICADA AQUI ---
   // Lógica de cookies condicional ao ambiente
-  cookies: {
+  /*cookies: {
     sessionToken: {
       name: process.env.NODE_ENV === 'production' 
         ? prodCookieName 
@@ -53,7 +53,7 @@ export const authOptions = {
           : undefined, // Em dev, o navegador usará 'localhost'
       }
     },
-  },
+  },*/
 
   callbacks: {
     async jwt({ token, user, trigger, account, session } ) {
@@ -90,52 +90,55 @@ export const authOptions = {
         return null;
       }
 
-    const toolTags = dbUser.tags.filter(tag => tag.startsWith('tool_'));
+      const userTags = dbUser.tags || [];
+      const userCompletedTools = dbUser.completedTools || [];
+      
+      const toolTags = dbUser.tags.filter(tag => tag.startsWith('tool_'));
 
-    if (toolTags.length > 0) {
-      // Extrai os nomes das ferramentas (ex: 'tool_irritacao_completed' -> 'Irritacao')
-      const newTools = toolTags.map(tag => {
-        const name = tag.replace('tool_', '').replace('_completed', '');
-        return name.charAt(0).toUpperCase() + name.slice(1); // Capitaliza: 'irritacao' -> 'Irritacao'
-      });
-
-      // Filtra as ferramentas que ainda não estão em 'completedTools'
-      const uniqueNewTools = newTools.filter(tool => !dbUser.completedTools.includes(tool));
-
-      if (uniqueNewTools.length > 0) {
-        // Filtra as tags antigas, removendo as que foram movidas
-        const remainingTags = dbUser.tags.filter(tag => !tag.startsWith('tool_'));
-
-        // Atualiza o usuário no banco de dados em uma única operação
-        dbUser = await client.user.update({
-          where: { id: dbUser.id },
-          data: {
-            completedTools: {
-              push: uniqueNewTools, // Adiciona as novas ferramentas
-            },
-            tags: remainingTags, // Define a nova lista de tags (sem as de ferramentas)
-          },
+      if (toolTags.length > 0) {
+        // Extrai os nomes das ferramentas (ex: 'tool_irritacao_completed' -> 'Irritacao')
+        const newTools = toolTags.map(tag => {
+          const name = tag.replace('tool_', '').replace('_completed', '');
+          return name.charAt(0).toUpperCase() + name.slice(1); // Capitaliza: 'irritacao' -> 'Irritacao'
         });
-        console.log(`Sincronizadas ${uniqueNewTools.length} ferramentas para o usuário ${dbUser.email}.`);
-      }
-    }
 
-    // Preenche o token com os dados mais recentes do banco de dados
-    return {
-      ...token, // Mantém os dados existentes no token (como 'sub', 'iat', 'exp')
-      id: dbUser.id,
-      name: dbUser.name,
-      email: dbUser.email,
-      picture: dbUser.image, // Use 'picture' para a imagem, é o padrão do JWT
-      plan: dbUser.plan,
-      tags: dbUser.tags,
-      discProfile: dbUser.discProfile, // Pega o discProfile do banco de dados
-      completedTools: dbUser.completedTools,
-      celular: dbUser.celular,
-      cidade: dbUser.cidade,
-      role: dbUser.role,
-    };
-  },
+        // Filtra as ferramentas que ainda não estão em 'completedTools'
+        const uniqueNewTools = newTools.filter(tool => !dbUser.completedTools.includes(tool));
+
+        if (uniqueNewTools.length > 0) {
+          // Filtra as tags antigas, removendo as que foram movidas
+          const remainingTags = userTags.filter(tag => !tag.startsWith('tool_'));
+
+          // Atualiza o usuário no banco de dados em uma única operação
+          dbUser = await client.user.update({
+            where: { id: dbUser.id },
+            data: {
+              completedTools: {
+                push: uniqueNewTools, // Adiciona as novas ferramentas
+              },
+              tags: remainingTags, // Define a nova lista de tags (sem as de ferramentas)
+            },
+          });
+          console.log(`Sincronizadas ${uniqueNewTools.length} ferramentas para o usuário ${dbUser.email}.`);
+        }
+      }
+
+      // Preenche o token com os dados mais recentes do banco de dados
+      return {
+        ...token, // Mantém os dados existentes no token (como 'sub', 'iat', 'exp')
+        id: dbUser.id,
+        name: dbUser.name,
+        email: dbUser.email,
+        picture: dbUser.image, // Use 'picture' para a imagem, é o padrão do JWT
+        plan: dbUser.plan,
+        tags: dbUser.tags,
+        discProfile: dbUser.discProfile, // Pega o discProfile do banco de dados
+        completedTools: dbUser.completedTools,
+        celular: dbUser.celular,
+        cidade: dbUser.cidade,
+        role: dbUser.role,
+      };
+    },
 
   async session({ session, token }) {
     // --- INÍCIO DA CORREÇÃO ---

@@ -25,3 +25,5 @@ yarn-error.log*
 /generated/prisma
 
 /lib/generated/prisma
+
+/docs/*

@@ -1,0 +1,15 @@
+import { defineConfig } from '@prisma/sdk'
+
+export default defineConfig({
+  // Configuração para o Prisma Migrate e Introspection
+  datasource: {
+    url: process.env.DATABASE_URL,
+    // Se você estiver usando Neon ou outro serviço que exija conexão direta para migrações:
+    directUrl: process.env.DIRECT_URL,
+  },
+  // Configuração para o Prisma Client
+  client: {
+    // Se estiver usando Prisma Accelerate, você passaria a accelerateUrl aqui
+    // Caso contrário, ele usará a URL do datasource por padrão
+  }
+})

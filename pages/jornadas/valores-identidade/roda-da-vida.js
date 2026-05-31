@@ -1,18 +1,13 @@
-// pages/roda-da-vida/index.js 
+// pages/jornadas/valores-identidade/roda-da-vida.js 
 
-// Importações do React e Next.js
 import React, { useEffect } from 'react';
 import Head from 'next/head';
-import Script from 'next/script'; // MUDANÇA: Importado para carregamento otimizado de scripts.
-
-// Importações dos seus componentes e hooks
-import { useSmartAuth } from '../../hooks/useSmartAuth';
-import PageLayout from '../../components/PageLayout';
-import { AccessDenied } from '../../components/AuthGuard';
+import Script from 'next/script'; 
+import { useSmartAuth } from '../../../hooks/useSmartAuth';
+import PageLayout from '../../../components/PageLayout';
+import { AccessDenied } from '../../../components/AuthGuard';
 import Modals from '@/componentes/Modals';
-
-// MUDANÇA: Importação do CSS Modules para estilização.
-import styles from '../../styles/roda-da-vida.module.css';
+import styles from '../../../styles/jornadas/roda-da-vida.module.css';
 
 const FerramentaRodaDaVida = () => {
   // Função para chamar a API de tagueamento (sem alterações, já estava ótima).

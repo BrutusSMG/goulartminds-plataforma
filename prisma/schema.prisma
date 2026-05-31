@@ -5,9 +5,11 @@ generator client {
 datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
-  directUrl = env("DIRECT_URL")
 }
 
+// --------------------------------------
+// 1. MODELOS DE USUÁRIO E AUTENTICAÇÃO (EXISTENTES + NOVOS)
+// --------------------------------------
 model User {
   id            String    @id @default(cuid())
   name          String?
@@ -16,16 +18,28 @@ model User {
   image         String?
   plan          String    @default("free")
   tags          String[]  @default([])
+
+  // Mantido para compatibilidade, mas o novo sistema usará ToolResponse e UserJourneyProgress
   completedTools String[]  @default([])
-  accounts      Account[]
-  sessions      Session[]
+
   discProfile   String?
   celular       String?
   cidade        String?
   role String @default("USER") // Pode ser "USER" ou "ADMIN"
+
+  // Relacionamentos Existentes
+  accounts      Account[]
+  sessions      Session[]  
   articles      Article[]
   comments      Comment[]
   commentReactions CommentReaction[]
+
+  // NOVOS Relacionamentos de Jornada e Progresso
+  responses       ToolResponse[]
+  journeyProgress UserJourneyProgress[]
+  
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
 }
 
 model Account {
@@ -60,6 +74,9 @@ model VerificationToken {
   @@unique([identifier, token])
 }
 
+// --------------------------------------
+// 2. MODELOS DE CONTEÚDO E COMUNIDADE (EXISTENTES)
+// --------------------------------------
 model Article {
   id          String    @id @default(cuid())
   slug        String    @unique // URL amigável (ex: "a-raiva-nao-e-o-problema")
@@ -68,15 +85,17 @@ model Article {
   description String    // O resumo que aparece na página inicial
   imageUrl    String    // URL da imagem de destaque
   content     String    @db.Text // O conteúdo completo do artigo em Markdown ou HTML
-  published   Boolean   @default(false)
-  
-  likes       Int       @default(0) // O contador de curtidas!
-  
+  published   Boolean   @default(false)  
+  likes       Int       @default(0) // O contador de curtidas!  
   createdAt   DateTime  @default(now())
   updatedAt   DateTime  @updatedAt
   author      User      @relation(fields: [authorId], references: [id])
   authorId    String
   comments    Comment[]
+
+  // Futuro: Vincular artigo a uma jornada específica
+  journeyId   String?
+  journey     Journey?  @relation(fields: [journeyId], references: [id])
 }
 
 model Comment {
@@ -90,20 +109,16 @@ model Comment {
   parentId  String?   
   parent    Comment?  @relation("Replies", fields: [parentId], references: [id], onDelete: NoAction, onUpdate: NoAction)
   replies   Comment[] @relation("Replies")
-
   reactions CommentReaction[]
 }
 
 model CommentReaction {
   id        String   @id @default(cuid()) 
-  type      String   
-
+  type      String
   commentId String
   comment   Comment  @relation(fields: [commentId], references: [id], onDelete: Cascade)
-
   userId    String
-  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
-  
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)  
   @@unique([commentId, userId, type])
 }
 
@@ -123,4 +138,129 @@ model Event {
   // Campos de controle
   createdAt       DateTime  @default(now())
   updatedAt       DateTime  @updatedAt
+}
+
+// --------------------------------------
+// 3. NOVOS MODELOS DE ESTRUTURA (JORNADAS)
+// --------------------------------------
+
+model Journey {
+  id          String   @id // ex: "emocoes", "clareza-interna"
+  name        String
+  description String?  @db.Text
+  order       Int      @default(0)
+  
+  // RELACIONAMENTOS
+  articles    Article[]
+  steps       Step[] // Mantém o relacionamento com as ferramentas, se necessário
+  
+  // NOVO RELACIONAMENTO COM O CONTEÚDO DA JORNADA
+  contentSteps JourneyContentStep[] 
+
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+model JourneyContentStep {
+  id          String   @id @default(cuid())
+  title       String   // Ex: "Etapa 1: Compreensão do Problema Atual"
+  description String?  // Ex: "Nesta etapa, vamos aprofundar a compreensão do padrão..."
+  order       Int      // 1, 2 ou 3
+  slug        String   @unique // Ex: "clareza-compreensao-problema"
+
+  // Campos para o conteúdo da etapa
+  videoUrls         String[] // Array de URLs dos vídeos
+  toolDescription   String?  // Descrição da ferramenta de apoio em texto
+  toolDownloadUrl   String?  // Link opcional para baixar um PDF
+  taskDescription   String   // A tarefa orientada para a semana
+
+  // Relacionamento com a Jornada
+  journeyId   String
+  journey     Journey  @relation(fields: [journeyId], references: [id])
+  
+  @@unique([journeyId, order])
+}
+
+model Step {
+  id          String   @id // ex: "mapa-da-irritacao", "roda-da-vida", "valores", "resultado-esperado"
+  name        String
+  description String?  @db.Text
+  path        String   // ex: "/jornadas/emocoes/irritacao"
+  order       Int      // Ordem dentro da jornada (1, 2, 3...)
+  journeyId   String
+  journey     Journey  @relation(fields: [journeyId], references: [id])
+  responses   ToolResponse[]
+  
+  // Configurações de desbloqueio e acesso
+  isRequired  Boolean  @default(true)
+  isPublic    Boolean  @default(false) // Se pode ser acessada sem login (ex: Teste Inicial)
+
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  @@index([journeyId])
+}
+
+// --------------------------------------
+// 4. NOVOS MODELOS DE PROGRESSO E HISTÓRICO
+// --------------------------------------
+
+model UserJourneyProgress {
+  id          String   @id @default(cuid())
+  userId      String
+  journeyId   String
+  status      String   @default("NOT_STARTED") // "NOT_STARTED", "IN_PROGRESS", "COMPLETED"
+  
+  // O progresso agora se refere à 'order' do JourneyContentStep
+  currentStep Int      @default(1) 
+  
+  updatedAt   DateTime @updatedAt
+
+  user        User     @relation(fields: [userId], references: [id])
+  
+  @@unique([userId, journeyId])
+  @@index([userId])
+}
+
+model ToolResponse {
+  id        String   @id @default(cuid())
+  userId    String
+  stepId    String
+  version   String   @default("1.0")
+  
+  // O campo 'content' armazena o JSON padronizado:
+  // { responses: [], scores: {}, insight: "", metadata: {} }
+  content   Json     
+  
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  user      User     @relation(fields: [userId], references: [id])
+  step      Step     @relation(fields: [stepId], references: [id])
+
+  @@index([userId, stepId])
+  @@index([createdAt])
+}
+
+// --------------------------------------
+// 5. GESTÃO DE TRÁFEGO E LEADS
+// --------------------------------------
+model Briefing {
+  id                    String   @id @default(cuid())
+  
+  // 1. Contato
+  empresa               String?
+  nome                  String
+  email                 String
+  whatsapp              String
+  redes                 String?
+
+  // Como os formulários podem evoluir e ter novos campos, 
+  // salvar as respostas completas em formato JSON é a melhor prática!
+  respostas             Json
+
+  // Controle
+  status                String   @default("NOVO") // "NOVO", "EM_ANALISE", "CLIENTE", "DESCARTADO"
+  createdAt             DateTime @default(now())
+  updatedAt             DateTime @updatedAt
 }

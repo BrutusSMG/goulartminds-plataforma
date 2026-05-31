@@ -28,7 +28,7 @@ export const tools = [
     id: 'irritacao',
     name: 'Ferramenta de Irritacao',
     description: 'Descubra o que te realmente te deixa irritado',
-    path: '/ferramentas/irritacao',
+    path: '/jornadas/emocoes/irritacao',
     // Sem a propriedade 'packages', o acesso é público.
   },
 
@@ -36,7 +36,7 @@ export const tools = [
     id: 'valores',
     name: 'Ferramenta de Valores',
     description: 'Descubra o que é mais importante para você em minutos.',
-    path: '/ferramentas/valores',
+    path: '/jornadas/valores-identidade/valores',
     // Sem a propriedade 'packages', o acesso é público.
   },
 
@@ -45,7 +45,7 @@ export const tools = [
     id: 'roda-da-vida',
     name: 'Roda da Vida',
     description: 'Avalie as áreas da sua vida e encontre equilíbrio.',
-    path: '/ferramentas/roda-da-vida', // Usaremos este path quando movermos o arquivo
+    path: '/jornadas/valores-identidade/roda-da-vida',
     packages: [PLAN_LEVELS.FREE, PLAN_LEVELS.BASICO, PLAN_LEVELS.AVANCADO],
   },
   
@@ -53,7 +53,7 @@ export const tools = [
     id: 'resultado-esperado',
     name: 'Resultado Esperado',
     description: 'Transforme desejos vagos em objetivos claros e poderosos.',
-    path: '/ferramentas/resultado-esperado', // Usaremos este path quando movermos o arquivo
+    path: '/jornadas/clareza-interna/resultado-esperado',
     packages: [PLAN_LEVELS.FREE, PLAN_LEVELS.BASICO, PLAN_LEVELS.AVANCADO],
   },
 

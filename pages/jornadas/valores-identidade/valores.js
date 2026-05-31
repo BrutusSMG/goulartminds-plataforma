@@ -1,9 +1,11 @@
+// pages/jornadas/valores-identidade/valores.js
+
 import React, { useEffect, useRef } from "react";
-import PageLayout from "../../components/PageLayout";
-import { useSmartAuth } from "../../hooks/useSmartAuth";
-import { AccessDenied } from "../../components/AuthGuard";
-import styles from "../../styles/valores.module.css";
-import Modals from "@/componentes/Modals";
+import PageLayout from "../../../components/PageLayout";
+import { useSmartAuth } from "../../../hooks/useSmartAuth";
+import { AccessDenied } from "../../../components/AuthGuard";
+import styles from "../../../styles/jornadas/valores.module.css";
+import Modals from "@/components/Modals";
 
 const initialValues = [
   {
@@ -544,15 +546,16 @@ const FerramentaValores = () => {
         }
       }
 
-      function sendDataToApi() {
+      async function sendDataToApi() {
         const nameInput = document.getElementById('user-name');
         const emailInput = document.getElementById('user-email');
         const sendReportBtn = document.getElementById('send-report-btn');
 
         const name = nameInput ? nameInput.value : '';
         const email = emailInput ? emailInput.value : '';
-        if (!name || !email) {
-          alert("Por favor, preencha seu nome e e-mail para continuar.");
+
+        if (!name || !email || !email.includes('@')) {
+          alert("Por favor, preencha seu nome e um e-mail válido para continuar.");
           return;
         }
 
@@ -563,47 +566,50 @@ const FerramentaValores = () => {
 
         document.dispatchEvent(new CustomEvent('showProgressModal'));
 
-        // Atualiza o objeto de respostas com os dados finais do formulário
-        userResponsesRef.current.nome = name;
-        userResponsesRef.current.email = email;
-        userResponsesRef.current.whatsapp = document.getElementById('user-whatsapp')?.value || '';
+        const finalPayload = {
+          nome: name,
+          email: email,
+          whatsapp: document.getElementById('user-whatsapp')?.value.trim() || '',
+          origem: "FerramentaDeValores",
+          
+          // Extrai os dados do userResponsesRef, garantindo que são tipos válidos
+          valoresSelecionados: userResponsesRef.current.valoresSelecionados || [],
+          top5Essenciais: userResponsesRef.current.top5Essenciais || [],
+          definicoes: userResponsesRef.current.definicoes || {},
+          dualidade: userResponsesRef.current.dualidade || {},
+          resultadoFinal: userResponsesRef.current.resultadoFinal || [],
+        };
 
-        const webAppUrl = "https://script.google.com/macros/s/AKfycbyZ3-z22JopJar4BWi7iSzAruNBVX-sZTJSaihfK2OGyCuorHgF-3SjdVU40fPitdRU/exec";
+        try {
+          // 2. Envia para a API CENTRALIZADA, não mais para o Google diretamente
+          const response = await fetch('/api/capture-lead', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(finalPayload),
+          });
 
-        fetch(webAppUrl, {
-          method: "POST",
-          mode: "no-cors",
-          cache: "no-cache",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify(userResponsesRef.current),
-        })
-        .then(() => {
-        // --- SUCESSO (IMEDIATO) ---
-            console.log("Requisição enviada para a API. Assumindo sucesso e mostrando modal.");
+          if (!response.ok) {
+            // Se a API responder com um erro, nós o capturamos
+            const errorData = await response.json();
+            throw new Error(errorData.message || "O servidor não pôde processar a solicitação.");
+          }
 
-            // Esconde o modal de progresso e mostra o de sucesso
-            document.dispatchEvent(new CustomEvent('hideProgressModal'));
-            document.dispatchEvent(new CustomEvent('showSuccessModal'));
+          // 3. SUCESSO: A API respondeu que está tudo OK
+          document.dispatchEvent(new CustomEvent('hideProgressModal'));
+          document.dispatchEvent(new CustomEvent('showSuccessModal'));
 
-            // O botão "Ok" do seu modal de sucesso já cuida de recarregar a página,
-            // então não precisamos mais alterar o formulário ou o botão aqui.
-        })
-        .catch(error => {
-            // --- FALHA DE REDE ---
-            console.error('Erro de rede ao enviar os dados:', error);
-
-            // Esconde o modal de progresso
-            document.dispatchEvent(new CustomEvent('hideProgressModal'));
-            
-            // Mostra um alerta de erro
-            alert('Ocorreu um erro de conexão ao enviar seu relatório. Por favor, verifique sua internet e tente novamente.');
-            
-            // Reabilita o botão para que o usuário possa tentar de novo
-            if (sendReportBtn) {
-                sendReportBtn.disabled = false;
-                sendReportBtn.textContent = 'Quero Receber Meu Relatório'; // Volta ao texto original
-            }
-        });
+        } catch (error) {
+          // 4. FALHA: Erro de rede ou erro retornado pela API
+          console.error('Erro no envio dos dados dos Valores:', error);
+          alert(`Ocorreu um erro: ${error.message}`);
+          document.dispatchEvent(new CustomEvent('hideProgressModal'));
+        } finally {
+          // 5. Garante que o botão seja reativado em qualquer cenário
+          if (sendReportBtn) {
+            sendReportBtn.disabled = false;
+            sendReportBtn.textContent = 'Quero Receber Meu Relatório';
+          }
+        }
       }
 
       // ==================================================================

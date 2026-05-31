@@ -1,30 +1,19 @@
-// /lib/db.ts
-
+// /lib/db.ts (VERSÃO PARA PRISMA 5)
 import { PrismaClient } from '@prisma/client';
 
-// 1. Declara uma variável global para o Prisma Client com tipagem.
-// Isso informa ao TypeScript sobre a nossa propriedade 'prisma' personalizada no objeto global.
 declare global {
   // eslint-disable-next-line no-var
   var prisma: PrismaClient | undefined;
 }
 
-// 2. Cria a instância do cliente.
-// Em produção, 'globalThis.prisma' será sempre 'undefined', criando uma nova instância.
-// Em desenvolvimento, ele reutilizará a instância armazenada no objeto global, se existir.
-const client = globalThis.prisma || new PrismaClient({
-  datasources: {
-    db: {
-      url: process.env.DATABASE_URL,
-    },
-  },
-});
+const prismaClientSingleton = () => {
+  return new PrismaClient();
+};
 
-// 3. Em ambiente de desenvolvimento, armazena a instância recém-criada no objeto global.
-// Isso garante que na próxima recarga (hot-reload), a instância será reutilizada.
+const prisma = globalThis.prisma ?? prismaClientSingleton();
+
+export default prisma;
+
 if (process.env.NODE_ENV !== 'production') {
-  globalThis.prisma = client;
+  globalThis.prisma = prisma;
 }
-
-// 4. Exporta a instância única e segura.
-export default client;

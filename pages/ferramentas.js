@@ -1,3 +1,4 @@
+// /pages/ferramentas.js
 // No Next.js, cada página é um "componente".
 // Esta função representa a sua página inicial.
 import PageLayout from '../components/PageLayout';
@@ -15,7 +16,7 @@ export default function HomePage() {
         <div className={styles.toolsGrid}>
 
             {/* Card da Ferramenta 1: Mapa da Irritação */}
-            <a href="/irritacao/" className={styles.toolCard} data-tool-id="irritacao">
+            <a href="../testes/irritacao" className={styles.toolCard} data-tool-id="irritacao">
                 <span className={styles.cardIcon}>😠</span>
                 <h3>Mapa da Sua Irritação</h3>
                 <p>Descubra o que realmente aciona sua reatividade e aprenda a retomar o controle em momentos de estresse.</p>
@@ -23,7 +24,7 @@ export default function HomePage() {
             </a>
 
             {/* Card da Ferramenta 2: Mapa dos Valores */}
-            <a href="/valores/" className={styles.toolCard} data-tool-id="valores">
+            <a href="../jornadas/valores-identidade/valores" className={styles.toolCard} data-tool-id="valores">
                 <span className={styles.cardIcon}>🧭</span>
                 <h3>Mapa dos Seus Valores</h3>
                 <p>Identifique seus valores fundamentais e entenda como eles influenciam suas decisões, motivações e satisfação.</p>

@@ -1,12 +1,12 @@
-// pages/resultado-esperado/index.js
+// pages/jornadas/clareza-interna/resultado-esperado.js
 
 import { useEffect } from "react";
 import Head from "next/head";
-import Modals from "../../components/Modals";
-import { useAuthProtection, AccessDenied } from "../../components/AuthGuard";
-import { useSmartAuth } from "../../hooks/useSmartAuth";
-import styles from "../../styles/resultado-esperado.module.css";
-import { completeTool } from "../../lib/tools";
+import Modals from "../../../components/Modals";
+import { useAuthProtection, AccessDenied } from "../../../components/AuthGuard";
+import { useSmartAuth } from "../../../hooks/useSmartAuth";
+import styles from "../../../styles/jornadas/resultado-esperado.module.css";
+import { completeTool } from "../../../lib/tools";
 import PageLayout from "@/componentes/PageLayout";
 
 export default function FerramentaResultadoEsperado() {

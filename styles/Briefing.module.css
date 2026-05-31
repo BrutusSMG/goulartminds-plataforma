@@ -1,0 +1,239 @@
+/* styles/Briefing.module.css */
+
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap' );
+
+.journeyContainer {
+    background-color: #f8fafc; /* Slate 50 - Fundo limpo */
+    min-height: 100vh;
+    color: #1e293b;
+    font-family: 'Inter', sans-serif;
+}
+
+/* --- Tela de Boas-Vindas --- */
+.welcomeScreen {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 80vh;
+    padding: 2rem 1rem;
+}
+
+.welcomeContent {
+    max-width: 700px;
+    width: 100%;
+    text-align: center;
+}
+
+.welcomeTitle {
+    font-size: 2.75rem;
+    font-weight: 800;
+    color: #0f172a;
+    letter-spacing: -0.02em;
+    line-height: 1.2;
+    margin-bottom: 1.5rem;
+}
+
+.welcomeSubtitle {
+    font-size: 1.125rem;
+    color: #64748b;
+    margin-bottom: 3rem;
+    line-height: 1.6;
+}
+
+.videoPlaceholder {
+    width: 100%;
+    aspect-ratio: 16 / 9;
+    background-color: #f1f5f9;
+    border-radius: 1.25rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #94a3b8;
+    border: 2px dashed #e2e8f0;
+    margin-bottom: 3rem;
+}
+
+/* --- Tela do Formulário Centralizada --- */
+.formContainerCentered {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 4rem 1.5rem;
+}
+
+.formCard {
+    background: white;
+    padding: 3rem;
+    border-radius: 1.5rem;
+    box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.05), 0 8px 10px -6px rgba(0, 0, 0, 0.05);
+    border: 1px solid #f1f5f9;
+}
+
+/* --- Barra de Progresso --- */
+.progressBarContainer {
+    width: 100%;
+    background-color: #f1f5f9;
+    border-radius: 9999px;
+    height: 0.5rem;
+    margin-bottom: 2.5rem;
+}
+
+.progressBar {
+    background-color: #2563eb; /* Azul Goulart Minds */
+    height: 100%;
+    border-radius: 9999px;
+    transition: width 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* --- Títulos e Labels --- */
+.formStepTitle {
+    font-size: 1.75rem;
+    font-weight: 700;
+    color: #0f172a;
+    margin-bottom: 0.5rem;
+}
+
+.stepIndicator {
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: #3b82f6;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    margin-bottom: 2rem;
+}
+
+.labelWrapper {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 0.5rem;
+}
+
+.label {
+    font-size: 0.95rem;
+    font-weight: 600;
+    color: #334155;
+}
+
+/* --- Tooltip Profissional --- */
+.helpIconWrapper { position: relative; display: inline-block; }
+
+.helpIcon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 20px;
+    height: 20px;
+    background: #f1f5f9;
+    border: 1px solid #e2e8f0;
+    color: #64748b;
+    border-radius: 50%;
+    font-size: 12px;
+    font-weight: bold;
+    cursor: help;
+    transition: all 0.2s;
+}
+
+.helpIcon:hover {
+    background: #3b82f6;
+    color: white;
+    border-color: #3b82f6;
+}
+
+.tooltip {
+    visibility: hidden;
+    position: absolute;
+    bottom: 130%;
+    left: 50%;
+    transform: translateX(-50%) translateY(5px);
+    background: #1e293b;
+    color: white;
+    padding: 0.75rem 1rem;
+    border-radius: 0.5rem;
+    width: 240px;
+    font-size: 0.813rem;
+    line-height: 1.4;
+    z-index: 50;
+    opacity: 0;
+    transition: all 0.2s ease;
+    pointer-events: none;
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+}
+
+.helpIconWrapper:hover .tooltip {
+    visibility: visible;
+    opacity: 1;
+    transform: translateX(-50%) translateY(0);
+}
+
+/* --- Inputs e Opções --- */
+.fieldGroup { margin-bottom: 2rem; }
+
+.input, .textarea {
+    width: 100%;
+    padding: 0.875rem 1rem;
+    background-color: #ffffff;
+    border: 1px solid #e2e8f0;
+    border-radius: 0.75rem;
+    font-size: 1rem;
+    color: #1e293b;
+    transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.input:focus, .textarea:focus {
+    outline: none;
+    border-color: #3b82f6;
+    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+}
+
+.optionsGrid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+    gap: 0.75rem;
+}
+
+.optionLabel {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 1rem;
+    background: #f8fafc;
+    border: 1px solid #e2e8f0;
+    border-radius: 0.75rem;
+    cursor: pointer;
+    transition: all 0.2s;
+    font-size: 0.938rem;
+}
+
+.optionLabel:hover {
+    background: #f1f5f9;
+    border-color: #cbd5e1;
+}
+
+/* --- Botões --- */
+.button {
+    padding: 0.75rem 1.5rem;
+    border-radius: 0.75rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s;
+    border: 1px solid #e2e8f0;
+    background: white;
+    color: #475569;
+}
+
+.buttonPrimary {
+    background-color: #2563eb;
+    color: white;
+    border: none;
+}
+
+.buttonPrimary:hover {
+    background-color: #1d4ed8;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+}
+
+.buttonLarge {
+    padding: 1.125rem 3.5rem;
+    font-size: 1.125rem;
+}

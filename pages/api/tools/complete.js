@@ -1,43 +1,102 @@
 // /pages/api/tools/complete.js
+
 import { getServerSession } from 'next-auth/next';
 import { authOptions } from '../auth/[...nextauth]';
-import client from '../../../lib/db'; 
+import client from '../../../lib/db';
 
-export default async function handle(req, res) {
+export default async function handler(req, res) {
   if (req.method !== 'POST') {
-    return res.status(405).json({ message: 'Method not allowed' });
+    return res.status(405).json({ message: 'Method Not Allowed' });
   }
 
   const session = await getServerSession(req, res, authOptions);
-  if (!session?.user?.id) {
-    return res.status(401).json({ message: 'Não autorizado.' });
+  if (!session || !session.user || !session.user.id) {
+    return res.status(403).json({ message: 'Acesso negado. Usuário não autenticado.' });
   }
+  const userId = session.user.id;
 
-  const { toolName } = req.body;
-  if (!toolName || typeof toolName !== 'string') {
-    return res.status(400).json({ message: 'O nome da ferramenta (string) é obrigatório.' });
+  const { toolId, journeyId, data } = req.body;
+
+  if (!toolId || !journeyId || !data) {
+    return res.status(400).json({ message: 'Dados incompletos. toolId, journeyId e data são obrigatórios.' });
   }
 
   try {
-    await client.user.updateMany({
-      where: { 
-        id: session.user.id,
-        NOT: {
-          completedTools: {
-            has: toolName,
+    const result = await client.$transaction(async (prisma) => {
+      // Salva as respostas da ferramenta
+      const toolResponse = await prisma.toolResponse.create({
+        data: {
+          toolId: toolId,
+          userId: userId,
+          journeyId: journeyId,
+          data: data,
+        },
+      });
+
+      // Encontra o progresso atual do usuário na jornada
+      const userProgress = await prisma.userJourneyProgress.findUnique({
+        where: {
+          userId_journeyId: {
+            userId: userId,
+            journeyId: journeyId,
           },
         },
-      },
-      data: {
-        completedTools: {
-          push: toolName,
+        include: {
+          journey: {
+            include: {
+              steps: {
+                orderBy: {
+                  order: 'asc',
+                },
+              },
+            },
+          },
         },
-      },
+      });
+
+      if (!userProgress) {
+        // Se não houver progresso, cria um novo
+        await prisma.userJourneyProgress.create({
+          data: {
+            userId: userId,
+            journeyId: journeyId,
+            currentStep: 1,
+            status: 'IN_PROGRESS',
+          },
+        });
+      } else {
+        // Se o progresso existe, avança para a próxima etapa
+        const currentStepIndex = userProgress.journey.steps.findIndex(
+          (step) => step.order === userProgress.currentStep
+        );
+        
+        const nextStep = userProgress.journey.steps[currentStepIndex + 1];
+
+        if (nextStep) {
+          // Se houver próxima etapa, atualiza o progresso
+          await prisma.userJourneyProgress.update({
+            where: { id: userProgress.id },
+            data: { currentStep: nextStep.order },
+          });
+        } else {
+          // Se não houver, marca a jornada como concluída
+          await prisma.userJourneyProgress.update({
+            where: { id: userProgress.id },
+            data: {
+              status: 'COMPLETED',
+              completedAt: new Date(),
+            },
+          });
+        }
+      }
+      
+      return toolResponse;
     });
 
-    res.status(200).json({ success: true, message: 'Progresso salvo.' });
+    res.status(200).json({ success: true, message: 'Progresso salvo com sucesso!', data: result });
+
   } catch (error) {
-    console.error('API Error: Falha ao salvar a ferramenta concluída.', error);
-    res.status(500).json({ message: 'Ocorreu um erro no servidor.' });
+    console.error("Erro ao salvar progresso da ferramenta:", error);
+    res.status(500).json({ message: 'Erro interno do servidor ao salvar o progresso.' });
   }
 }

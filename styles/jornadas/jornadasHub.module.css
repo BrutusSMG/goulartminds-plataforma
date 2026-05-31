@@ -1,0 +1,51 @@
+/* Adicionar ao final de styles/jornadasHub.module.css */
+
+.journeysGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 30px;
+  margin-bottom: 80px;
+}
+
+.journeyCard {
+  border: 1px solid #e0e0e0;
+  padding: 25px;
+  border-radius: 12px;
+  transition: all 0.3s ease;
+}
+
+.journeyCard h3 {
+  margin-top: 0;
+}
+
+/* Estilo para jornadas selecionáveis */
+.journeyCard.selectable {
+  cursor: pointer;
+}
+.journeyCard.selectable:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+  border-color: var(--primary-color);
+}
+
+/* Estilo para a jornada ativa */
+.journeyCard.active {
+  border: 2px solid var(--primary-color);
+  box-shadow: 0 8px 25px rgba(0, 112, 243, 0.2);
+}
+
+/* Estilo para jornadas bloqueadas */
+.journeyCard.locked {
+  background-color: #f5f5f5;
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+.journeyCard.locked h3, .journeyCard.locked p {
+  color: #999;
+}
+
+.activeJourneySteps {
+  margin-top: 60px;
+  border-top: 1px solid #eee;
+  padding-top: 40px;
+}

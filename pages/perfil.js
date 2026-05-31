@@ -3,7 +3,7 @@
 import { useState, useEffect } from 'react';
 import Head from 'next/head';
 import { useSession } from 'next-auth/react';
-import PageLayout from '../components/PageLayout'; // Usando PageLayout para consistência
+import PageLayout from '../components/PageLayout';
 import { AccessDenied } from '../components/AuthGuard';
 import { getToolDisplayName } from '../lib/tool-mappings';
 

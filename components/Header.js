@@ -50,6 +50,7 @@ export default function Header() {
               <li key="ferramentas"><Link href="/ferramentas" className={styles.navLink} onClick={toggleMenu}>Ferramentas</Link></li>
               <li key="blog"><Link href="/blog" className={styles.navLink} onClick={toggleMenu}>Blog</Link></li>
               <li key="eventos"><Link href="/eventos" className={styles.navLink} onClick={toggleMenu}>Eventos</Link></li>
+              <li key="jornadas"><Link href="/jornadas" className={styles.navLink} onClick={toggleMenu}>Jornadas</Link></li>
               
               {session?.user?.role === 'ADMIN' && (
                 <>
