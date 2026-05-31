@@ -1,7 +1,7 @@
 // pages/jornadas/etapas/[slug].js
 
 import { useRouter } from 'next/router';
-import PageLayout from '@/components/PageLayout';
+import PageLayout from '../../components/PageLayout';
 import Head from 'next/head';
 import { getServerSession } from 'next-auth/next';
 import { authOptions } from '../../api/auth/[...nextauth]';

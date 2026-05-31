@@ -3,8 +3,7 @@
 import { useState } from 'react';
 import { signIn } from 'next-auth/react';
 import Head from 'next/head';
-import Header from '@/components/Header';
-import Copyright from '@/components/Copyright';
+import Copyright from '../../components/Copyright';
 
 // Adicionei um pouco de CSS para o botão do Google e o separador
 const pageStyles = `

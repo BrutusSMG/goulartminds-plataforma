@@ -2,7 +2,7 @@
 
 import { getServerSession } from 'next-auth/next';
 import { authOptions } from '../auth/[...nextauth]'; // Caminho relativo para a configuração do NextAuth
-import client from '@/lib/db';
+import client from '../../../lib/db';
 
 export default async function handler(req, res) {
   console.log('API /api/jornadas/start FOI CHAMADA');

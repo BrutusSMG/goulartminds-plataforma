@@ -5,7 +5,7 @@ import PageLayout from "../../../components/PageLayout";
 import { useSmartAuth } from "../../../hooks/useSmartAuth";
 import { AccessDenied } from "../../../components/AuthGuard";
 import styles from "../../../styles/jornadas/valores.module.css";
-import Modals from "@/components/Modals";
+import Modals from "../../../components/Modals";
 
 const initialValues = [
   {

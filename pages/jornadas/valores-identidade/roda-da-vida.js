@@ -6,7 +6,7 @@ import Script from 'next/script';
 import { useSmartAuth } from '../../../hooks/useSmartAuth';
 import PageLayout from '../../../components/PageLayout';
 import { AccessDenied } from '../../../components/AuthGuard';
-import Modals from '@/componentes/Modals';
+import Modals from '../../../components/Modals';
 import styles from '../../../styles/jornadas/roda-da-vida.module.css';
 
 const FerramentaRodaDaVida = () => {

@@ -2,11 +2,11 @@
 
 import { getServerSession } from 'next-auth/next';
 import { authOptions } from '../api/auth/[...nextauth]';
-import client from '@/lib/db';
+import client from '../../lib/db';
 import Link from 'next/link';
-import PageLayout from '@/components/PageLayout';
+import PageLayout from '../../components/PageLayout';
 import Head from 'next/head';
-import styles from '@/styles/jornadas/jornadasHub.module.css';
+import styles from '../../styles/jornadas/jornadasHub.module.css';
 import { useRouter } from 'next/router';
 
 // --- COMPONENTE: JourneyCard ---
